@@ -3,7 +3,8 @@ import { useAdmin } from '../context/AdminContext';
 import GalleryManager from './GalleryManager';
 import ContentManager from './ContentManager';
 import ServicesManager from './ServicesManager';
-import { LogOut, Image, FileText, Grid, ExternalLink, Loader } from 'lucide-react';
+import MessagesManager from './MessagesManager';
+import { LogOut, Image, FileText, Grid, ExternalLink, Loader, Mail } from 'lucide-react';
 
 export default function AdminDashboard() {
     const { logout, isAuthenticated } = useAdmin();
@@ -18,6 +19,7 @@ export default function AdminDashboard() {
         { id: 'services', label: 'Services', icon: Grid },
         { id: 'content', label: 'Content', icon: FileText },
         { id: 'gallery', label: 'Gallery', icon: Image },
+        { id: 'messages', label: 'Messages', icon: Mail },
     ];
 
     const currentTab = tabs.find(tab => tab.id === activeTab);
@@ -165,6 +167,7 @@ export default function AdminDashboard() {
                         {activeTab === 'content' && <ContentManager />}
                         {activeTab === 'services' && <ServicesManager />}
                         {activeTab === 'gallery' && <GalleryManager />}
+                        {activeTab === 'messages' && <MessagesManager />}
                     </div>
                 </div>
             </div>

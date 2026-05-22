@@ -64,7 +64,7 @@ export default function Contact() {
         <div className="grid md:grid-cols-2 gap-12 ">
           {/* Contact Info */}
           <div className="space-y-8">
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-1 h-full">
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-1 md:p-6 lg:p-8 h-full">
               <h3 className="text-2xl font-bold text-white mb-6" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>Get in Touch</h3>
               <div className="space-y-5">
                 <div className="flex items-start gap-4">
@@ -73,7 +73,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="text-white/40 text-xs uppercase tracking-wide mb-1">Email</p>
-                    <p className="font-medium text-white">info@vectorintegratedsolutions.com</p>
+                    <p className="font-medium text-white">horizonintegratedsol@gmail.com</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
@@ -131,7 +131,7 @@ export default function Contact() {
             <h3 className="text-xl font-bold text-white mb-6" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>
               SEND A MESSAGE
             </h3>
-            
+
             {/* Success Message */}
             {success && (
               <div className="mb-5 p-4 bg-green-50/10 border border-green-500/20 rounded-xl text-green-400 text-sm flex items-center gap-3 animate-fadeIn">
@@ -139,7 +139,7 @@ export default function Contact() {
                 <span>Message sent successfully! We'll get back to you soon.</span>
               </div>
             )}
-            
+
             {/* Error Message */}
             {error && (
               <div className="mb-5 p-4 bg-red-50/10 border border-red-500/20 rounded-xl text-red-400 text-sm flex items-center gap-3 animate-fadeIn">
