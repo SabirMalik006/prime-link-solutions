@@ -1,6 +1,10 @@
+import { useState } from 'react';
 import { services } from '../data/company';
+import PolicyModal from './PolicyModal';
 
 export default function Footer() {
+  const [isPolicyOpen, setIsPolicyOpen] = useState(false);
+
   return (
     <footer className="bg-[#0a1c30] border-t border-white/5">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 py-16">
@@ -40,6 +44,12 @@ export default function Footer() {
                   {link}
                 </a>
               ))}
+              <button
+                onClick={() => setIsPolicyOpen(true)}
+                className="block text-white/40 hover:text-[#c9a84c] text-sm transition-colors text-left w-full"
+              >
+                Policy
+              </button>
             </div>
           </div>
 
@@ -88,6 +98,7 @@ export default function Footer() {
           </p>
         </div>
       </div>
+      <PolicyModal isOpen={isPolicyOpen} onClose={() => setIsPolicyOpen(false)} />
     </footer>
   );
 }

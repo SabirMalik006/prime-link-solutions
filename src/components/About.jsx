@@ -69,24 +69,6 @@ export default function About() {
                 </h3>
               </div>
               <p className="text-gray-600 text-sm sm:text-lg leading-relaxed flex-grow">{mission}</p>
-              
-              <div className="mt-8 pt-4 border-t border-gray-100">
-                <div className="mb-2 flex flex-col gap-1">
-                  <img 
-                    src={signatureImg} 
-                    alt="Ammad Khan Signature" 
-                    className="h-10 sm:h-12 md:h-14 w-auto object-contain max-w-[150px] sm:max-w-[180px] md:max-w-[200px]" 
-                  />
-                  <img 
-                    src={fontImg} 
-                    alt="Ammad Khan Name" 
-                    className="h-4 sm:h-5 md:h-6 w-auto object-contain max-w-[120px] sm:max-w-[140px] md:max-w-[165px]" 
-                  />
-                </div>
-                <p className="text-[10px] sm:text-xs font-bold text-[#1d7a8a] uppercase tracking-widest mt-1">
-                  CEO, {companyInfo.name}.
-                </p>
-              </div>
             </div>
 
             {/* Vision */}
