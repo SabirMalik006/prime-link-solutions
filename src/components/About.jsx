@@ -2,6 +2,8 @@ import { companyInfo, mission, vision, strengths } from '../data/company';
 import signatureImg from '../assets/sign.png';
 import fontImg from '../assets/font.png';
 
+// hello
+
 export default function About() {
   return (
     <section id="about" className="py-16 md:py-24 bg-white">
