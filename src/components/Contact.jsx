@@ -1,185 +1,233 @@
-import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
-import { API_URL } from '../api/config';
+import { useState, useEffect } from 'react';
+import { FiMail, FiPhone, FiMapPin, FiCheckCircle, FiLoader } from 'react-icons/fi';
 import { companyInfo } from '../data/company';
 import AnimatedBackground from './AnimatedBackground';
 
 export default function Contact() {
+  const [darkMode, setDarkMode] = useState(false);
   const [formData, setFormData] = useState({
-    name: '', email: '', phone: '', subject: '', message: ''
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: ''
   });
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    setDarkMode(savedTheme === 'dark');
+
+    const observer = new MutationObserver(() => {
+      setDarkMode(document.documentElement.classList.contains('dark'));
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  }, []);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError('');
-    setSuccess(false);
+    setIsSubmitting(true);
+    setSubmitError('');
+    setSubmitSuccess(false);
+
     try {
-      const response = await fetch(`${API_URL}/contact/send`, {
+      const response = await fetch('https://primelinksolutions.net/api/contact.php', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
+
       const data = await response.json();
-      if (response.ok) {
-        setSuccess(true);
-        setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-        setTimeout(() => setSuccess(false), 5000);
+
+      if (data.success) {
+        setSubmitSuccess(true);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: ''
+        });
+        setTimeout(() => setSubmitSuccess(false), 5000);
       } else {
-        setError(data.error || 'Failed to send.');
+        setSubmitError(data.message || 'Failed to send message. Please try again.');
       }
-    } catch {
-      setError('Network error.');
-    } finally { setLoading(false); }
+    } catch (error) {
+      setSubmitError('Network error. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
-    <section id="contact" className="py-20 md:py-28 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full">
-        <div className="absolute top-20 left-20 w-80 h-80 rounded-full bg-primary-500/10 blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-accent-500/10 blur-3xl animate-pulse delay-1000"></div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="mb-16 text-center">
-          <div className="inline-flex items-center gap-2 bg-primary-500/10 px-4 py-2 rounded-full mb-4">
-            <span className="w-2 h-2 rounded-full bg-primary-400 animate-pulse"></span>
-            <span className="text-primary-400 text-xs font-semibold tracking-[0.2em] uppercase">Contact</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4">
-            Get in Touch
-          </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-primary-500 to-accent-500 mx-auto rounded-full"></div>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto mt-6">
-            Have a project in mind? Let's discuss how we can help.
-          </p>
-        </div>
-
-        <div className="grid lg:grid-cols-2 gap-10 max-w-5xl mx-auto">
-          <div className="space-y-5">
-            <div className="flex items-start gap-4 p-5 bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-3xl card-hover">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500/20 to-primary-500/10 border border-primary-400/30 flex items-center justify-center flex-shrink-0">
-                <Mail className="text-primary-400" size={24} />
-              </div>
-              <div>
-                <p className="text-slate-500 text-[11px] uppercase tracking-[0.15em] mb-1 font-bold">Email</p>
-                <a href={`mailto:${companyInfo.email}`} className="text-base text-slate-200 font-semibold hover:text-primary-400 transition-colors">
-                  {companyInfo.email}
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4 p-5 bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-3xl card-hover">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-500/20 to-accent-500/10 border border-accent-400/30 flex items-center justify-center flex-shrink-0">
-                <Phone className="text-accent-400" size={24} />
-              </div>
-              <div>
-                <p className="text-slate-500 text-[11px] uppercase tracking-[0.15em] mb-1 font-bold">Phone</p>
-                <a href={`tel:${companyInfo.phone}`} className="text-base text-slate-200 font-semibold hover:text-accent-400 transition-colors">
-                  {companyInfo.phone}
-                </a>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4 p-5 bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-3xl card-hover">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-slate-500/20 to-slate-500/10 border border-slate-400/30 flex items-center justify-center flex-shrink-0">
-                <MapPin className="text-slate-400" size={24} />
-              </div>
-              <div>
-                <p className="text-slate-500 text-[11px] uppercase tracking-[0.15em] mb-1 font-bold">Address</p>
-                <p className="text-base text-slate-200 font-semibold">
-                  {companyInfo.address}
-                </p>
-              </div>
-            </div>
+    <AnimatedBackground dark={darkMode}>
+      <section id="contact" className="py-20 md:py-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <span className={`inline-block px-4 py-1.5 rounded-full mb-4 border ${darkMode ? 'bg-accent-500/20 border-accent-500/30 text-accent-400' : 'bg-accent-50 border-accent-200 text-accent-600'} text-xs font-bold tracking-[0.2em] uppercase`}>
+              Get In Touch
+            </span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4">
+              <span className={darkMode ? "text-white" : "text-slate-900"}>Let's Work Together</span>
+            </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-primary-500 to-accent-500 mx-auto mb-6 rounded-full" />
+            <p className={`text-lg max-w-2xl mx-auto ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+              Ready to start your project? Get in touch with our team and let's discuss how we can help you achieve your goals.
+            </p>
           </div>
 
-          <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-3xl p-7 sm:p-8">
-            {success && (
-              <div className="mb-6 p-4 bg-accent-500/10 border border-accent-500/30 rounded-2xl text-accent-400 text-sm flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-accent-500/20 flex items-center justify-center">✓</div>
-                <span className="font-medium">Message sent successfully!</span>
-              </div>
-            )}
-            {error && (
-              <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-2xl text-red-400 text-sm flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center">✕</div>
-                <span className="font-medium">{error}</span>
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="block text-sm font-semibold text-slate-300 mb-2">Full Name *</label>
-                  <input
-                    type="text" name="name" value={formData.name} onChange={handleChange} required
-                    className="w-full bg-slate-950/50 border border-slate-700 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 rounded-2xl px-5 py-3.5 text-slate-200 text-base placeholder-slate-500 outline-none transition-all"
-                    placeholder="Your Name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-slate-300 mb-2">Email *</label>
-                  <input
-                    type="email" name="email" value={formData.email} onChange={handleChange} required
-                    className="w-full bg-slate-950/50 border border-slate-700 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 rounded-2xl px-5 py-3.5 text-slate-200 text-base placeholder-slate-500 outline-none transition-all"
-                    placeholder="you@email.com"
-                  />
+          <div className="grid lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-1 space-y-6">
+              <div className={`bg-gradient-to-br ${darkMode ? 'from-slate-800 to-slate-900' : 'from-white to-slate-50'} rounded-3xl p-6 border-2 ${darkMode ? 'border-slate-700' : 'border-slate-200'} shadow-xl`}>
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-r from-primary-500/30 to-accent-500/30 border border-primary-500/30 flex items-center justify-center flex-shrink-0">
+                    <FiMapPin className="text-2xl text-primary-500" />
+                  </div>
+                  <div>
+                    <h3 className={`text-lg font-bold mb-2 ${darkMode ? 'text-white' : 'text-slate-900'}`}>Our Location</h3>
+                    <p className={`text-sm leading-relaxed ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>{companyInfo.address}</p>
+                  </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label className="block text-sm font-semibold text-slate-300 mb-2">Phone</label>
-                  <input
-                    type="tel" name="phone" value={formData.phone} onChange={handleChange}
-                    className="w-full bg-slate-950/50 border border-slate-700 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 rounded-2xl px-5 py-3.5 text-slate-200 text-base placeholder-slate-500 outline-none transition-all"
-                    placeholder="+92 300 123 4567"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-slate-300 mb-2">Subject</label>
-                  <input
-                    type="text" name="subject" value={formData.subject} onChange={handleChange}
-                    className="w-full bg-slate-950/50 border border-slate-700 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 rounded-2xl px-5 py-3.5 text-slate-200 text-base placeholder-slate-500 outline-none transition-all"
-                    placeholder="Project Inquiry"
-                  />
+              <div className={`bg-gradient-to-br ${darkMode ? 'from-slate-800 to-slate-900' : 'from-white to-slate-50'} rounded-3xl p-6 border-2 ${darkMode ? 'border-slate-700' : 'border-slate-200'} shadow-xl`}>
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-r from-primary-500/30 to-accent-500/30 border border-primary-500/30 flex items-center justify-center flex-shrink-0">
+                    <FiPhone className="text-2xl text-primary-500" />
+                  </div>
+                  <div>
+                    <h3 className={`text-lg font-bold mb-2 ${darkMode ? "text-white" : "text-slate-900"}`}>Phone</h3>
+                    <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>{companyInfo.phone}</p>
+                  </div>
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-slate-300 mb-2">Your Message *</label>
-                <textarea
-                  name="message" value={formData.message} onChange={handleChange} required rows={5}
-                  className="w-full bg-slate-950/50 border border-slate-700 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 rounded-2xl px-5 py-3.5 text-slate-200 text-base placeholder-slate-500 outline-none transition-all resize-none"
-                  placeholder="Tell us about your project..."
-                />
+              <div className={`bg-gradient-to-br ${darkMode ? 'from-slate-800 to-slate-900' : 'from-white to-slate-50'} rounded-3xl p-6 border-2 ${darkMode ? 'border-slate-700' : 'border-slate-200'} shadow-xl`}>
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-r from-primary-500/30 to-accent-500/30 border border-primary-500/30 flex items-center justify-center flex-shrink-0">
+                    <FiMail className="text-2xl text-primary-500" />
+                  </div>
+                  <div>
+                    <h3 className={`text-lg font-bold mb-2 ${darkMode ? "text-white" : "text-slate-900"}`}>Email</h3>
+                    <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>{companyInfo.email}</p>
+                  </div>
+                </div>
               </div>
+            </div>
 
-              <button
-                type="submit" disabled={loading}
-                className="w-full py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white text-base font-bold rounded-2xl shadow-xl shadow-primary-500/25 hover:shadow-2xl hover:shadow-primary-500/35 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3 shine-effect"
-              >
-                {loading ? (
-                  <span className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></span>
-                ) : (
-                  <>
-                    <Send size={20} />
-                    Send Message
-                  </>
+            <div className="lg:col-span-2">
+              <form onSubmit={handleSubmit} className={`bg-gradient-to-br ${darkMode ? 'from-slate-800 to-slate-900' : 'from-white to-slate-50'} rounded-3xl p-8 border-2 ${darkMode ? 'border-slate-700' : 'border-slate-200'} shadow-xl space-y-6`}>
+                {submitSuccess && (
+                  <div className="bg-green-500/20 border border-green-500/30 rounded-2xl p-4 flex items-center gap-3">
+                    <FiCheckCircle className="text-green-500 text-2xl" />
+                    <span className="text-green-500 font-medium">Thank you! Your message has been sent successfully.</span>
+                  </div>
                 )}
-              </button>
-            </form>
+                {submitError && (
+                  <div className="bg-red-500/20 border border-red-500/30 rounded-2xl p-4 flex items-center gap-3">
+                    <span className="text-red-500 font-medium">{submitError}</span>
+                  </div>
+                )}
+
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className={`block text-sm font-bold mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>Full Name</label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className={`w-full px-4 py-3 rounded-xl border-2 ${darkMode ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-slate-200 text-slate-900'} focus:border-primary-500 outline-none transition-all`}
+                      placeholder="Your name"
+                    />
+                  </div>
+                  <div>
+                    <label className={`block text-sm font-bold mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>Email Address</label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className={`w-full px-4 py-3 rounded-xl border-2 ${darkMode ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-slate-200 text-slate-900'} focus:border-primary-500 outline-none transition-all`}
+                      placeholder="your@email.com"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid sm:grid-cols-2 gap-6">
+                  <div>
+                    <label className={`block text-sm font-bold mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>Phone Number</label>
+                    <input
+                      type="tel"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className={`w-full px-4 py-3 rounded-xl border-2 ${darkMode ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-slate-200 text-slate-900'} focus:border-primary-500 outline-none transition-all`}
+                      placeholder="+92 xxx xxxxxxx"
+                    />
+                  </div>
+                  <div>
+                    <label className={`block text-sm font-bold mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>Subject</label>
+                    <input
+                      type="text"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      required
+                      className={`w-full px-4 py-3 rounded-xl border-2 ${darkMode ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-slate-200 text-slate-900'} focus:border-primary-500 outline-none transition-all`}
+                      placeholder="How can we help?"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className={`block text-sm font-bold mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>Message</label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={5}
+                    className={`w-full px-4 py-3 rounded-xl border-2 ${darkMode ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-slate-200 text-slate-900'} focus:border-primary-500 outline-none transition-all resize-none`}
+                    placeholder="Tell us about your project..."
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full px-8 py-4 bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 text-white font-bold text-lg rounded-2xl shadow-xl shadow-primary-500/30 hover:shadow-2xl hover:shadow-accent-500/40 transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <FiLoader className="animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <FiMail />
+                    </>
+                  )}
+                </button>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </AnimatedBackground>
   );
 }
