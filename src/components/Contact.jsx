@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { API_URL } from '../api/config';
 import { companyInfo } from '../data/company';
+import AnimatedBackground from './AnimatedBackground';
 
 export default function Contact() {
   const [formData, setFormData] = useState({

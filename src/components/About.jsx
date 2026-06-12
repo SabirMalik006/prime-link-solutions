@@ -1,19 +1,21 @@
 import { companyInfo, mission, vision, strengths } from '../data/company';
 import signatureImg from '../assets/sign.png';
 import fontImg from '../assets/font.png';
+import AnimatedBackground from './AnimatedBackground';
 
 export default function About() {
   return (
-    <section id="about" className="py-20 md:py-28 bg-white">
+    <AnimatedBackground dark={false}>
+      <section id="about" className="py-20 md:py-28 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <span className="inline-block px-4 py-1.5 bg-gradient-to-r from-primary-100 via-accent-100 to-secondary-100 text-primary-700 text-xs font-bold tracking-[0.2em] uppercase rounded-full mb-4">
+          <span className="inline-block px-4 py-1.5 bg-gradient-to-r from-primary-100 to-accent-100 text-primary-700 text-xs font-bold tracking-[0.2em] uppercase rounded-full mb-4">
             About Us
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900">
             Who We Are
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-primary-500 via-accent-500 to-secondary-500 mx-auto mt-6 rounded-full"></div>
+          <div className="w-20 h-1 bg-gradient-to-r from-primary-500 to-accent-500 mx-auto mt-6 rounded-full"></div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 mb-20">
@@ -29,11 +31,11 @@ export default function About() {
                 { label: 'Sector', value: 'Public & Private', color: 'primary' },
                 { label: 'Expertise', value: 'Telecom & Security', color: 'accent' },
               ].map((item, i) => (
-                <div 
-                  key={i} 
+                <div
+                  key={i}
                   className={`p-5 rounded-2xl border-2 ${
-                    item.color === 'primary' 
-                      ? 'bg-gradient-to-br from-primary-50 to-white border-primary-100' 
+                    item.color === 'primary'
+                      ? 'bg-gradient-to-br from-primary-50 to-white border-primary-100'
                       : 'bg-gradient-to-br from-accent-50 to-white border-accent-100'
                   } card-hover`}
                 >
@@ -53,7 +55,7 @@ export default function About() {
           <div className="space-y-6">
             <div className="bg-gradient-to-br from-slate-50 to-white p-6 sm:p-8 rounded-3xl border border-slate-100 card-hover">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 via-accent-500 to-secondary-500 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-primary-500/30">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-primary-500/30">
                   M
                 </div>
                 <h3 className="text-xl font-bold text-slate-900">Our Mission</h3>
@@ -88,13 +90,13 @@ export default function About() {
 
         <div>
           <div className="text-center mb-12">
-            <span className="inline-block px-4 py-1.5 bg-gradient-to-r from-accent-100 via-primary-100 to-secondary-100 text-accent-700 text-xs font-bold tracking-[0.2em] uppercase rounded-full mb-4">
+            <span className="inline-block px-4 py-1.5 bg-gradient-to-r from-accent-100 to-primary-100 text-accent-700 text-xs font-bold tracking-[0.2em] uppercase rounded-full mb-4">
               Strengths
             </span>
             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900">
               Our Strengths
             </h3>
-            <div className="w-16 h-1 bg-gradient-to-r from-primary-500 via-accent-500 to-secondary-500 mx-auto mt-5 rounded-full"></div>
+            <div className="w-16 h-1 bg-gradient-to-r from-primary-500 to-accent-500 mx-auto mt-5 rounded-full"></div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -102,10 +104,10 @@ export default function About() {
               const gradients = [
                 'from-primary-500 to-primary-700',
                 'from-accent-500 to-accent-700',
-                'from-secondary-500 to-secondary-700',
-                'from-primary-600 via-accent-500 to-secondary-500'
+                'from-primary-500 to-accent-500',
+                'from-accent-500 to-primary-500'
               ];
-c              return (
+              return (
                 <div
                   key={s.title}
                   className="card-hover relative overflow-hidden rounded-3xl p-7 text-center bg-gradient-to-br from-slate-900 to-slate-800 text-white"
@@ -124,5 +126,6 @@ c              return (
         </div>
       </div>
     </section>
+    </AnimatedBackground>
   );
 }

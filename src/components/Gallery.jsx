@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { API_URL, MEDIA_URL } from '../api/config';
+import AnimatedBackground from './AnimatedBackground';
 
 const normalizeGalleryData = (data) => {
   if (!data) return [];
@@ -46,7 +47,8 @@ export default function Gallery() {
   ];
 
   return (
-    <section id="gallery" className="py-20 md:py-28 bg-slate-950">
+    <AnimatedBackground dark={true}>
+      <section id="gallery" className="py-20 md:py-28 bg-slate-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 bg-primary-500/10 text-primary-400 text-xs font-bold tracking-[0.2em] uppercase rounded-full mb-4">
@@ -112,5 +114,6 @@ export default function Gallery() {
         )}
       </div>
     </section>
+    </AnimatedBackground>
   );
 }

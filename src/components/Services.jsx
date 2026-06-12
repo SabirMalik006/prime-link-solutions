@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { API_URL, MEDIA_URL } from '../api/config';
 import { services as staticServices } from '../data/company';
+import AnimatedBackground from './AnimatedBackground';
 
 export default function Services() {
   const [active, setActive] = useState(null);
@@ -38,19 +39,20 @@ export default function Services() {
     );
   }
 
-  const colors = ['primary', 'accent', 'secondary', 'primary', 'accent', 'secondary', 'primary', 'accent'];
+  const colors = ['primary', 'accent', 'primary', 'accent', 'primary', 'accent', 'primary', 'accent'];
 
   return (
-    <section id="services" className="py-20 md:py-28 bg-slate-50">
+    <AnimatedBackground dark={false}>
+      <section id="services" className="py-20 md:py-28 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <span className="inline-block px-4 py-1.5 bg-gradient-to-r from-primary-100 via-accent-100 to-secondary-100 text-primary-700 text-xs font-bold tracking-[0.2em] uppercase rounded-full mb-4">
+          <span className="inline-block px-4 py-1.5 bg-gradient-to-r from-primary-100 to-accent-100 text-primary-700 text-xs font-bold tracking-[0.2em] uppercase rounded-full mb-4">
             Services
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-4">
             What We Do
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-primary-500 via-accent-500 to-secondary-500 mx-auto mb-4 rounded-full"></div>
+          <div className="w-20 h-1 bg-gradient-to-r from-primary-500 to-accent-500 mx-auto mb-4 rounded-full"></div>
           <p className="text-slate-600 text-lg max-w-2xl mx-auto">
             Comprehensive infrastructure & technology solutions for public and private sector projects.
           </p>
@@ -130,5 +132,6 @@ export default function Services() {
         </div>
       </div>
     </section>
+    </AnimatedBackground>
   );
 }

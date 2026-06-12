@@ -1,16 +1,14 @@
 import { clients, certifications, whyChoose } from '../data/company';
 import { FiUsers, FiAward, FiTrendingUp, FiStar, FiBriefcase, FiTarget, FiShield } from 'react-icons/fi';
+import AnimatedBackground from './AnimatedBackground';
 
 export default function Clients() {
   const icons = [FiUsers, FiAward, FiTrendingUp, FiStar, FiBriefcase];
 
   return (
     <>
-      <section id="clients" className="py-20 md:py-28 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full">
-          <div className="absolute top-20 left-20 w-72 h-72 rounded-full bg-primary-500/10 blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-accent-500/10 blur-3xl animate-pulse delay-1000"></div>
-        </div>
+      <AnimatedBackground dark={true}>
+      <section id="clients" className="py-20 md:py-28 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="mb-16 text-center">
@@ -76,10 +74,10 @@ export default function Clients() {
           </div>
         </div>
       </section>
+      </AnimatedBackground>
 
-      <section id="why-us" className="py-20 md:py-28 bg-white relative overflow-hidden">
-        <div className="hidden lg:block absolute top-0 right-0 w-80 h-80 bg-primary-50 rounded-full blur-3xl"></div>
-        <div className="hidden lg:block absolute bottom-0 left-0 w-96 h-96 bg-accent-50 rounded-full blur-3xl"></div>
+      <AnimatedBackground dark={false}>
+      <section id="why-us" className="py-20 md:py-28 bg-slate-50">
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="mb-16 text-center">
@@ -163,6 +161,7 @@ export default function Clients() {
           </div>
         </div>
       </section>
+      </AnimatedBackground>
     </>
   );
 }

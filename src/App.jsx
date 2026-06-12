@@ -13,6 +13,7 @@ import Contact from './components/Contact';
 import Gallery from './components/Gallery';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
+import CustomCursor from './components/CustomCursor';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           {/* Main Site Route */}
           <Route path="/" element={
             <div className="min-h-screen">
+              <CustomCursor />
               <Navbar />
               <Hero />
               <About />

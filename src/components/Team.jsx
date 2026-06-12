@@ -1,11 +1,13 @@
 import { team } from '../data/company';
 import { FiUsers, FiAward, FiTrendingUp, FiStar, FiBriefcase, FiTarget } from 'react-icons/fi';
+import AnimatedBackground from './AnimatedBackground';
 
 export default function Team() {
   const icons = [FiUsers, FiAward, FiTrendingUp, FiStar, FiBriefcase, FiTarget];
 
   return (
-    <section id="team" className="py-20 md:py-28 bg-slate-50">
+    <AnimatedBackground dark={false}>
+      <section id="team" className="py-20 md:py-28 bg-slate-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-16 text-center">
           <div className="inline-flex items-center gap-2 bg-accent-100 px-4 py-2 rounded-full mb-4">
@@ -79,5 +81,6 @@ export default function Team() {
         </div>
       </div>
     </section>
+    </AnimatedBackground>
   );
 }

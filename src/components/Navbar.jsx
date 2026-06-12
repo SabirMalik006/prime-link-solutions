@@ -50,7 +50,7 @@ export default function Navbar() {
   if (isAdminPage) return null;
 
   return (
-    <nav className={"fixed top-0 left-0 right-0 z-50 transition-all duration-500 " + (scrolled ? 'glass-nav shadow-xl' : 'bg-transparent')}>
+    <nav className={"fixed top-0 left-0 right-0 z-50 transition-all duration-500 " + (scrolled ? 'bg-slate-950/90 backdrop-blur-2xl shadow-2xl border-b border-slate-800/50' : 'bg-transparent')}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
         <a
           href="/"
@@ -64,7 +64,7 @@ export default function Navbar() {
           }}
           className="flex items-center gap-3"
         >
-          <div className="w-12 h-12 rounded-xl overflow-hidden bg-gradient-to-br from-primary-500 via-accent-500 to-secondary-500 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-xl overflow-hidden bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center">
             <img
               src="/pp.jpeg"
               alt="Prime Link Solutions Logo"
@@ -75,10 +75,10 @@ export default function Navbar() {
             />
           </div>
           <div>
-            <div className="font-extrabold text-xl bg-gradient-to-r from-primary-600 via-accent-500 to-secondary-500 bg-clip-text text-transparent">
+            <div className="font-extrabold text-xl bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent">
               Prime Link
             </div>
-            <div className="text-xs font-semibold text-slate-500 tracking-widest">
+            <div className="text-xs font-semibold text-slate-400 tracking-widest">
               Solutions
             </div>
           </div>
@@ -90,42 +90,42 @@ export default function Navbar() {
               key={link.label}
               href={'#' + link.href}
               onClick={(e) => handleNavClick(e, link.href)}
-              className="text-slate-600 hover:text-primary-600 font-medium transition-colors relative group"
+              className="text-slate-300 hover:text-primary-400 font-medium transition-colors relative group"
             >
               {link.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 via-accent-500 to-secondary-500 transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-primary-500 to-accent-500 transition-all duration-300 group-hover:w-full"></span>
             </a>
           ))}
           <a
             href="#contact"
             onClick={(e) => handleNavClick(e, 'contact')}
-            className="px-6 py-2.5 bg-gradient-to-r from-primary-600 via-accent-500 to-secondary-500 hover:from-primary-700 hover:via-accent-600 hover:to-secondary-600 text-white font-semibold rounded-xl shadow-lg shadow-primary-500/30 transition-all duration-300 hover:shadow-xl hover:shadow-accent-500/40 hover:-translate-y-0.5"
+            className="px-6 py-2.5 bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 text-white font-semibold rounded-xl shadow-lg shadow-primary-500/30 transition-all duration-300 hover:shadow-xl hover:shadow-accent-500/40 hover:-translate-y-0.5"
           >
             Get Quote
           </a>
         </div>
 
         <button
-          className="lg:hidden text-slate-700 p-2"
+          className="lg:hidden text-slate-300 p-2"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           <div className="space-y-1.5">
-            <span className={"block w-7 h-0.5 bg-slate-700 transition-all duration-300 " + (menuOpen ? 'rotate-45 translate-y-2' : '')}></span>
-            <span className={"block w-7 h-0.5 bg-slate-700 transition-all duration-300 " + (menuOpen ? 'opacity-0' : '')}></span>
-            <span className={"block w-7 h-0.5 bg-slate-700 transition-all duration-300 " + (menuOpen ? '-rotate-45 -translate-y-2' : '')}></span>
+            <span className={"block w-7 h-0.5 bg-slate-300 transition-all duration-300 " + (menuOpen ? 'rotate-45 translate-y-2' : '')}></span>
+            <span className={"block w-7 h-0.5 bg-slate-300 transition-all duration-300 " + (menuOpen ? 'opacity-0' : '')}></span>
+            <span className={"block w-7 h-0.5 bg-slate-300 transition-all duration-300 " + (menuOpen ? '-rotate-45 -translate-y-2' : '')}></span>
           </div>
         </button>
       </div>
 
       {menuOpen && (
-        <div className="lg:hidden bg-white border-t border-slate-200 px-4 py-6">
+        <div className="lg:hidden bg-slate-950 border-t border-slate-800 px-4 py-6">
           <div className="flex flex-col gap-4">
             {navLinks.map((link) => (
               <a
                 key={link.label}
                 href={'#' + link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="text-slate-700 hover:text-primary-600 font-medium py-2 transition-colors"
+                className="text-slate-300 hover:text-primary-400 font-medium py-2 transition-colors"
               >
                 {link.label}
               </a>
@@ -133,7 +133,7 @@ export default function Navbar() {
             <a
               href="#contact"
               onClick={(e) => handleNavClick(e, 'contact')}
-              className="mt-2 w-full py-3 bg-gradient-to-r from-primary-600 via-accent-500 to-secondary-500 text-white font-semibold rounded-xl text-center"
+              className="mt-2 w-full py-3 bg-gradient-to-r from-primary-600 to-accent-500 text-white font-semibold rounded-xl text-center"
             >
               Get Quote
             </a>
