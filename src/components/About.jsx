@@ -160,27 +160,28 @@ export default function About() {
               <div className="w-16 h-1 bg-gradient-to-r from-primary-500 to-accent-500 mx-auto mt-5 rounded-full"></div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {strengths.map((s, i) => {
                 const gradients = [
-                  'from-primary-500 to-primary-700',
-                  'from-accent-500 to-accent-700',
+                  'from-primary-500 to-cyan-400',
+                  'from-accent-500 to-lime-400',
                   'from-primary-500 to-accent-500',
                   'from-accent-500 to-primary-500'
                 ];
-                const gradientClass = gradients[i];
                 return (
                   <div
                     key={s.title}
-                    className="card-hover relative overflow-hidden rounded-3xl p-7 text-center bg-gradient-to-br from-slate-900 to-slate-800 text-white shadow-xl"
+                    className="card-hover relative overflow-hidden rounded-3xl p-7 text-center bg-gradient-to-br from-slate-800 to-slate-900 text-white shadow-2xl transition-all duration-500 hover:-translate-y-3 border border-slate-700"
                   >
-                    <div className="absolute top-0 right-0 w-28 h-28 bg-gradient-to-br opacity-10 rounded-bl-[80px]" style={{ background: `linear-gradient(to bottom right, ${i % 2 === 0 ? '#0ea5e9' : '#22c55e'}, ${i % 2 === 0 ? '#0284c7' : '#16a34a'})` }}></div>
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br flex items-center justify-center mx-auto mb-5 shadow-xl" style={{ background: `linear-gradient(to bottom right, ${i % 2 === 0 ? '#0ea5e9' : '#22c55e'}, ${i % 2 === 0 ? '#0284c7' : '#16a34a'})` }}>
-                      <span className="text-2xl font-black">0{i + 1}</span>
+                    <div className="absolute inset-0 bg-gradient-to-br opacity-5" style={{ background: `linear-gradient(135deg, ${i % 2 === 0 ? '#0ea5e9' : '#22c55e'}, transparent)` }}></div>
+                    <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${gradients[i]} opacity-20 rounded-bl-[100px]`}></div>
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${gradients[i]} flex items-center justify-center mx-auto mb-6 shadow-2xl`}>
+                      <span className="text-3xl font-black text-white">0{i + 1}</span>
                     </div>
-                    <span className="text-4xl mb-3 block">{s.icon}</span>
-                    <h4 className="font-bold text-xl mb-2">{s.title}</h4>
-                    <p className="text-slate-300 text-sm leading-relaxed">{s.desc}</p>
+                    <span className="text-5xl mb-4 block">{s.icon}</span>
+                    <h4 className="font-extrabold text-2xl mb-3 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">{s.title}</h4>
+                    <p className="text-slate-300 text-sm leading-relaxed font-medium">{s.desc}</p>
+                    <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary-500 to-transparent"></div>
                   </div>
                 );
               })}

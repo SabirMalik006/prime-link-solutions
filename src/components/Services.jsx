@@ -64,18 +64,25 @@ export default function Services() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {services.map((service, idx) => {
             const colorKey = colors[idx % colors.length];
+            const cardGradients = [
+              'from-slate-800 via-slate-900 to-slate-800',
+              'from-slate-900 via-slate-800 to-slate-900'
+            ];
             return (
               <div
                 key={service.id}
-                className={`card-hover bg-slate-800 rounded-3xl overflow-hidden shadow-lg border-2 transition-all duration-300 flex flex-col ${
-                  active === service.id ? `border-${colorKey}-500` : 'border-slate-700'
+                className={`card-hover relative overflow-hidden rounded-3xl shadow-2xl border-2 transition-all duration-500 flex flex-col hover:-translate-y-3 ${
+                  active === service.id 
+                    ? `bg-gradient-to-br ${cardGradients[0]} border-${colorKey}-500` 
+                    : `bg-gradient-to-br ${cardGradients[idx % 2]} border-slate-700 hover:border-${colorKey}-500/50`
                 }`}
-                onClick={() => setActive(active === service.id ? null : service.id)}
               >
-                <div className="relative h-44 overflow-hidden bg-gradient-to-br from-slate-700 to-slate-800">
+                <div className="absolute inset-0 bg-gradient-to-br opacity-5" style={{ background: `linear-gradient(135deg, ${colorKey === 'primary' ? '#0ea5e9' : '#22c55e'}, transparent)` }}></div>
+                
+                <div className="relative h-48 overflow-hidden">
                   {service.image ? (
                     <img
                       src={`${MEDIA_URL}${service.image}`}
@@ -88,45 +95,50 @@ export default function Services() {
                     />
                   ) : null}
                   <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-800" style={{ display: service.image ? 'none' : 'flex' }}>
-                    <span className="text-7xl">{service.icon}</span>
+                    <span className="text-8xl drop-shadow-2xl">{service.icon}</span>
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/20 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="flex items-center gap-2">
-                      <div className={`w-2.5 h-2.5 rounded-full bg-${colorKey}-500`}></div>
-                      <span className="text-white text-xs font-semibold uppercase tracking-wider">Featured</span>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent"></div>
+                  <div className="absolute top-4 left-4">
+                    <div className={`px-4 py-1 rounded-full bg-${colorKey}-500/20 border border-${colorKey}-500/30 flex items-center gap-2`}>
+                      <div className={`w-2 h-2 rounded-full bg-${colorKey}-500 animate-pulse`}></div>
+                      <span className={`text-${colorKey}-400 text-[10px] font-bold uppercase tracking-[0.2em]`}>Premium</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="p-6 flex flex-col flex-1">
-                  <h3 className="font-extrabold text-lg text-white mb-2 leading-tight">
+                <div className="p-7 flex flex-col flex-1 relative z-10">
+                  <h3 className="font-extrabold text-2xl text-white mb-3 leading-tight bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
                     {service.title}
                   </h3>
-                  <p className="text-slate-300 text-sm leading-relaxed mb-4 flex-1">
+                  <p className="text-slate-300 text-sm leading-relaxed mb-5 flex-1">
                     {service.description}
                   </p>
 
                   <button
-                    className={`text-sm font-bold tracking-wide transition-all duration-300 flex items-center gap-2 ${
-                      colorKey === 'primary' ? 'text-primary-400' : 'text-accent-400'
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setActive(active === service.id ? null : service.id);
+                    }}
+                    className={`w-full py-3 rounded-2xl font-bold tracking-wide transition-all duration-300 flex items-center justify-center gap-2 text-sm ${
+                      colorKey === 'primary' 
+                        ? 'bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white shadow-xl shadow-primary-500/25' 
+                        : 'bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white shadow-xl shadow-accent-500/25'
                     }`}
                   >
                     {active === service.id ? (
-                      <>Show Less <span>▲</span></>
+                      <>Show Less <span className="text-lg">▲</span></>
                     ) : (
-                      <>View Details <span>▼</span></>
+                      <>View Details <span className="text-lg">▼</span></>
                     )}
                   </button>
 
                   {active === service.id && (
-                    <ul className="mt-4 pt-4 border-t border-slate-700 space-y-2">
+                    <ul className="mt-5 pt-5 border-t border-slate-700 space-y-3">
                       {service.details.map((detail, i) => (
-                        <li key={i} className="flex items-start gap-2.5">
-                          <span className={`mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 ${
-                            colorKey === 'primary' ? 'bg-primary-500' : 'bg-accent-500'
-                          }`}></span>
-                          <span className="text-sm text-slate-300">{detail}</span>
+                        <li key={i} className="flex items-start gap-3">
+                          <span className={`mt-1 w-2 h-2 rounded-full flex-shrink-0 bg-${colorKey}-500`}></span>
+                          <span className="text-sm text-slate-300 font-medium">{detail}</span>
                         </li>
                       ))}
                     </ul>

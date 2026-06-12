@@ -195,7 +195,7 @@ const CustomCursor = () => {
         </div>
       )}
       
-      <style jsx>{`
+      <style>{`
         @keyframes ripple {
           0% {
             transform: scale(0.5);
