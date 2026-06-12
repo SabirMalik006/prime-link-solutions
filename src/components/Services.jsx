@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { API_URL, MEDIA_URL } from '../api/config';  // ← MEDIA_URL bhi import karo
+import { API_URL, MEDIA_URL } from '../api/config';
+import { services as staticServices } from '../data/company';
 
 export default function Services() {
   const [active, setActive] = useState(null);
@@ -7,98 +8,125 @@ export default function Services() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await fetch(`${API_URL}/services`);
+        const data = await response.json();
+        if (data && data.length > 0) {
+          setServices(data);
+        } else {
+          setServices(staticServices);
+        }
+      } catch (err) {
+        console.error('Error fetching services:', err);
+        setServices(staticServices);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchServices();
   }, []);
 
-  const fetchServices = async () => {
-    try {
-      const response = await fetch(`${API_URL}/services`);
-      const data = await response.json();
-      setServices(data);
-    } catch (err) {
-      console.error('Error fetching services:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   if (loading) {
     return (
-      <section id="services" className="py-24 bg-[#f0f4f8]">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#c9a84c] mx-auto"></div>
-          <p className="mt-4 text-gray-500">Loading services...</p>
+      <section id="services" className="py-20 md:py-28 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="animate-spin rounded-full h-10 w-10 border-4 border-slate-200 border-t-primary-500 mx-auto"></div>
+          <p className="mt-4 text-slate-500 font-medium">Loading services...</p>
         </div>
       </section>
     );
   }
 
-  return (
-    <section id="services" className="py-24 bg-[#f0f4f8]">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6">
+  const colors = ['primary', 'accent', 'secondary', 'primary', 'accent', 'secondary', 'primary', 'accent'];
 
-        {/* Header */}
-        <div className="mb-16 text-center">
-          <p className="text-[#1d7a8a] text-xs font-semibold tracking-widest uppercase mb-3">What We Do</p>
-          <h2 className="text-3xl sm:text-5xl font-bold text-[#0e2540] mb-4" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>
-            OUR SERVICES
+  return (
+    <section id="services" className="py-20 md:py-28 bg-slate-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <span className="inline-block px-4 py-1.5 bg-gradient-to-r from-primary-100 via-accent-100 to-secondary-100 text-primary-700 text-xs font-bold tracking-[0.2em] uppercase rounded-full mb-4">
+            Services
+          </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-4">
+            What We Do
           </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-[#1d7a8a] to-[#c9a84c] mx-auto mb-6"></div>
-          <p className="text-gray-500 max-w-2xl mx-auto">
-            Comprehensive infrastructure & technology solutions tailored for public and private sector projects.
+          <div className="w-20 h-1 bg-gradient-to-r from-primary-500 via-accent-500 to-secondary-500 mx-auto mb-4 rounded-full"></div>
+          <p className="text-slate-600 text-lg max-w-2xl mx-auto">
+            Comprehensive infrastructure & technology solutions for public and private sector projects.
           </p>
         </div>
 
-        {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-          {services.map((service) => (
-            <div
-              key={service.id}
-              className="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 cursor-pointer flex flex-col"
-              onClick={() => setActive(active === service.id ? null : service.id)}
-            >
-              {/* Image - FIXED LINE BELOW */}
-              <div className="relative h-44 overflow-hidden">
-                <img
-                  src={`${MEDIA_URL}${service.image}`}
-                  alt={service.title}
-                  className="w-full h-44 object-cover group-hover:scale-110 transition-transform duration-700"
-                  onError={(e) => { e.target.src = 'https://placehold.co/400x300?text=No+Image'; }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#061220]/80 via-[#061220]/30 to-transparent"></div>
-              </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          {services.map((service, idx) => {
+            const colorKey = colors[idx % colors.length];
+            return (
+              <div
+                key={service.id}
+                className={`card-hover bg-white rounded-3xl overflow-hidden shadow-lg border-2 transition-all duration-300 flex flex-col ${
+                  active === service.id ? `border-${colorKey}-500` : 'border-slate-100'
+                }`}
+                onClick={() => setActive(active === service.id ? null : service.id)}
+              >
+                <div className="relative h-44 overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200">
+                  {service.image ? (
+                    <img
+                      src={`${MEDIA_URL}${service.image}`}
+                      alt={service.title}
+                      className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextElementSibling.style.display = 'flex';
+                      }}
+                    />
+                  ) : null}
+                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200" style={{ display: service.image ? 'none' : 'flex' }}>
+                    <span className="text-7xl">{service.icon}</span>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-slate-900/20 to-transparent"></div>
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <div className="flex items-center gap-2">
+                      <div className={`w-2.5 h-2.5 rounded-full bg-${colorKey}-500`}></div>
+                      <span className="text-white text-xs font-semibold uppercase tracking-wider">Featured</span>
+                    </div>
+                  </div>
+                </div>
 
-              {/* Card Body */}
-              <div className="flex flex-col items-center text-center px-6 pt-6 pb-6 flex-1">
-                <div className="w-8 h-0.5 mb-4 group-hover:w-14 transition-all duration-300 bg-[#c9a84c]"></div>
-                <h3 className="font-bold text-[#0e2540] text-lg leading-tight mb-3" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>
-                  {service.title.toUpperCase()}
-                </h3>
-                <p className="text-gray-500 text-sm leading-relaxed mb-5">{service.description}</p>
-                <button
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-bold tracking-widest uppercase border transition-all duration-300"
-                  style={{
-                    color: active === service.id ? '#fff' : '#0e2540',
-                    background: active === service.id ? '#0e2540' : 'transparent',
-                    borderColor: '#0e2540',
-                  }}
-                >
-                  {active === service.id ? '▲ Show Less' : '▼ View Details'}
-                </button>
+                <div className="p-6 flex flex-col flex-1">
+                  <h3 className="font-extrabold text-lg text-slate-900 mb-2 leading-tight">
+                    {service.title}
+                  </h3>
+                  <p className="text-slate-600 text-sm leading-relaxed mb-4 flex-1">
+                    {service.description}
+                  </p>
 
-                {active === service.id && (
-                  <ul className="mt-5 space-y-2 border-t border-gray-100 pt-5 w-full text-left">
-                    {service.details.map((d, j) => (
-                      <li key={j} className="flex items-start gap-2 text-sm text-gray-600">
-                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#000] flex-shrink-0"></span>
-                        {d}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                  <button
+                    className={`text-sm font-bold tracking-wide transition-all duration-300 flex items-center gap-2 ${
+                      colorKey === 'primary' ? 'text-primary-600' : 'text-accent-600'
+                    }`}
+                  >
+                    {active === service.id ? (
+                      <>Show Less <span>▲</span></>
+                    ) : (
+                      <>View Details <span>▼</span></>
+                    )}
+                  </button>
+
+                  {active === service.id && (
+                    <ul className="mt-4 pt-4 border-t border-slate-100 space-y-2">
+                      {service.details.map((detail, i) => (
+                        <li key={i} className="flex items-start gap-2.5">
+                          <span className={`mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0 ${
+                            colorKey === 'primary' ? 'bg-primary-500' : 'bg-accent-500'
+                          }`}></span>
+                          <span className="text-sm text-slate-700">{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

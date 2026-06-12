@@ -4,122 +4,121 @@ const heroCTALinks = [
 ];
 
 export default function Hero() {
-  // Smooth scroll function
   const smoothScrollTo = (elementId) => {
     const element = document.getElementById(elementId);
     if (element) {
       const offset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
     }
   };
 
-  // Handle CTA button click
   const handleCTAClick = (e, sectionId) => {
     e.preventDefault();
     smoothScrollTo(sectionId);
   };
 
   return (
-    <section
-      id="home"
-      className="relative min-h-screen flex items-center overflow-hidden lg:px-20 bg-[#061220]"
-    >
-      {/* Background grid pattern */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-40"></div>
+    <section id="home" className="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-primary-50 via-accent-50 to-secondary-50 pt-20">
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary-200/60 to-transparent"></div>
+      <div className="absolute top-10 right-10 w-72 h-72 rounded-full bg-gradient-to-br from-primary-400/40 to-secondary-400/40 blur-3xl animate-float"></div>
+      <div className="absolute bottom-10 left-10 w-96 h-96 rounded-full bg-gradient-to-br from-accent-400/40 to-primary-400/40 blur-3xl animate-float delay-300"></div>
+      <div className="absolute top-1/2 left-1/2 w-[500px] h-[500px] -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-secondary-300/20 to-accent-300/20 blur-3xl animate-float delay-500"></div>
 
-      {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0e2540] via-[#061220] to-[#0a1c30]"></div>
-      <div className="hidden sm:block absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[#1d7a8a]/10 to-transparent"></div>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="space-y-8">
+            <div className="animate-fade-up">
+              <span className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full text-primary-700 text-sm font-semibold shadow-lg relative overflow-hidden">
+                <span className="absolute inset-0 bg-gradient-to-r from-primary-500/20 via-accent-500/20 to-secondary-500/20 animate-gradient"></span>
+                <span className="relative flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 animate-pulse"></span>
+                  Trusted Since 20+ Years
+                </span>
+              </span>
+            </div>
 
-      {/* Decorative circles */}
-      <div className="hidden sm:block absolute top-20 right-20 w-96 h-96 rounded-full border border-[#c9a84c]/10 animate-float"></div>
-      <div className="hidden sm:block absolute top-32 right-32 w-64 h-64 rounded-full border border-[#1d7a8a]/15 animate-float delay-200"></div>
-      <div className="hidden md:block absolute bottom-20 left-10 w-48 h-48 rounded-full bg-[#1d7a8a]/5 blur-3xl"></div>
+            <div className="space-y-4 animate-fade-up delay-100">
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-slate-900 leading-tight">
+                Building the
+                <span className="bg-gradient-to-r from-primary-600 via-accent-500 to-secondary-500 bg-clip-text text-transparent block">
+                  Future, Today
+                </span>
+              </h1>
+              <h2 className="text-xl sm:text-2xl text-slate-600 font-medium">
+                Prime Link Solutions
+              </h2>
+            </div>
 
-      {/* Diagonal accent line */}
-      <div className="hidden sm:block absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-[#c9a84c]/20 to-transparent"></div>
+            <div className="w-24 h-1.5 bg-gradient-to-r from-primary-500 via-accent-500 to-secondary-500 rounded-full animate-fade-up delay-200"></div>
 
-      <div className="relative z-10  max-w-7xl  px-3 sm:px-6  md:px-[32px] lg:px-[90px] mt-[68px]  md:pt-24 pb-16">
-        <div className="max-w-3xl">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-2 sm:px-4 py-2 bg-[#c9a84c]/10 border border-[#c9a84c]/30 rounded-full mb-8 animate-fade-up">
-            <span className="w-2 h-2 rounded-full bg-[#c9a84c] animate-pulse"></span>
-            <span className="text-[#c9a84c] text-[10px] sm:text-xs font-medium tracking-widest uppercase">
-              Trusted Since 20+ Years
-            </span>
-          </div>
+            <p className="text-lg text-slate-600 leading-relaxed max-w-xl animate-fade-up delay-300">
+              Complete infrastructure, technology & procurement services — specializing in Telecom Towers, CCTV Surveillance, Perimeter Fencing, Fiber Networks, Civil Works & construction site supplies.
+            </p>
 
-          {/* Main Heading */}
-          <h1
-            className="text-3xl sm:text-6xl md:text-8xl font-bold text-white leading-none mb-2 animate-fade-up delay-100"
-            style={{ fontFamily: 'Barlow Condensed, sans-serif', fontWeight: 700 }}
-          >
-            VECTOR
-          </h1>
-          <h2
-            className="text-lg sm:text-2xl md:text-4xl font-light tracking-[0.3em] text-[#c9a84c] mb-8 animate-fade-up delay-200"
-            style={{ fontFamily: 'Barlow Condensed, sans-serif' }}
-          >
-            INTEGRATED SOLUTIONS
-          </h2>
+            <div className="flex flex-wrap gap-4 animate-fade-up delay-400">
+              {heroCTALinks.map((link, index) => (
+                <a
+                  key={link.label}
+                  href={`#${link.href}`}
+                  onClick={(e) => handleCTAClick(e, link.href)}
+                  className={`px-8 py-3.5 font-semibold rounded-xl transition-all duration-300 ${
+                    index === 0
+                      ? 'bg-gradient-to-r from-primary-600 via-accent-500 to-secondary-500 text-white shadow-lg shadow-primary-500/30 hover:shadow-xl hover:shadow-accent-500/40 hover:-translate-y-1 shine-effect'
+                      : 'bg-white text-slate-700 border-2 border-slate-200 hover:border-primary-400 hover:text-primary-700'
+                  }`}
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
 
-          {/* Divider */}
-          <div className="w-20 h-1 bg-gradient-to-r from-[#c9a84c] to-[#1d7a8a] mb-8 animate-fade-up delay-200"></div>
-
-          {/* Description */}
-          <p className="text-white/70 text-lg leading-relaxed max-w-2xl mb-10 animate-fade-up delay-300">
-            Complete infrastructure, technology & procurement services — specializing in Telecom Towers, CCTV Surveillance, Perimeter Fencing, Fiber Networks , Civil Worls & construction site supplies.
-          </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-wrap gap-2 sm:gap-4 mb-16 animate-fade-up delay-400">
-            {heroCTALinks.map(link => (
-              <a
-                key={link.label}
-                href={`#${link.href}`}
-                onClick={(e) => handleCTAClick(e, link.href)}
-                className={`px-4 sm:px-8 py-2 sm:py-4 font-bold text-xs sm:text-sm tracking-wide rounded transition-all hover:scale-105 ${
-                  link.href === 'services'
-                    ? 'bg-[#c9a84c] text-[#061220] hover:bg-[#f0d080]'
-                    : 'border border-white/20 text-white hover:border-[#c9a84c] hover:text-[#c9a84c]'
-                }`}
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-
-          {/* Stats */}
-          <div className="flex flex-wrap gap-6 sm:gap-12 animate-fade-up delay-500">
-            {[
-              { value: '20+', label: 'Years Experience' },
-              { value: '8+', label: 'Service Sectors' },
-              { value: '7+', label: 'Major Clients' },
-              { value: '100%', label: 'On-Time Delivery' },
-            ].map(stat => (
-              <div key={stat.label}>
-                <div className="text-3xl font-bold text-[#c9a84c]" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>
-                  {stat.value}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8 animate-fade-up delay-500">
+              {[
+                { value: '20+', label: 'Years Experience' },
+                { value: '8+', label: 'Service Sectors' },
+                { value: '500+', label: 'Happy Clients' },
+                { value: '100%', label: 'On-Time Delivery' }
+              ].map((stat, i) => (
+                <div key={i} className="text-center">
+                  <div className="text-3xl sm:text-4xl font-extrabold bg-gradient-to-r from-primary-600 via-accent-500 to-secondary-500 bg-clip-text text-transparent">
+                    {stat.value}
+                  </div>
+                  <div className="text-sm text-slate-500 font-medium mt-1">
+                    {stat.label}
+                  </div>
                 </div>
-                <div className="text-white/50 text-xs tracking-wide uppercase mt-1">
-                  {stat.label}
+              ))}
+            </div>
+          </div>
+
+          <div className="hidden lg:block animate-scale-in delay-200">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-400/20 to-accent-400/20 rounded-3xl blur-2xl"></div>
+              <div className="relative bg-white rounded-3xl shadow-2xl p-6 border border-slate-100">
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { icon: '📡', title: 'Telecom Towers' },
+                    { icon: '📹', title: 'CCTV Systems' },
+                    { icon: '🔌', title: 'Fiber Networks' },
+                    { icon: '🏗️', title: 'Civil Works' }
+                  ].map((item, i) => (
+                    <div key={i} className="bg-gradient-to-br from-slate-50 to-white p-5 rounded-2xl border border-slate-100 card-hover">
+                      <div className="text-4xl mb-3">{item.icon}</div>
+                      <div className="font-semibold text-slate-800">{item.title}</div>
+                    </div>
+                  ))}
                 </div>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30 animate-bounce">
-        <span className="text-xs tracking-widest uppercase">Scroll</span>
-        <div className="w-px h-8 bg-white/20"></div>
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400">
+        <span className="text-xs font-semibold tracking-widest uppercase">Scroll</span>
+        <div className="w-0.5 h-12 bg-gradient-to-b from-primary-500 to-transparent"></div>
       </div>
     </section>
   );

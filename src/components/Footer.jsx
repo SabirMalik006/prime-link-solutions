@@ -1,99 +1,100 @@
 import { useState } from 'react';
-import { services } from '../data/company';
+import { services, companyInfo } from '../data/company';
 import PolicyModal from './PolicyModal';
 
 export default function Footer() {
   const [isPolicyOpen, setIsPolicyOpen] = useState(false);
 
   return (
-    <footer className="bg-[#0a1c30] border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-16">
-        <div className="grid md:grid-cols-4 gap-6 sm:gap-10 mb-12 text-center md:text-left">
-          {/* Brand */}
-          <div className="col-span-1">
-            <div className="flex items-center gap-3 mb-5 justify-center md:justify-start">
-              <div className="w-10 h-10 hidden sm:block sm:w-14 sm:h-12 rounded-md overflow-hidden">
+    <footer className="bg-slate-950 border-t border-slate-900 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+          <div className="lg:col-span-1">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="w-12 h-12 rounded-xl overflow-hidden bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
                 <img
                   src="/pp.jpeg"
-                  alt="Vector Logo"
-                  className="w-full h-full object-contain"
+                  alt="Prime Link Solutions"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.src = 'https://placehold.co/200x200/0ea5e9/ffffff?text=PL';
+                  }}
                 />
               </div>
               <div>
-                <div className="text-white font-bold text-lg sm:text-2xl leading-none tracking-wider" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>
-                  VECTOR
+                <div className="font-extrabold text-xl text-white">
+                  Prime Link
                 </div>
-                <div className="text-[#c9a84c] text-sm tracking-widest">INTEGRATED SOLUTIONS</div>
+                <div className="text-xs font-semibold text-primary-400 tracking-widest">
+                  Solutions
+                </div>
               </div>
             </div>
-            <p className="text-white/40 text-sm leading-relaxed">
+            <p className="text-slate-500 text-sm leading-relaxed">
               Delivering complete infrastructure, technology & procurement services across Pakistan.
             </p>
           </div>
 
-          {/* Quick Links */}
           <div>
-            <h4 className="text-white font-semibold mb-4 text-sm tracking-wide uppercase">Quick Links</h4>
-            <div className="space-y-2">
-              {['Home', 'About', 'Services', 'Clients', 'Contact'].map(link => (
+            <h4 className="text-white font-bold text-base mb-5 tracking-wide uppercase">Quick Links</h4>
+            <div className="space-y-3">
+              {['Home', 'About', 'Services', 'Clients', 'Contact'].map((link) => (
                 <a
                   key={link}
                   href={`#${link.toLowerCase().replace(' ', '-')}`}
-                  className="block text-white/40 hover:text-[#c9a84c] text-sm transition-colors"
+                  className="block text-slate-400 hover:text-primary-400 text-sm font-medium transition-colors"
                 >
                   {link}
                 </a>
               ))}
               <button
                 onClick={() => setIsPolicyOpen(true)}
-                className="block text-white/40 hover:text-[#c9a84c] text-sm transition-colors text-left w-full"
+                className="block text-slate-400 hover:text-primary-400 text-sm font-medium transition-colors text-left"
               >
                 Policy
               </button>
             </div>
           </div>
 
-          {/* Services */}
           <div>
-            <h4 className="text-white font-semibold mb-4 text-sm tracking-wide uppercase">Services</h4>
-            <div className="space-y-2">
-              {services.slice(0, 6).map(s => (
-                <div key={s.id} className="text-white/40 text-sm">
+            <h4 className="text-white font-bold text-base mb-5 tracking-wide uppercase">Services</h4>
+            <div className="space-y-3">
+              {services.slice(0, 6).map((s) => (
+                <div key={s.id} className="text-slate-400 text-sm font-medium">
                   {s.title}
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Contact */}
           <div>
-            <h4 className="text-white font-semibold mb-4 text-sm tracking-wide uppercase">Contact</h4>
-            <div className="space-y-3">
-              <div className="flex items-start gap-2 justify-center md:justify-start">
-                <span className="text-sm mt-0.5">📍</span>
-                <span className="text-white/40 text-sm text-left">Icon 2, Business Square, Gulberg Greens, Islamabad</span>
+            <h4 className="text-white font-bold text-base mb-5 tracking-wide uppercase">Contact</h4>
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="text-primary-400 mt-1">📍</div>
+                <span className="text-slate-400 text-sm">{companyInfo.address}</span>
               </div>
-              <div className="flex items-center gap-2 justify-center md:justify-start">
-                <span className="text-sm">📞</span>
-                <a href="tel:03215366666" className="text-white/40 hover:text-[#c9a84c] text-sm transition-colors">
-                  +92 321-5366666
+              <div className="flex items-center gap-3">
+                <div className="text-accent-400">📞</div>
+                <a href={`tel:${companyInfo.phone}`} className="text-slate-400 hover:text-accent-400 text-sm font-medium transition-colors">
+                  {companyInfo.phone}
                 </a>
               </div>
-              <div className="flex items-center gap-2 justify-center md:justify-start">
-                <span className="text-sm">✉️</span>
-                <a href="vectorintegratedsol@gmail.com" className="text-white/40 hover:text-[#c9a84c] text-sm transition-colors break-all">
-                  vectorintegratedsol@gmail.com
+              <div className="flex items-center gap-3">
+                <div className="text-slate-400">✉️</div>
+                <a href={`mailto:${companyInfo.email}`} className="text-slate-400 hover:text-slate-300 text-sm font-medium transition-colors break-all">
+                  {companyInfo.email}
                 </a>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
-          <p className="text-white/30 text-xs">
-            © {new Date().getFullYear()} Vector Integrated Solutions. All rights reserved.
+        <div className="border-t border-slate-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          <p className="text-slate-600 text-sm">
+            © {new Date().getFullYear()} Prime Link Solutions. All rights reserved.
           </p>
-          <p className="text-white/20 text-xs">
+          <p className="text-slate-700 text-xs">
             Islamabad, Pakistan
           </p>
         </div>

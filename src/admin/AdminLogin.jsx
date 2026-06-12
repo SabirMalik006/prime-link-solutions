@@ -28,7 +28,6 @@ export default function AdminLogin() {
 
       if (response.ok) {
         login(data.token);
-        // ✅ FIX: HashRouter ke liye direct window location use karo
         window.location.href = '/#/admin/dashboard';
       } else {
         setError(data.message || 'Invalid password');
@@ -41,44 +40,46 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0e2540] via-[#1a3a5c] to-[#061220] px-6 sm:px-0">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-[#c9a84c]/10 blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-[#c9a84c]/5 blur-3xl animate-pulse delay-1000"></div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 px-4 sm:px-0 relative overflow-hidden">
+      <div className="absolute inset-0">
+        <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-primary-500/10 blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-accent-500/10 blur-3xl animate-pulse delay-1000"></div>
       </div>
 
-      <div className="relative z-10 bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl p-8 max-w-md w-full border border-white/20">
+      <div className="relative z-10 bg-slate-900/80 backdrop-blur-xl rounded-3xl shadow-2xl p-8 max-w-md w-full border border-slate-800">
         <div className="text-center mb-8">
-          <div className="flex justify-center">
-            <div className="w-10 h-10 sm:w-20 sm:h-14 rounded-md overflow-hidden">
+          <div className="flex justify-center mb-4">
+            <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center shadow-xl shadow-primary-500/25">
               <img
                 src="/pp.jpeg"
-                alt="Vector Logo"
-                className="w-full h-full object-contain"
-                onError={(e) => { e.target.src = 'https://placehold.co/200x100/0e2540/white?text=VECTOR'; }}
+                alt="Prime Link Solutions"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.src = 'https://placehold.co/200x200/0ea5e9/ffffff?text=PL';
+                }}
               />
             </div>
           </div>
-          <h2 className="text-2xl font-bold text-[#0e2540]">Admin Login</h2>
-          <p className="text-gray-500 text-sm mt-2">Enter your credentials to access dashboard</p>
+          <h2 className="text-2xl font-bold text-white mb-2">Admin Login</h2>
+          <p className="text-slate-400 text-sm">Enter your credentials to access dashboard</p>
         </div>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Password</label>
+            <label className="block text-sm font-semibold text-slate-300 mb-2">Password</label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-3 pr-12 border border-gray-300 rounded-lg focus:outline-none focus:border-[#c9a84c] focus:ring-2 focus:ring-[#c9a84c]/20 transition-all"
+                className="w-full bg-slate-950/50 border border-slate-700 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 rounded-2xl px-5 py-4 text-slate-200 text-base placeholder-slate-500 outline-none transition-all pr-14"
                 placeholder="Enter admin password"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors"
               >
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
@@ -86,7 +87,7 @@ export default function AdminLogin() {
           </div>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm text-center">
+            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/30 rounded-2xl text-red-400 text-sm text-center font-medium">
               {error}
             </div>
           )}
@@ -94,11 +95,11 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-[#0e2540] to-[#1a3a5c] text-white py-3 rounded-lg hover:from-[#1a3a5c] hover:to-[#0e2540] transition-all duration-300 font-semibold disabled:opacity-70 flex items-center justify-center gap-2"
+            className="w-full py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white text-base font-bold rounded-2xl shadow-xl shadow-primary-500/25 hover:shadow-2xl hover:shadow-primary-500/35 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3"
           >
             {loading ? (
               <>
-                <Loader size={18} className="animate-spin" />
+                <Loader size={20} className="animate-spin" />
                 <span>Logging in...</span>
               </>
             ) : (
@@ -107,17 +108,6 @@ export default function AdminLogin() {
           </button>
         </form>
       </div>
-
-      <style>{`
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          25% { transform: translateX(-5px); }
-          75% { transform: translateX(5px); }
-        }
-        .animate-shake {
-          animation: shake 0.3s ease-in-out;
-        }
-      `}</style>
     </div>
   );
 }

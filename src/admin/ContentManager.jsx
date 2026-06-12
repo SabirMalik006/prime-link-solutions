@@ -27,10 +27,10 @@ export default function ContentManager() {
     try {
       const response = await fetch(`${API_URL}/content`);
       const data = await response.json();
-      
+
       setContent({
-        heroTitle: data.hero?.title || 'VECTOR',
-        heroSubtitle: data.hero?.subtitle || 'INTEGRATED SOLUTIONS',
+        heroTitle: data.hero?.title || 'PRIME LINK',
+        heroSubtitle: data.hero?.subtitle || 'SOLUTIONS',
         heroDescription: data.hero?.description || '',
         servicesTitle: data.services?.title || 'OUR SERVICES',
         servicesDescription: data.services?.description || '',
@@ -48,7 +48,6 @@ export default function ContentManager() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      // Save Hero Section
       await fetch(`${API_URL}/content/hero`, {
         method: 'PUT',
         headers: {
@@ -62,7 +61,6 @@ export default function ContentManager() {
         })
       });
 
-      // Save Services Section
       await fetch(`${API_URL}/content/services`, {
         method: 'PUT',
         headers: {
@@ -75,7 +73,6 @@ export default function ContentManager() {
         })
       });
 
-      // Save Contact Section
       await fetch(`${API_URL}/content/contact`, {
         method: 'PUT',
         headers: {
@@ -102,125 +99,124 @@ export default function ContentManager() {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-2xl shadow-sm p-6 text-center">
-        <Loader className="animate-spin mx-auto" size={32} />
-        <p className="mt-2 text-gray-500">Loading content...</p>
+      <div className="bg-white rounded-3xl shadow-lg p-8 text-center">
+        <Loader className="animate-spin mx-auto text-primary-500" size={32} />
+        <p className="mt-4 text-slate-500">Loading content...</p>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      {/* Hero Section Content */}
-      <div className="bg-white rounded-2xl shadow-sm p-6">
-        <h3 className="text-xl font-bold text-[#0e2540] mb-4">Hero Section</h3>
-        
-        <div className="space-y-4">
+      <div className="bg-white rounded-3xl shadow-lg p-8">
+        <h3 className="text-xl font-bold text-slate-900 mb-6">Hero Section</h3>
+
+        <div className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">Title</label>
             <input
               type="text"
               value={content.heroTitle}
               onChange={(e) => setContent({ ...content, heroTitle: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#c9a84c]"
+              className="w-full px-5 py-3 border border-slate-200 rounded-2xl focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Subtitle</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">Subtitle</label>
             <input
               type="text"
               value={content.heroSubtitle}
               onChange={(e) => setContent({ ...content, heroSubtitle: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#c9a84c]"
+              className="w-full px-5 py-3 border border-slate-200 rounded-2xl focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">Description</label>
             <textarea
               rows="3"
               value={content.heroDescription}
               onChange={(e) => setContent({ ...content, heroDescription: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#c9a84c]"
+              className="w-full px-5 py-3 border border-slate-200 rounded-2xl focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all resize-none"
             />
           </div>
         </div>
       </div>
 
-      {/* Services Content */}
-      <div className="bg-white rounded-2xl shadow-sm p-6">
-        <h3 className="text-xl font-bold text-[#0e2540] mb-4">Services Section</h3>
-        
-        <div className="space-y-4">
+      <div className="bg-white rounded-3xl shadow-lg p-8">
+        <h3 className="text-xl font-bold text-slate-900 mb-6">Services Section</h3>
+
+        <div className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Section Title</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">Section Title</label>
             <input
               type="text"
               value={content.servicesTitle}
               onChange={(e) => setContent({ ...content, servicesTitle: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#c9a84c]"
+              className="w-full px-5 py-3 border border-slate-200 rounded-2xl focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Section Description</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">Section Description</label>
             <textarea
               rows="2"
               value={content.servicesDescription}
               onChange={(e) => setContent({ ...content, servicesDescription: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#c9a84c]"
+              className="w-full px-5 py-3 border border-slate-200 rounded-2xl focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all resize-none"
             />
           </div>
         </div>
       </div>
 
-      {/* Contact Info */}
-      <div className="bg-white rounded-2xl shadow-sm p-6">
-        <h3 className="text-xl font-bold text-[#0e2540] mb-4">Contact Information</h3>
-        
-        <div className="space-y-4">
+      <div className="bg-white rounded-3xl shadow-lg p-8">
+        <h3 className="text-xl font-bold text-slate-900 mb-6">Contact Information</h3>
+
+        <div className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">Email</label>
             <input
               type="email"
               value={content.contactEmail}
               onChange={(e) => setContent({ ...content, contactEmail: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#c9a84c]"
+              className="w-full px-5 py-3 border border-slate-200 rounded-2xl focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">Phone</label>
             <input
               type="text"
               value={content.contactPhone}
               onChange={(e) => setContent({ ...content, contactPhone: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#c9a84c]"
+              className="w-full px-5 py-3 border border-slate-200 rounded-2xl focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+            <label className="block text-sm font-semibold text-slate-700 mb-2">Address</label>
             <input
               type="text"
               value={content.contactAddress}
               onChange={(e) => setContent({ ...content, contactAddress: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#c9a84c]"
+              className="w-full px-5 py-3 border border-slate-200 rounded-2xl focus:outline-none focus:border-primary-500 focus:ring-1 focus:ring-primary-500 transition-all"
             />
           </div>
         </div>
       </div>
 
-      <button
-        onClick={handleSave}
-        disabled={saving}
-        className="flex items-center gap-2 px-6 py-3 bg-[#c9a84c] text-[#0e2540] rounded-lg font-semibold hover:bg-[#f0d080] transition-colors disabled:opacity-50"
-      >
-        {saving ? <Loader size={18} className="animate-spin" /> : <Save size={18} />}
-        {saving ? 'Saving...' : 'Save Changes'}
-      </button>
+      <div className="flex items-center gap-4">
+        <button
+          onClick={handleSave}
+          disabled={saving}
+          className="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-slate-900 font-bold rounded-2xl shadow-xl shadow-primary-500/25 hover:shadow-2xl hover:shadow-primary-500/35 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed"
+        >
+          {saving ? <Loader size={20} className="animate-spin" /> : <Save size={20} />}
+          {saving ? 'Saving...' : 'Save Changes'}
+        </button>
 
-      {saved && (
-        <div className="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg animate-fadeIn">
-          Changes saved successfully!
-        </div>
-      )}
+        {saved && (
+          <div className="flex items-center gap-2 px-5 py-3 bg-accent-500/10 border border-accent-500/30 rounded-2xl text-accent-600 font-medium">
+            ✓ Changes saved successfully!
+          </div>
+        )}
+      </div>
     </div>
   );
 }

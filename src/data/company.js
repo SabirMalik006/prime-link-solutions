@@ -1,11 +1,11 @@
 export const companyInfo = {
-  name: "Vector Integrated Solutions",
+  name: "Prime Link Solutions",
   tagline: "Infrastructure. Technology. Excellence.",
-  about: "Vector Integrated Solutions delivers Compete infrastructure development, civil works, maintainance, customised solutions and procurement services and procurement services. Telecom towers fabrication , security systems, CCTV, conference audio and video systems, fencing, equipment supply And tower maintainance , we provide reliable, cost-effective solutions with seamless execution. Committed to quality and efficiency, we support both public and private sector projects with excellence.",
+  about: "Prime Link Solutions delivers Complete infrastructure development, civil works, maintenance, customized solutions and procurement services. Telecom towers fabrication, security systems, CCTV, conference audio and video systems, fencing, equipment supply and tower maintenance, we provide reliable, cost-effective solutions with seamless execution. Committed to quality and efficiency, we support both public and private sector projects with excellence.",
   address: "Icon 2, Business Square, Gulberg Greens, Islamabad",
   phone: "+92 321-5366666",
-  email: "info@vectorintegratedsolutions.com",
-  website: "www.vectorintegratedsolutions.com",
+  email: "info@primelinksolutions.com",
+  website: "www.primelinksolutions.com",
   experience: "20+",
 };
 
@@ -36,7 +36,6 @@ export const services = [
       "Bulk supply for all project types",
       "Competitive pricing with assured quality",
       "Complete one-stop material solution",
-
     ],
   },
   {
@@ -46,13 +45,13 @@ export const services = [
     color: "#155f6e",
     description: "Keeping your properties in peak condition through expert repairs, upgrades, and modern renovations tailored to every need.",
     details: [
-      "Interior & extrior painting (residental, commercial & institutional)",
-      "Waterproofing & leak protection solutiond",
+      "Interior & exterior painting (residential, commercial & institutional)",
+      "Waterproofing & leak protection solutions",
       "Minor repairs, upgrades & finishing works",
       "Full-scale renovation & remodeling projects",
       "Routine maintenance & on-demand workmanship",
       "Timely execution with minimal disruption",
-      "Cost-effective solutions with lasting results ",
+      "Cost-effective solutions with lasting results",
     ],
   },
   {
@@ -87,8 +86,8 @@ export const services = [
   },
   {
     id: "cctv",
-    title: "CCTV , Access Control , Maintenance Procurement & Monitoring Systems",
-    icon: "📷",
+    title: "CCTV, Access Control, Maintenance Procurement & Monitoring Systems",
+    icon: "📹",
     color: "#1a3a5c",
     description: "Securing and monitoring your premises with advanced CCTV, access control, and smart procurement systems for seamless oversight and protection.",
     details: [
@@ -109,13 +108,13 @@ export const services = [
     color: "#155f6e",
     description: "Safeguarding lives and assets with industry-grade fire fighting equipment and comprehensive site safety solutions.",
     details: [
-      "Construction site safety equipment for harzar-free operations",
-      "Certified fire safety systems(extinguisher, alarms & protection systems)",
-      "Personal protective equipment(PPE) for workforce safety compliance",
+      "Construction site safety equipment for hazard-free operations",
+      "Certified fire safety systems (extinguisher, alarms & protection systems)",
+      "Personal protective equipment (PPE) for workforce safety compliance",
       "End-to-end safety solutions with installation, inspection & maintenance",
-      "Quick deployment for on-site safety readliness",
+      "Quick deployment for on-site safety readiness",
       "Cost-effective safety solutions for all project types",
-      "Ensuring safe and compiant work environment",
+      "Ensuring safe and compliant work environment",
     ],
   },
   {
@@ -128,7 +127,7 @@ export const services = [
       "Enterprise power & energy solutions (UPS, batteries, PDUs, stabilizers & backup systems)",
       "IT, computing & AI-ready infrastructure (desktops, laptops, servers, storage & networking)",
       "Surveillance & access control systems (CCTV, ANPR, RFID & perimeter security devices)",
-      "Audio-visual & conferencing solutions (PA systems, LED displays, SMDs , video walls & digital signage)",
+      "Audio-visual & conferencing solutions (PA systems, LED displays, SMDs, video walls & digital signage)",
       "End-to-end customized procurement as per client specs & OEM standards",
       "Project-based sourcing for specialized technical equipment",
       "Reliable supply chain with quality assurance",
@@ -144,10 +143,10 @@ export const services = [
     details: [
       "Technology-enabled civil construction with ICT, power & monitoring integration",
       "RFID-based access & mobility systems with ANPR, RFID & real-time reporting",
-      "Centralized surveillance & secuirty infrastructure with command center integeration",
+      "Centralized surveillance & security infrastructure with command center integration",
       "Smart energy & utility management with intelligent monitoring & backup systems",
-      "Automated control systems for improved effiency and operations",
-      "Secure, scable solution for modern infrastructure projects",
+      "Automated control systems for improved efficiency and operations",
+      "Secure, scalable solution for modern infrastructure projects",
       "End-to-end smart infrastructure deployment and support",
     ],
   },

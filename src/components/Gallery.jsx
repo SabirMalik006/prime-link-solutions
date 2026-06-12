@@ -25,75 +25,86 @@ export default function Gallery() {
     const fetchGallery = async () => {
       try {
         const response = await fetch(`${API_URL}/gallery`);
-        if (!response.ok) {
-          throw new Error(`Gallery fetch failed: ${response.status}`);
-        }
+        if (!response.ok) throw new Error(`Gallery fetch failed: ${response.status}`);
         const data = await response.json();
         setImages(normalizeGalleryData(data));
       } catch (err) {
         console.error('Error fetching gallery:', err);
-        setError('Unable to load gallery. Please try again later.');
+        setError('Unable to load gallery.');
       } finally {
-        setLoading(false);
-      }
+          setLoading(false);
+        }
     };
-
     fetchGallery();
   }, []);
 
+  const gradients = [
+    'from-primary-500/20 to-accent-500/20',
+    'from-accent-500/20 to-primary-500/20',
+    'from-primary-600/20 to-accent-600/20',
+    'from-accent-600/20 to-primary-600/20'
+  ];
+
   return (
-    <section id="gallery" className="py-24 bg-[#081522] text-white">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6">
+    <section id="gallery" className="py-20 md:py-28 bg-slate-950">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <p className="text-[#c9a84c] text-xs font-semibold tracking-widest uppercase mb-3">
-            Our Work
-          </p>
-          <h2 className="text-3xl sm:text-5xl font-bold mb-4" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>
-            GALLERY
+          <span className="inline-block px-4 py-1.5 bg-primary-500/10 text-primary-400 text-xs font-bold tracking-[0.2em] uppercase rounded-full mb-4">
+            Projects
+          </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4">
+            Our Gallery
           </h2>
-          <div className="w-16 h-1 bg-gradient-to-r from-[#1d7a8a] to-[#c9a84c] mx-auto mb-6"></div>
-          <p className="text-white/60 max-w-2xl mx-auto">
-            Browse some of our latest installations and completed projects across telecom, CCTV, perimeter fencing, and construction support.
+          <div className="w-20 h-1 bg-gradient-to-r from-primary-500 to-accent-500 mx-auto mb-4 rounded-full"></div>
+          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+            Browse our latest installations and completed projects.
           </p>
         </div>
 
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#c9a84c]" />
+            <div className="animate-spin rounded-full h-12 w-12 border-4 border-slate-800 border-t-primary-500"></div>
           </div>
         ) : error ? (
-          <div className="text-center text-red-400 py-20">{error}</div>
+          <div className="text-center text-slate-500 text-lg py-20">{error}</div>
         ) : images.length === 0 ? (
-          <div className="text-center text-white/60 py-20">No gallery images available yet.</div>
+          <div className="text-center text-slate-500 text-lg py-20">No images available yet.</div>
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {(showAll ? images : images.slice(0, 3)).map((img) => (
-                <div key={img._id || img.id || img.url} className="group overflow-hidden rounded-3xl border border-white/10 bg-[#0c2037] shadow-xl">
+              {(showAll ? images : images.slice(0, 6)).map((img, idx) => (
+                <div
+                  key={img._id || img.id || idx}
+                  className="card-hover overflow-hidden rounded-3xl border border-slate-800 bg-slate-900"
+                >
                   <div className="relative overflow-hidden">
                     <img
                       src={getImageSrc(img.url)}
-                      alt={img.title || 'Gallery image'}
-                      className="w-full h-72 object-cover transition-transform duration-500 group-hover:scale-105"
+                      alt={img.title || 'Project'}
+                      className="w-full h-64 object-cover transition-transform duration-700 hover:scale-110"
+                      onError={(e) => {
+                        e.target.src = `https://placehold.co/600x400/0f172a/ffffff?text=Project`;
+                      }}
                     />
-                    <div className="absolute inset-0 bg-black/20" />
+                    <div className={`absolute inset-0 bg-gradient-to-t ${gradients[idx % gradients.length]} opacity-40`}></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
                   </div>
-                  <div className="p-5">
-                    <h3 className="text-lg font-semibold text-white mb-2 truncate">{img.title || 'Project image'}</h3>
-                    <p className="text-sm text-white/60 leading-relaxed break-words">
-                      {img.description || 'High-quality installation image from our project portfolio.'}
+                  <div className="p-6">
+                    <h3 className="text-lg font-bold text-white mb-2">{img.title || 'Project'}</h3>
+                    <p className="text-slate-400 text-sm leading-relaxed">
+                      {img.description || 'Installation from our portfolio.'}
                     </p>
                   </div>
                 </div>
               ))}
             </div>
-            {images.length > 3 && (
-              <div className="mt-8 flex justify-center">
+            {images.length > 6 && (
+              <div className="mt-12 flex justify-center">
                 <button
                   onClick={() => setShowAll(!showAll)}
-                  className="px-6 py-3 rounded-full bg-[#c9a84c] text-[#061220] font-semibold hover:bg-[#f0d080] transition-colors"
+                  className="px-8 py-3 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-semibold rounded-xl shadow-lg shadow-primary-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/35"
                 >
-                  {showAll ? 'Show Less' : `View More (${images.length - 3})`}
+                  {showAll ? 'Show Less' : `View All (${images.length})`}
                 </button>
               </div>
             )}

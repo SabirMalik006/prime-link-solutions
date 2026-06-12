@@ -1,86 +1,75 @@
 import { clients, certifications, whyChoose } from '../data/company';
-import { FiArrowRight, FiAward, FiUsers, FiShield, FiCheckCircle, FiTrendingUp, FiGlobe, FiClock } from 'react-icons/fi';
+import { FiUsers, FiAward, FiTrendingUp, FiStar, FiBriefcase, FiTarget, FiShield } from 'react-icons/fi';
 
 export default function Clients() {
+  const icons = [FiUsers, FiAward, FiTrendingUp, FiStar, FiBriefcase];
+
   return (
     <>
-      {/* Clients & Partners Section */}
-      <section id="clients" className="py-16 sm:py-20 md:py-28 bg-gradient-to-br from-[#0a1a2f] via-[#0e2540] to-[#0a1a2f] relative overflow-hidden">
-        {/* Background Pattern */}
-        <div className="hidden sm:block absolute inset-0 opacity-5">
-          <div className="absolute top-0 left-0 w-48 sm:w-72 h-48 sm:h-72 bg-[#c9a84c] rounded-full filter blur-3xl"></div>
-          <div className="absolute bottom-0 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-[#1d7a8a] rounded-full filter blur-3xl"></div>
+      <section id="clients" className="py-20 md:py-28 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-20 left-20 w-72 h-72 rounded-full bg-primary-500/10 blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-accent-500/10 blur-3xl animate-pulse delay-1000"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10">
-          {/* Header */}
-          <div className="mb-12 sm:mb-16 text-center">
-            <div className="inline-flex items-center gap-2 bg-[#c9a84c]/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4 sm:mb-6">
-              <FiUsers className="text-[#c9a84c] text-xs sm:text-sm" />
-              <p className="text-[#c9a84c] text-[10px] sm:text-xs font-semibold tracking-wider uppercase">Our Network</p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="mb-16 text-center">
+            <div className="inline-flex items-center gap-2 bg-primary-500/10 px-4 py-2 rounded-full mb-4">
+              <FiUsers className="text-primary-400 text-sm" />
+              <p className="text-primary-400 text-xs font-semibold tracking-[0.2em] uppercase">Our Network</p>
             </div>
-            <h2
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 sm:mb-4 px-2"
-              style={{ fontFamily: 'Barlow Condensed, sans-serif' }}
-            >
-              TRUSTED BY INDUSTRY <br className="block sm:hidden" />
-              <span className="text-[#c9a84c]">LEADERS</span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4">
+              Trusted by Industry <span className="text-primary-400">Leaders</span>
             </h2>
-            <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-[#1d7a8a] via-[#c9a84c] to-[#1d7a8a] mx-auto rounded-full"></div>
-            <p className="text-white/40 sm:text-white/50 text-sm sm:text-base mt-4 sm:mt-6 max-w-2xl mx-auto px-4">
-              Join 500+ satisfied clients who trust Vector for their industrial needs
+            <div className="w-20 h-1 bg-gradient-to-r from-primary-500 to-accent-500 mx-auto rounded-full"></div>
+            <p className="text-slate-400 text-lg max-w-2xl mx-auto mt-6">
+              Join 500+ satisfied clients who trust Prime Link Solutions for their industrial needs.
             </p>
           </div>
 
-          {/* Clients Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-16 sm:mb-24 text-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-20">
             {clients.map((client, idx) => (
               <div
                 key={client.name}
-                className="group relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl sm:rounded-2xl p-6 sm:p-8 text-center hover:bg-white/10 hover:border-[#c9a84c]/40 hover:scale-105 transition-all duration-300"
+                className="group relative bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-3xl p-8 text-center card-hover"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#c9a84c]/0 to-[#c9a84c]/0 group-hover:from-[#c9a84c]/5 group-hover:to-[#1d7a8a]/5 rounded-xl sm:rounded-2xl transition-all duration-300"></div>
-                <div
-                  className="text-2xl sm:text-3xl font-bold text-white mb-1 sm:mb-2 group-hover:text-[#c9a84c] transition-colors"
-                  style={{ fontFamily: 'Barlow Condensed, sans-serif' }}
-                >
-                  {client.name}
-                </div>
-                <div className="text-white/30 sm:text-white/40 text-xs sm:text-sm">{client.full}</div>
-                <div className="mt-3 sm:mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <FiArrowRight className="text-[#c9a84c] mx-auto text-sm" />
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-500/0 to-accent-500/0 group-hover:from-primary-500/10 group-hover:to-accent-500/10 rounded-3xl transition-all duration-500"></div>
+                <div className="relative">
+                  <div className="text-3xl sm:text-4xl font-extrabold text-white mb-2 group-hover:text-primary-400 transition-colors">
+                    {client.name}
+                  </div>
+                  <div className="text-slate-400 text-sm">{client.full}</div>
+                  <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <FiTrendingUp className="text-primary-400 mx-auto text-lg" />
+                  </div>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Certifications Section */}
-          <div className="mt-12 sm:mt-16">
-            <div className="text-center mb-8 sm:mb-12">
-              <div className="inline-flex items-center gap-2 bg-[#1d7a8a]/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-3 sm:mb-4">
-                <FiAward className="text-[#1d7a8a] text-xs sm:text-sm" />
-                <p className="text-[#1d7a8a] text-[10px] sm:text-xs font-semibold tracking-wider uppercase">Quality Assured</p>
+          <div>
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 bg-accent-500/10 px-4 py-2 rounded-full mb-4">
+                <FiAward className="text-accent-400 text-sm" />
+                <p className="text-accent-400 text-xs font-semibold tracking-[0.2em] uppercase">Quality Assured</p>
               </div>
-              <h3
-                className="text-2xl sm:text-3xl md:text-4xl font-bold text-white px-2"
-                style={{ fontFamily: 'Barlow Condensed, sans-serif' }}
-              >
-                CERTIFICATIONS & REGISTRATIONS
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white">
+                Certifications & Registrations
               </h3>
             </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 text-center">
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {certifications.map((cert, idx) => (
                 <div
                   key={cert.no}
-                  className="group relative bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-sm border border-white/10 rounded-xl sm:rounded-2xl p-6 sm:p-8 text-center hover:border-[#1d7a8a]/40 hover:scale-105 transition-all duration-300"
+                  className="group relative bg-gradient-to-br from-slate-900/50 to-slate-800/50 backdrop-blur-sm border border-slate-800 rounded-3xl p-8 text-center card-hover"
                 >
-                  <div className="absolute -top-2 -right-2 sm:-top-3 sm:-right-3 w-8 h-8 sm:w-12 sm:h-12 bg-[#c9a84c]/10 rounded-full flex items-center justify-center">
-                    <span className="text-[#c9a84c] text-[10px] sm:text-xs font-bold">{cert.no}</span>
+                  <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-primary-500 to-accent-500 rounded-full flex items-center justify-center shadow-lg shadow-primary-500/25">
+                    <span className="text-white text-xs font-black">{cert.no}</span>
                   </div>
-                  <div className="text-3xl sm:text-4xl md:text-5xl mb-3 sm:mb-4">{cert.icon}</div>
-                  <p className="text-white/70 sm:text-white/80 text-xs sm:text-sm leading-relaxed">{cert.title}</p>
-                  <div className="mt-3 sm:mt-4 h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-[#1d7a8a] to-[#c9a84c] transition-all duration-500 mx-auto"></div>
+                  <div className="text-5xl mb-4">{cert.icon}</div>
+                  <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-medium">{cert.title}</p>
+                  <div className="mt-4 h-0.5 w-0 group-hover:w-full bg-gradient-to-r from-primary-500 to-accent-500 transition-all duration-700 mx-auto"></div>
                 </div>
               ))}
             </div>
@@ -88,93 +77,87 @@ export default function Clients() {
         </div>
       </section>
 
-      {/* Why Choose Us Section - Fully Responsive */}
-      <section id="why-us" className="py-16 sm:py-20 md:py-28 bg-white relative overflow-hidden">
-        {/* Decorative elements - Hidden on mobile */}
-        <div className="hidden lg:block absolute top-0 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-[#1d7a8a]/5 rounded-full filter blur-3xl"></div>
-        <div className="hidden lg:block absolute bottom-0 left-0 w-64 sm:w-96 h-64 sm:h-96 bg-[#c9a84c]/5 rounded-full filter blur-3xl"></div>
+      <section id="why-us" className="py-20 md:py-28 bg-white relative overflow-hidden">
+        <div className="hidden lg:block absolute top-0 right-0 w-80 h-80 bg-primary-50 rounded-full blur-3xl"></div>
+        <div className="hidden lg:block absolute bottom-0 left-0 w-96 h-96 bg-accent-50 rounded-full blur-3xl"></div>
 
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 relative z-10\">
-          {/* Header - Responsive */}
-          <div className="mb-12 sm:mb-16 text-center">
-            <div className="inline-flex items-center gap-2 bg-[#1d7a8a]/10 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full mb-4">
-              <FiShield className="text-[#1d7a8a] text-xs sm:text-sm" />
-              <p className="text-[#1d7a8a] text-[10px] sm:text-xs font-semibold tracking-wider uppercase">Why Vector</p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="mb-16 text-center">
+            <div className="inline-flex items-center gap-2 bg-primary-100 px-4 py-2 rounded-full mb-4">
+              <FiShield className="text-primary-600 text-sm" />
+              <p className="text-primary-700 text-xs font-semibold tracking-[0.2em] uppercase">Why Us</p>
             </div>
-            <h2
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-[#0e2540] mb-3 sm:mb-4 px-2"
-              style={{ fontFamily: 'Barlow Condensed, sans-serif' }}
-            >
-              WHY CHOOSE <br className="block sm:hidden" />
-              <span className="text-[#1d7a8a]">VECTOR?</span>
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 mb-4">
+              Why Choose <span className="text-primary-600">Prime Link Solutions?</span>
             </h2>
-            <div className="w-16 sm:w-20 h-1 bg-gradient-to-r from-[#1d7a8a] to-[#c9a84c] rounded-full mx-auto"></div>
-            <p className="text-gray-500 text-sm sm:text-base max-w-md mt-6 mx-auto px-4">
-              Setting new standards in industrial solutions with excellence and innovation
+            <div className="w-20 h-1 bg-gradient-to-r from-primary-500 to-accent-500 mx-auto rounded-full"></div>
+            <p className="text-slate-600 text-lg max-w-2xl mx-auto mt-6">
+              Setting new standards in industrial solutions with excellence and innovation.
             </p>
           </div>
 
-          {/* Why Choose Grid - Responsive */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 sm:gap-6 lg:gap-8 text-center sm:text-left px-2 sm:px-0">
-            {whyChoose.map((item, i) => (
-              <div
-                key={item.no}
-                className="group relative bg-white rounded-xl sm:rounded-2xl p-5 sm:p-6 lg:p-8 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100"
-              >
-                {/* Number badge */}
-                <div className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-[#1d7a8a] to-[#0e2540] rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg">
-                  <span
-                    className="text-white text-base sm:text-xl font-bold"
-                    style={{ fontFamily: 'Barlow Condensed, sans-serif' }}
-                  >
-                    {item.no}
-                  </span>
-                </div>
-
-                {/* Icon */}
-                <div className="mt-6 sm:mt-8 mb-4 sm:mb-6 flex justify-center sm:justify-start">
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-[#1d7a8a]/10 to-[#c9a84c]/10 rounded-xl sm:rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                    {i === 0 && <FiTrendingUp className="text-xl sm:text-2xl text-[#1d7a8a]" />}
-                    {i === 1 && <FiGlobe className="text-xl sm:text-2xl text-[#1d7a8a]" />}
-                    {i === 2 && <FiClock className="text-xl sm:text-2xl text-[#1d7a8a]" />}
-                    {i === 3 && <FiShield className="text-xl sm:text-2xl text-[#1d7a8a]" />}
-                    {i === 4 && <FiCheckCircle className="text-xl sm:text-2xl text-[#1d7a8a]" />}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+            {whyChoose.map((item, i) => {
+              const Icon = icons[i % icons.length];
+              return (
+                <div
+                  key={item.no}
+                  className="group relative bg-white rounded-3xl p-7 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-slate-300/60 transition-all duration-500 hover:-translate-y-2 border border-slate-100"
+                >
+                  <div className="absolute -top-4 -left-4 sm:-top-5 sm:-left-5 w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-primary-600 to-primary-800 rounded-2xl flex items-center justify-center shadow-lg shadow-primary-500/25">
+                    <span className="text-white text-lg font-extrabold" style={{ fontFamily: 'Barlow Condensed, sans-serif' }}>
+                      {item.no}
+                    </span>
                   </div>
+
+                  <div className="mt-8 mb-5 flex items-center justify-center sm:justify-start">
+                    <div className="w-14 h-14 bg-gradient-to-br from-primary-50 to-accent-50 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <Icon className="text-2xl text-primary-600" />
+                    </div>
+                  </div>
+
+                  <p className="text-slate-700 text-sm sm:text-base leading-relaxed font-semibold text-center sm:text-left">
+                    {item.text}
+                  </p>
+
+                  <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary-500 to-accent-500 rounded-b-3xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
                 </div>
-
-                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed font-medium text-center sm:text-left">
-                  {item.text}
-                </p>
-
-                {/* Hover line */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#1d7a8a] to-[#c9a84c] rounded-b-xl sm:rounded-b-2xl transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
-          {/* Stats Section - Fully Responsive */}
-          <div className="mt-12 sm:mt-16 md:mt-20">
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 md:gap-8 bg-gray-50 rounded-2xl sm:rounded-full px-6 sm:px-8 md:px-12 py-6 sm:py-4 text-center">
-              {/* Stat 1 */}
-              <div className="text-center w-full sm:w-auto">
-                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0e2540]">500+</div>
-                <div className="text-xs sm:text-sm text-gray-500">Happy Clients</div>
+          <div className="mt-16">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 bg-gradient-to-br from-slate-50 to-white rounded-3xl px-8 sm:px-12 py-8 border border-slate-100 shadow-lg shadow-slate-100">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white font-bold shadow-lg shadow-primary-500/25">
+                  500+
+                </div>
+                <div className="text-left">
+                  <div className="text-lg font-extrabold text-slate-900">Happy Clients</div>
+                  <div className="text-sm text-slate-500">Satisfied customers</div>
+                </div>
               </div>
-              <div className="hidden sm:block w-px h-8 bg-gray-200"></div>
-              <div className="w-full h-px sm:w-auto sm:h-8 bg-gray-200 block sm:hidden"></div>
-              
-              {/* Stat 2 */}
-              <div className="text-center w-full sm:w-auto">
-                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0e2540]">50+</div>
-                <div className="text-xs sm:text-sm text-gray-500">Countries Served</div>
+              <div className="hidden sm:block w-px h-12 bg-slate-200"></div>
+              <div className="w-full h-px bg-slate-200 block sm:hidden"></div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-accent-500 to-accent-700 flex items-center justify-center text-white font-bold shadow-lg shadow-accent-500/25">
+                  50+
+                </div>
+                <div className="text-left">
+                  <div className="text-lg font-extrabold text-slate-900">Countries Served</div>
+                  <div className="text-sm text-slate-500">Global presence</div>
+                </div>
               </div>
-              <div className="hidden sm:block w-px h-8 bg-gray-200"></div>
-              <div className="w-full h-px sm:w-auto sm:h-8 bg-gray-200 block sm:hidden"></div>
-              
-              {/* Stat 3 */}
-              <div className="text-center w-full sm:w-auto">
-                <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#0e2540]">10+</div>
-                <div className="text-xs sm:text-sm text-gray-500">Years Experience</div>
+              <div className="hidden sm:block w-px h-12 bg-slate-200"></div>
+              <div className="w-full h-px bg-slate-200 block sm:hidden"></div>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-slate-700 to-slate-900 flex items-center justify-center text-white font-bold shadow-lg shadow-slate-500/25">
+                  20+
+                </div>
+                <div className="text-left">
+                  <div className="text-lg font-extrabold text-slate-900">Years Experience</div>
+                  <div className="text-sm text-slate-500">Industry expertise</div>
+                </div>
               </div>
             </div>
           </div>
