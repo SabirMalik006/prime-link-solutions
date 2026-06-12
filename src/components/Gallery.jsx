@@ -48,8 +48,12 @@ export default function Gallery() {
 
   return (
     <AnimatedBackground dark={true}>
-      <section id="gallery" className="py-20 md:py-28 bg-slate-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="gallery" className="py-20 md:py-28 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-20 left-20 w-80 h-80 rounded-full bg-primary-500/10 blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-accent-500/10 blur-3xl animate-pulse delay-1000"></div>
+        </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 bg-primary-500/10 text-primary-400 text-xs font-bold tracking-[0.2em] uppercase rounded-full mb-4">
             Projects
