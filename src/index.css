@@ -104,3 +104,14 @@ body {
 .dark .bg-gradient-accent {
   background: linear-gradient(135deg, rgba(53,86,241,0.08) 0%, rgba(108,92,231,0.08) 50%, rgba(232,67,147,0.05) 100%);
 }
+
+/* Loader bar sweep */
+@keyframes loaderBar {
+  0%   { width: 0; left: 0; }
+  30%  { width: 40%; left: 0; }
+  60%  { width: 30%; left: 70%; }
+  100% { width: 100%; left: 0; }
+}
+.animate-loader-bar {
+  animation: loaderBar 1.6s ease-in-out infinite;
+}

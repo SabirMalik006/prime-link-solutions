@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { createHashRouter, RouterProvider } from 'react-router-dom';
 import { AdminProvider } from './context/AdminContext';
 import ProtectedRoute from './admin/ProtectedRoute';
@@ -46,9 +47,42 @@ const router = createHashRouter([
   },
 ]);
 
+function Loader() {
+  const [show, setShow] = useState(true);
+  const [fade, setFade] = useState(false);
+  const dark = localStorage.getItem('theme') === 'dark';
+
+  useEffect(() => {
+    const timer = setTimeout(() => setFade(true), 1800);
+    const remove = setTimeout(() => setShow(false), 2200);
+    return () => { clearTimeout(timer); clearTimeout(remove); };
+  }, []);
+
+  if (!show) return null;
+
+  return (
+    <div
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center transition-opacity duration-400 ${
+        fade ? 'opacity-0' : 'opacity-100'
+      } ${dark ? 'bg-[#0e0940]' : 'bg-[#fdfdfd]'}`}
+    >
+      <div className="w-20 h-20 rounded-2xl overflow-hidden bg-[#3556f1] flex items-center justify-center shadow-xl shadow-[#3556f1]/25 mb-6">
+        <img src="/prime.jpeg" alt="Prime Link Solutions" className="w-full h-full object-cover" />
+      </div>
+      <h1 className={`text-2xl sm:text-3xl font-black tracking-tight mb-12 ${dark ? 'text-white' : 'text-[#0e0940]'}`}>
+        Prime Link <span className="text-gradient">Solutions</span>
+      </h1>
+      <div className={`w-48 sm:w-64 h-1 rounded-full overflow-hidden relative ${dark ? 'bg-[#221c75]' : 'bg-[#d6d4e8]'}`}>
+        <div className="absolute inset-y-0 left-0 bg-[#3556f1] rounded-full animate-loader-bar" />
+      </div>
+    </div>
+  );
+}
+
 function App() {
   return (
     <AdminProvider>
+      <Loader />
       <RouterProvider router={router} />
     </AdminProvider>
   );
