@@ -113,5 +113,5 @@ body {
   100% { width: 100%; left: 0; }
 }
 .animate-loader-bar {
-  animation: loaderBar 1.6s ease-in-out infinite;
+  animation: loaderBar 1.6s ease-in-out forwards;
 }
