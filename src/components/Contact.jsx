@@ -1,233 +1,178 @@
 import { useState, useEffect } from 'react';
-import { FiMail, FiPhone, FiMapPin, FiCheckCircle, FiLoader } from 'react-icons/fi';
+import { motion, AnimatePresence } from 'framer-motion';
 import { companyInfo } from '../data/company';
-import AnimatedBackground from './AnimatedBackground';
+import { API_URL } from '../api/config';
+import { MapPin, Phone, Mail, Send, CheckCircle } from 'lucide-react';
 
 export default function Contact() {
-  const [darkMode, setDarkMode] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [submitError, setSubmitError] = useState('');
+  const [dark,    setDark]    = useState(false);
+  const [form,    setForm]    = useState({ name: '', email: '', phone: '', subject: '', message: '' });
+  const [busy,    setBusy]    = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [err,     setErr]     = useState('');
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    setDarkMode(savedTheme === 'dark');
-
-    const observer = new MutationObserver(() => {
-      setDarkMode(document.documentElement.classList.contains('dark'));
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    const sync = () => setDark(document.documentElement.classList.contains('dark'));
+    sync();
+    const ob = new MutationObserver(sync);
+    ob.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => ob.disconnect();
   }, []);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  const handleChange = e => setForm(p => ({ ...p, [e.target.name]: e.target.value }));
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitError('');
-    setSubmitSuccess(false);
-
+    setBusy(true); setErr(''); setSuccess(false);
     try {
-      const response = await fetch('https://primelinksolutions.net/api/contact.php', {
+      const res  = await fetch(`${API_URL}/contact/send`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
       });
-
-      const data = await response.json();
-
+      const data = await res.json();
       if (data.success) {
-        setSubmitSuccess(true);
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          subject: '',
-          message: ''
-        });
-        setTimeout(() => setSubmitSuccess(false), 5000);
+        setSuccess(true);
+        setForm({ name: '', email: '', phone: '', subject: '', message: '' });
+        setTimeout(() => setSuccess(false), 5000);
       } else {
-        setSubmitError(data.message || 'Failed to send message. Please try again.');
+        setErr(data.error || data.message || 'Failed to send. Please try again.');
       }
-    } catch (error) {
-      setSubmitError('Network error. Please check your connection and try again.');
+    } catch {
+      setErr('Network error. Please check your connection.');
     } finally {
-      setIsSubmitting(false);
+      setBusy(false);
     }
   };
 
+  const input = `w-full px-4 py-3 rounded-xl text-sm font-medium outline-none border transition-all duration-200 ${
+    dark
+      ? 'bg-[#1a1460] border-[#221c75] text-white placeholder-[#4a4a7a] focus:border-[#3556f1]'
+      : 'bg-white border-[#d6d4e8] text-[#0a0530] placeholder-[#484a71] focus:border-[#3556f1]'
+  }`;
+
+  const contactItems = [
+    { icon: MapPin, label: 'Office',  value: companyInfo.address,  href: null },
+    { icon: Phone,  label: 'Phone',   value: companyInfo.phone,    href: `tel:${companyInfo.phone}` },
+    { icon: Mail,   label: 'Email',   value: companyInfo.email,    href: `mailto:${companyInfo.email}` },
+  ];
+
   return (
-    <AnimatedBackground dark={darkMode}>
-      <section id="contact" className="py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <span className={`inline-block px-4 py-1.5 rounded-full mb-4 border ${darkMode ? 'bg-accent-500/20 border-accent-500/30 text-accent-400' : 'bg-accent-50 border-accent-200 text-accent-600'} text-xs font-bold tracking-[0.2em] uppercase`}>
-              Get In Touch
-            </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4">
-              <span className={darkMode ? "text-white" : "text-slate-900"}>Let's Work Together</span>
-            </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-primary-500 to-accent-500 mx-auto mb-6 rounded-full" />
-            <p className={`text-lg max-w-2xl mx-auto ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-              Ready to start your project? Get in touch with our team and let's discuss how we can help you achieve your goals.
-            </p>
-          </div>
+    <section id="contact" className={`transition-colors duration-300 ${dark ? 'bg-[#0e0940]' : 'bg-[#fdfdfd]'}`}>
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
 
-          <div className="grid lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-1 space-y-6">
-              <div className={`bg-gradient-to-br ${darkMode ? 'from-slate-800 to-slate-900' : 'from-white to-slate-50'} rounded-3xl p-6 border-2 ${darkMode ? 'border-slate-700' : 'border-slate-200'} shadow-xl`}>
-                <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-r from-primary-500/30 to-accent-500/30 border border-primary-500/30 flex items-center justify-center flex-shrink-0">
-                    <FiMapPin className="text-2xl text-primary-500" />
-                  </div>
-                  <div>
-                    <h3 className={`text-lg font-bold mb-2 ${darkMode ? 'text-white' : 'text-slate-900'}`}>Our Location</h3>
-                    <p className={`text-sm leading-relaxed ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>{companyInfo.address}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className={`bg-gradient-to-br ${darkMode ? 'from-slate-800 to-slate-900' : 'from-white to-slate-50'} rounded-3xl p-6 border-2 ${darkMode ? 'border-slate-700' : 'border-slate-200'} shadow-xl`}>
-                <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-r from-primary-500/30 to-accent-500/30 border border-primary-500/30 flex items-center justify-center flex-shrink-0">
-                    <FiPhone className="text-2xl text-primary-500" />
-                  </div>
-                  <div>
-                    <h3 className={`text-lg font-bold mb-2 ${darkMode ? "text-white" : "text-slate-900"}`}>Phone</h3>
-                    <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>{companyInfo.phone}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className={`bg-gradient-to-br ${darkMode ? 'from-slate-800 to-slate-900' : 'from-white to-slate-50'} rounded-3xl p-6 border-2 ${darkMode ? 'border-slate-700' : 'border-slate-200'} shadow-xl`}>
-                <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-r from-primary-500/30 to-accent-500/30 border border-primary-500/30 flex items-center justify-center flex-shrink-0">
-                    <FiMail className="text-2xl text-primary-500" />
-                  </div>
-                  <div>
-                    <h3 className={`text-lg font-bold mb-2 ${darkMode ? "text-white" : "text-slate-900"}`}>Email</h3>
-                    <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>{companyInfo.email}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="lg:col-span-2">
-              <form onSubmit={handleSubmit} className={`bg-gradient-to-br ${darkMode ? 'from-slate-800 to-slate-900' : 'from-white to-slate-50'} rounded-3xl p-8 border-2 ${darkMode ? 'border-slate-700' : 'border-slate-200'} shadow-xl space-y-6`}>
-                {submitSuccess && (
-                  <div className="bg-green-500/20 border border-green-500/30 rounded-2xl p-4 flex items-center gap-3">
-                    <FiCheckCircle className="text-green-500 text-2xl" />
-                    <span className="text-green-500 font-medium">Thank you! Your message has been sent successfully.</span>
-                  </div>
-                )}
-                {submitError && (
-                  <div className="bg-red-500/20 border border-red-500/30 rounded-2xl p-4 flex items-center gap-3">
-                    <span className="text-red-500 font-medium">{submitError}</span>
-                  </div>
-                )}
-
-                <div className="grid sm:grid-cols-2 gap-6">
-                  <div>
-                    <label className={`block text-sm font-bold mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>Full Name</label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className={`w-full px-4 py-3 rounded-xl border-2 ${darkMode ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-slate-200 text-slate-900'} focus:border-primary-500 outline-none transition-all`}
-                      placeholder="Your name"
-                    />
-                  </div>
-                  <div>
-                    <label className={`block text-sm font-bold mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>Email Address</label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className={`w-full px-4 py-3 rounded-xl border-2 ${darkMode ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-slate-200 text-slate-900'} focus:border-primary-500 outline-none transition-all`}
-                      placeholder="your@email.com"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid sm:grid-cols-2 gap-6">
-                  <div>
-                    <label className={`block text-sm font-bold mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>Phone Number</label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className={`w-full px-4 py-3 rounded-xl border-2 ${darkMode ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-slate-200 text-slate-900'} focus:border-primary-500 outline-none transition-all`}
-                      placeholder="+92 xxx xxxxxxx"
-                    />
-                  </div>
-                  <div>
-                    <label className={`block text-sm font-bold mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>Subject</label>
-                    <input
-                      type="text"
-                      name="subject"
-                      value={formData.subject}
-                      onChange={handleChange}
-                      required
-                      className={`w-full px-4 py-3 rounded-xl border-2 ${darkMode ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-slate-200 text-slate-900'} focus:border-primary-500 outline-none transition-all`}
-                      placeholder="How can we help?"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className={`block text-sm font-bold mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>Message</label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={5}
-                    className={`w-full px-4 py-3 rounded-xl border-2 ${darkMode ? 'bg-slate-700 border-slate-600 text-white' : 'bg-white border-slate-200 text-slate-900'} focus:border-primary-500 outline-none transition-all resize-none`}
-                    placeholder="Tell us about your project..."
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full px-8 py-4 bg-gradient-to-r from-primary-600 to-accent-500 hover:from-primary-700 hover:to-accent-600 text-white font-bold text-lg rounded-2xl shadow-xl shadow-primary-500/30 hover:shadow-2xl hover:shadow-accent-500/40 transition-all duration-300 hover:-translate-y-1 flex items-center justify-center gap-3 disabled:opacity-70 disabled:cursor-not-allowed"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <FiLoader className="animate-spin" />
-                      Sending...
-                    </>
-                  ) : (
-                    <>
-                      Send Message
-                      <FiMail />
-                    </>
-                  )}
-                </button>
-              </form>
-            </div>
-          </div>
+        {/* Full-width top label */}
+        <div className={`border-b py-10 ${dark ? 'border-[#221c75]' : 'border-[#d6d4e8]'}`}>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.4 }}
+            className="text-xs font-bold tracking-[0.2em] uppercase text-[#3556f1] mb-4"
+          >
+            Get In Touch
+          </motion.p>
+          <motion.h2
+            initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.06 }}
+            className={`font-black leading-tight tracking-tight ${dark ? 'text-white' : 'text-[#0e0940]'}`}
+            style={{ fontSize: 'clamp(1.8rem, 4vw, 3.2rem)' }}
+          >
+            <span className="text-gradient">Let's talk</span> about<br />your next project.
+          </motion.h2>
         </div>
-      </section>
-    </AnimatedBackground>
+
+        {/* Two-column layout */}
+        <div className="grid lg:grid-cols-5 gap-0">
+
+          {/* Left — contact details (2 cols) */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.5 }}
+            className={`lg:col-span-2 py-14 pr-0 lg:pr-16 border-b lg:border-b-0 lg:border-r ${dark ? 'border-[#221c75]' : 'border-[#d6d4e8]'}`}
+          >
+            <p className={`text-sm leading-relaxed mb-10 ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}>
+              Ready to start? Reach out directly or fill in the form and we'll respond within 24 hours.
+            </p>
+
+            <div className="space-y-8">
+              {contactItems.map(({ icon: Icon, label, value, href }) => (
+                <div key={label}>
+                  <p className={`text-[10px] font-bold tracking-[0.2em] uppercase mb-2 ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>{label}</p>
+                  <div className="flex items-start gap-3">
+                    <Icon className="w-4 h-4 text-[#3556f1] mt-0.5 flex-shrink-0" />
+                    {href ? (
+                      <a href={href} className={`text-sm font-semibold hover:text-[#3556f1] transition-colors ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}>{value}</a>
+                    ) : (
+                      <p className={`text-sm font-semibold ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}>{value}</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right — form (3 cols) */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.08 }}
+            className="lg:col-span-3 py-14 lg:pl-16"
+          >
+            <form onSubmit={handleSubmit} className="space-y-5">
+
+              <AnimatePresence>
+                {success && (
+                  <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                    className="flex items-center gap-3 p-4 rounded-xl bg-green-500/10 border border-green-500/20">
+                    <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    <span className="text-green-500 text-xs font-bold">Message sent! We'll be in touch shortly.</span>
+                  </motion.div>
+                )}
+                {err && (
+                  <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                    className="p-4 rounded-xl bg-red-500/10 border border-red-500/20">
+                    <span className="text-red-400 text-xs font-bold">{err}</span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className={`block text-[10px] font-bold tracking-[0.15em] uppercase mb-2 ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>Full Name</label>
+                  <input type="text" name="name" value={form.name} onChange={handleChange} required placeholder="Your name" className={input} />
+                </div>
+                <div>
+                  <label className={`block text-[10px] font-bold tracking-[0.15em] uppercase mb-2 ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>Email</label>
+                  <input type="email" name="email" value={form.email} onChange={handleChange} required placeholder="your@email.com" className={input} />
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className={`block text-[10px] font-bold tracking-[0.15em] uppercase mb-2 ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>Phone</label>
+                  <input type="tel" name="phone" value={form.phone} onChange={handleChange} placeholder="+92 xxx xxxxxxx" className={input} />
+                </div>
+                <div>
+                  <label className={`block text-[10px] font-bold tracking-[0.15em] uppercase mb-2 ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>Subject</label>
+                  <input type="text" name="subject" value={form.subject} onChange={handleChange} required placeholder="How can we help?" className={input} />
+                </div>
+              </div>
+
+              <div>
+                <label className={`block text-[10px] font-bold tracking-[0.15em] uppercase mb-2 ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>Message</label>
+                <textarea name="message" value={form.message} onChange={handleChange} required rows={5}
+                  placeholder="Tell us about your project..."
+                  className={`${input} resize-none`} />
+              </div>
+
+              <button type="submit" disabled={busy}
+                className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-[#3556f1] hover:bg-[#325def] text-white text-sm font-bold rounded-xl transition-colors disabled:opacity-60">
+                {busy ? 'Sending…' : 'Send Message'}
+                <Send className="w-4 h-4" />
+              </button>
+            </form>
+          </motion.div>
+
+        </div>
+      </div>
+    </section>
   );
 }

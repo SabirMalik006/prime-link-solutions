@@ -1,330 +1,200 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Radio, ShieldCheck, Cpu, Building2 } from 'lucide-react';
+import fontLight from '../assets/font.jpeg';
+import fontDark from '../assets/font.png';
+import signLight from '../assets/sign.jpeg';
+import signDark from '../assets/sign.png';
 
-const heroCTALinks = [
-  { label: 'Our Services', href: 'services' },
-  { label: 'Get In Touch', href: 'contact' },
+const smoothScrollTo = (id) => {
+  const el = document.getElementById(id);
+  if (!el) return;
+  window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 80, behavior: 'smooth' });
+};
+
+const services = [
+  { icon: Radio,       label: 'Telecom Towers' },
+  { icon: ShieldCheck, label: 'CCTV & Security' },
+  { icon: Cpu,         label: 'Fiber Networks' },
+  { icon: Building2,   label: 'Civil Works' },
 ];
 
-// Animated particle component
-const Particle = ({ x, y, size, duration, delay, color }) => {
-  return (
-    <div
-      className="absolute rounded-full"
-      style={{
-        left: `${x}%`,
-        top: `${y}%`,
-        width: size,
-        height: size,
-        background: color,
-        opacity: 0.1,
-        animation: `floatParticle ${duration}s ease-in-out infinite`,
-        animationDelay: `${delay}s`,
-      }}
-    />
-  );
-};
-
-// Animated gradient orb
-const GradientOrb = ({ size, x, y, color1, color2, delay }) => {
-  return (
-    <div
-      className="absolute rounded-full blur-3xl"
-      style={{
-        width: size,
-        height: size,
-        left: `${x}%`,
-        top: `${y}%`,
-        background: `radial-gradient(circle, ${color1} 0%, ${color2} 100%)`,
-        animation: `pulseOrb 15s ease-in-out infinite`,
-        animationDelay: `${delay}s`,
-      }}
-    />
-  );
-};
+const stats = [
+  { n: '20+',  l: 'Years' },
+  { n: '500+', l: 'Clients' },
+  { n: '8+',   l: 'Sectors' },
+  { n: '100%', l: 'On-Time' },
+];
 
 export default function Hero() {
-  const [darkMode, setDarkMode] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const containerRef = useRef(null);
+  const [dark, setDark] = useState(false);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    setDarkMode(savedTheme === 'dark');
-
-    const observer = new MutationObserver(() => {
-      setDarkMode(document.documentElement.classList.contains('dark'));
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    const sync = () => setDark(document.documentElement.classList.contains('dark'));
+    sync();
+    const ob = new MutationObserver(sync);
+    ob.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => ob.disconnect();
   }, []);
 
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        setMousePosition({
-          x: ((e.clientX - rect.left) / rect.width - 0.5) * 20,
-          y: ((e.clientY - rect.top) / rect.height - 0.5) * 20,
-        });
-      }
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  const smoothScrollTo = (elementId) => {
-    const element = document.getElementById(elementId);
-    if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-    }
-  };
-
-  const handleCTAClick = (e, sectionId) => {
-    e.preventDefault();
-    smoothScrollTo(sectionId);
-  };
-
-  // Generate random particles
-  const particles = Array.from({ length: 30 }).map((_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 6 + 2,
-    duration: Math.random() * 20 + 15,
-    delay: Math.random() * 10,
-    color: i % 2 === 0 ? 'rgba(14, 165, 233, 0.3)' : 'rgba(34, 197, 94, 0.3)',
-  }));
+  const fade = (delay = 0) => ({
+    initial: { opacity: 0, y: 22 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] },
+  });
 
   return (
     <section
       id="home"
-      ref={containerRef}
-      className={`relative min-h-screen flex items-center overflow-hidden pt-6 ${darkMode ? 'bg-slate-950' : 'bg-slate-50'}`}
+      className={`relative min-h-screen flex flex-col justify-center pt-28 pb-20 overflow-hidden transition-colors duration-300 ${dark ? 'bg-[#0e0940]' : 'bg-[#fdfdfd]'}`}
     >
-      {/* Animated Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Gradient mesh background */}
-        <div className={`absolute inset-0 ${darkMode ? 'bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950' : 'bg-gradient-to-br from-slate-50 via-white to-slate-100'}`}></div>
-        
-        {/* Animated gradient orbs */}
-        <GradientOrb 
-          size="600px" 
-          x={-10} 
-          y={-10} 
-          color1={darkMode ? "rgba(14, 165, 233, 0.2)" : "rgba(14, 165, 233, 0.1)"} 
-          color2="rgba(34, 197, 94, 0)" 
-          delay={0} 
-        />
-        <GradientOrb 
-          size="500px" 
-          x={60} 
-          y={20} 
-          color1={darkMode ? "rgba(34, 197, 94, 0.15)" : "rgba(34, 197, 94, 0.1)"} 
-          color2="rgba(14, 165, 233, 0)" 
-          delay={3} 
-        />
-        <GradientOrb 
-          size="700px" 
-          x={20} 
-          y={60} 
-          color1={darkMode ? "rgba(217, 70, 239, 0.1)" : "rgba(217, 70, 239, 0.05)"} 
-          color2="rgba(14, 165, 233, 0)" 
-          delay={6} 
-        />
+      {/* Background dot grid */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage: `radial-gradient(circle, ${dark ? 'rgba(54,87,243,0.18)' : 'rgba(54,87,243,0.12)'} 1px, transparent 1px)`,
+          backgroundSize: '28px 28px',
+        }}
+      />
 
-        {/* Grid pattern */}
-        <div className="absolute inset-0" style={{
-          backgroundImage: darkMode
-            ? `linear-gradient(rgba(148, 163, 184, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.03) 1px, transparent 1px)`
-            : `linear-gradient(rgba(148, 163, 184, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(148, 163, 184, 0.1) 1px, transparent 1px)`,
-          backgroundSize: '50px 50px',
-        }}></div>
+      {/* Subtle 3D isometric pattern */}
+      <div className="pointer-events-none absolute inset-0 hero-3d-pattern" />
 
-        {/* Floating particles */}
-        {particles.map((particle) => (
-          <Particle key={particle.id} {...particle} />
-        ))}
+      {/* Gradient accent blobs */}
+      <div className="pointer-events-none absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-[#3556f1] opacity-[0.08] blur-[120px]" />
+      <div className="pointer-events-none absolute -bottom-40 -right-20 w-[400px] h-[400px] rounded-full bg-[#6c5ce7] opacity-[0.08] blur-[100px]" />
+      <div className="pointer-events-none absolute top-1/2 -translate-y-1/2 right-0 w-[300px] h-[300px] rounded-full bg-[#e84393] opacity-[0.04] blur-[100px]" />
 
-        {/* Animated lines */}
-        <div className="absolute inset-0 overflow-hidden">
-          {[...Array(5)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute h-px bg-gradient-to-r from-transparent via-primary-500/20 to-transparent"
-              style={{
-                top: `${20 + i * 15}%`,
-                left: 0,
-                right: 0,
-                animation: `lineMove ${10 + i * 2}s ease-in-out infinite`,
-                animationDelay: `${i * 0.5}s`,
-              }}
-            />
-          ))}
+      <div className="relative z-10 max-w-7xl mx-auto w-full px-5 sm:px-8 lg:px-10">
+
+        {/* Top label row */}
+        <motion.div {...fade(0)} className="mb-8 flex items-center gap-3">
+          <span className="w-2 h-2 rounded-full bg-[#3556f1] animate-pulse" />
+          <span className={`text-xs font-bold tracking-[0.2em] uppercase ${dark ? 'text-[#3556f1]' : 'text-[#3556f1]'}`}>
+            Infrastructure · Technology · Excellence
+          </span>
+        </motion.div>
+
+        {/* Brand font logo */}
+        <motion.div {...fade(0.05)} className="mb-6">
+          <img
+            src={dark ? fontDark : fontLight}
+            alt="Prime Link Solutions"
+            className="h-10 sm:h-12 lg:h-14 w-auto object-contain"
+          />
+        </motion.div>
+
+        {/* Main headline — LARGE editorial type */}
+        <div className="mb-6">
+          <motion.h1
+            {...fade(0.08)}
+            className={`font-black leading-[0.92] tracking-tighter ${dark ? 'text-white' : 'text-[#0e0940]'}`}
+            style={{ fontSize: 'clamp(3rem, 9vw, 8rem)' }}
+          >
+            Prime Link
+          </motion.h1>
+          <motion.h1
+            {...fade(0.15)}
+            className="font-black leading-[0.92] tracking-tighter text-gradient"
+            style={{ fontSize: 'clamp(3rem, 9vw, 8rem)' }}
+          >
+            Solutions
+          </motion.h1>
         </div>
-      </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left content */}
-          <div className="space-y-6 text-center lg:text-left">
-            <div className="animate-fade-up flex justify-center lg:justify-start">
-              <span className={`inline-flex items-center gap-3 px-5 py-3 ${darkMode ? 'bg-slate-900/80 border border-slate-700/50 text-primary-300' : 'bg-white border border-slate-200 text-primary-600'} backdrop-blur-xl rounded-full text-sm font-semibold shadow-2xl relative overflow-hidden group`}>
-                <span className="absolute inset-0 bg-gradient-to-r from-primary-500/10 via-accent-500/10 to-primary-500/10 animate-gradient"></span>
-                <span className="relative flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 animate-ping absolute"></span>
-                  <span className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 relative z-10"></span>
-                  Trusted Since 20+ Years
-                </span>
-              </span>
-            </div>
+        {/* Owner sign */}
+        <motion.div {...fade(0.2)} className="mb-10">
+          <img
+            src={dark ? signDark : signLight}
+            alt="Owner's Sign"
+            className="h-8 sm:h-10 w-auto object-contain opacity-80"
+          />
+        </motion.div>
 
-            <div className="space-y-4 animate-fade-up delay-100">
-              <h1 className={`text-4xl sm:text-5xl lg:text-8xl font-black leading-tight tracking-tight ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-                <span className="block bg-gradient-to-r from-primary-400 via-accent-400 to-secondary-400 bg-clip-text text-transparent animate-gradient-text">
-                  Prime Link
-                </span>
-                <span className="block text-3xl sm:text-4xl lg:text-7xl">
-                  Solutions
-                </span>
-              </h1>
-              <p className={`text-lg sm:text-xl font-light max-w-xl mx-auto lg:mx-0 ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                Building the future, today
-              </p>
-            </div>
+        {/* Two-column layout — description + CTA  |  stats */}
+        <div className="flex flex-col lg:flex-row lg:items-end gap-12 lg:gap-20">
 
-            <div className="flex items-center justify-center lg:justify-start gap-4 animate-fade-up delay-200">
-              <div className="w-16 h-1 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full"></div>
-              <div className="flex -space-x-4">
-                {[
-                  { icon: '📡', label: 'Tower' },
-                  { icon: '📹', label: 'CCTV' },
-                  { icon: '🔌', label: 'Fiber' },
-                  { icon: '🏗️', label: 'Civil' }
-                ].map((item, i) => (
-                  <div
-                    key={i}
-                    className={`w-12 h-12 rounded-full border-2 flex items-center justify-center text-2xl backdrop-blur-sm group cursor-pointer transition-all duration-300 hover:scale-110 hover:z-10 ${darkMode ? 'border-slate-900 bg-gradient-to-br from-slate-800 to-slate-900' : 'border-white bg-gradient-to-br from-white to-slate-50'}`}
-                    style={{ zIndex: 5 - i }}
-                    title={item.label}
-                  >
-                    {item.icon}
-                  </div>
-                ))}
-              </div>
-            </div>
+          {/* Left: description + buttons */}
+          <div className="flex-1 max-w-xl">
+            <motion.p
+              {...fade(0.28)}
+              className={`text-base sm:text-lg leading-relaxed mb-8 ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}
+            >
+              Complete infrastructure development — from telecom tower fabrication and fiber networks to CCTV surveillance, civil works, and smart procurement. Serving Pakistan's public and private sectors for over two decades.
+            </motion.p>
 
-            <p className={`text-lg sm:text-xl leading-relaxed max-w-xl mx-auto lg:mx-0 animate-fade-up delay-300 ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-              Complete infrastructure, technology & procurement services — specializing in Telecom Towers, CCTV Surveillance, Perimeter Fencing, Fiber Networks, Civil Works & construction site supplies.
-            </p>
+            <motion.div {...fade(0.34)} className="flex flex-wrap gap-3 mb-10">
+              <button
+                onClick={() => smoothScrollTo('services')}
+                className="inline-flex items-center gap-2 px-6 py-3 bg-[#3556f1] hover:bg-[#325def] text-white text-sm font-bold rounded-xl transition-colors"
+              >
+                View Services <ArrowRight className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => smoothScrollTo('contact')}
+                className={`inline-flex items-center gap-2 px-6 py-3 border text-sm font-bold rounded-xl transition-colors ${dark ? 'border-[#221c75] text-white hover:border-[#3556f1]' : 'border-[#d6d4e8] text-[#0e0940] hover:border-[#3556f1]'}`}
+              >
+                Get a Quote
+              </button>
+            </motion.div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-up delay-400">
-              {heroCTALinks.map((link, index) => (
-                <a
-                  key={link.label}
-                  href={`#${link.href}`}
-                  onClick={(e) => handleCTAClick(e, link.href)}
-                  className={`w-full sm:w-auto px-10 py-4 font-bold rounded-2xl transition-all duration-500 transform hover:scale-105 ${
-                    index === 0
-                      ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-white shadow-2xl shadow-primary-500/30 hover:shadow-accent-500/40 hover:-translate-y-2 shine-effect'
-                      : `${darkMode ? 'bg-slate-800/50 text-white border-2 border-slate-700/50 hover:border-primary-400 hover:text-primary-300 hover:bg-slate-800/80' : 'bg-white text-slate-700 border-2 border-slate-200 hover:border-primary-400 hover:text-primary-600 hover:bg-slate-50'} backdrop-blur-xl`
-                  }`}
+            {/* Service tags */}
+            <motion.div {...fade(0.4)} className="flex flex-wrap gap-2">
+              {services.map(({ icon: Icon, label }) => (
+                <span
+                  key={label}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border ${dark ? 'border-[#221c75] text-[#a0a0c0]' : 'border-[#d6d4e8] text-[#484a71]'}`}
                 >
-                  {link.label}
-                </a>
+                  <Icon className="w-3.5 h-3.5 text-[#3556f1]" />
+                  {label}
+                </span>
               ))}
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8 animate-fade-up delay-500">
-              {[
-                { value: '20+', label: 'Years Experience' },
-                { value: '8+', label: 'Service Sectors' },
-                { value: '500+', label: 'Happy Clients' },
-                { value: '100%', label: 'On-Time Delivery' }
-              ].map((stat, i) => (
-                <div 
-                  key={i} 
-                  className={`text-center p-4 rounded-2xl backdrop-blur-sm border transition-all duration-300 hover:bg-opacity-80 ${darkMode ? 'bg-slate-900/50 border-slate-700/30 hover:border-primary-500/30 hover:bg-slate-800/50' : 'bg-white border-slate-200 hover:border-primary-500/30 hover:bg-slate-50'}`}
-                >
-                  <div className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-primary-400 to-accent-400 bg-clip-text text-transparent">
-                    {stat.value}
-                  </div>
-                  <div className={`text-sm font-medium mt-2 ${darkMode ? 'text-slate-500' : 'text-slate-500'}`}>
-                    {stat.label}
-                  </div>
-                </div>
-              ))}
-            </div>
+            </motion.div>
           </div>
 
-          {/* Right content - Interactive cards */}
-          <div className="hidden lg:block animate-scale-in delay-200 -mt-24" style={{ transform: `translate(${mousePosition.x * -0.5}px, ${mousePosition.y * -0.5}px)` }}>
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary-500/20 to-accent-500/20 rounded-3xl blur-3xl transform rotate-6"></div>
-              <div className={`relative backdrop-blur-2xl rounded-3xl shadow-2xl p-8 border ${darkMode ? 'bg-gradient-to-br from-slate-900/80 to-slate-950/80 border-slate-700/50' : 'bg-gradient-to-br from-white/80 to-slate-50/80 border-slate-200/50'}`} style={{ transform: `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.5}px)` }}>
-                <div className="grid grid-cols-2 gap-5">
-                  {[
-                    { icon: '📡', title: 'Telecom Towers', description: 'Complete tower infrastructure' },
-                    { icon: '📹', title: 'CCTV Systems', description: 'Surveillance solutions' },
-                    { icon: '🔌', title: 'Fiber Networks', description: 'High-speed connectivity' },
-                    { icon: '🏗️', title: 'Civil Works', description: 'Construction expertise' }
-                  ].map((item, i) => (
-                    <div
-                      key={i}
-                      className={`group p-6 rounded-2xl border transition-all duration-500 cursor-pointer ${darkMode ? 'bg-gradient-to-br from-slate-800/50 to-slate-900/50 border-slate-700/30 hover:border-primary-500/50 hover:bg-slate-800/80' : 'bg-gradient-to-br from-white/50 to-slate-50/50 border-slate-200/30 hover:border-primary-500/50 hover:bg-white/80'}`}
-                      style={{ animationDelay: `${i * 0.1}s` }}
-                    >
-                      <div className="text-5xl mb-4 transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-500">{item.icon}</div>
-                      <div className={`font-bold text-lg mb-1 ${darkMode ? 'text-white' : 'text-slate-900'}`}>{item.title}</div>
-                      <div className={`text-sm ${darkMode ? 'text-slate-500' : 'text-slate-500'}`}>{item.description}</div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Decoration */}
-                <div className="absolute -top-4 -right-4 w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 opacity-20 blur-xl"></div>
-                <div className="absolute -bottom-4 -left-4 w-24 h-24 rounded-2xl bg-gradient-to-br from-secondary-500 to-primary-500 opacity-15 blur-xl"></div>
+          {/* Right: big stat numbers */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.45, duration: 0.5 }}
+            className="grid grid-cols-2 gap-px"
+            style={{
+              background: dark ? '#221c75' : '#e4e4f0',
+              borderRadius: '20px',
+              overflow: 'hidden',
+              minWidth: 280,
+            }}
+          >
+            {stats.map(({ n, l }, i) => (
+              <div
+                key={l}
+                className={`flex flex-col items-center justify-center p-8 ${dark ? 'bg-[#0e0940]' : 'bg-[#fdfdfd]'}`}
+                style={{
+                  borderTopLeftRadius:     i === 0 ? 20 : 0,
+                  borderTopRightRadius:    i === 1 ? 20 : 0,
+                  borderBottomLeftRadius:  i === 2 ? 20 : 0,
+                  borderBottomRightRadius: i === 3 ? 20 : 0,
+                }}
+              >
+                <span className="text-4xl font-black text-[#3556f1] leading-none">{n}</span>
+                <span className={`text-xs font-bold mt-1.5 uppercase tracking-widest ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}>{l}</span>
               </div>
-            </div>
-          </div>
+            ))}
+          </motion.div>
         </div>
+
+        {/* Scroll hint */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="hidden lg:flex items-center gap-3 mt-16"
+        >
+          <div className={`w-8 h-[1px] ${dark ? 'bg-[#221c75]' : 'bg-[#d6d4e8]'}`} />
+          <span className={`text-[10px] font-bold tracking-[0.25em] uppercase ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>scroll down</span>
+        </motion.div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce ${darkMode ? 'text-slate-500' : 'text-slate-400'} hidden lg:flex`}>
-        <span className="text-xs font-bold tracking-[0.3em] uppercase">Scroll Down</span>
-        <div className="w-0.5 h-16 bg-gradient-to-b from-primary-500 via-accent-500 to-transparent rounded-full"></div>
-      </div>
-
-      {/* Custom animations */}
-      <style>{`
-        @keyframes lineMove {
-          0%, 100% { transform: translateX(-100%); opacity: 0; }
-          50% { transform: translateX(100%); opacity: 1; }
-        }
-        
-        @keyframes floatParticle {
-          0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.1; }
-          50% { transform: translateY(-30px) rotate(180deg); opacity: 0.3; }
-        }
-        
-        @keyframes pulseOrb {
-          0%, 100% { transform: scale(1) rotate(0deg); }
-          33% { transform: scale(1.1) rotate(120deg); }
-          66% { transform: scale(0.9) rotate(240deg); }
-        }
-        
-        @keyframes gradient-text {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-        
-        .animate-gradient-text {
-          background-size: 200% 200%;
-          animation: gradient-text 4s ease infinite;
-        }
-      `}</style>
     </section>
   );
 }

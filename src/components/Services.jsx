@@ -1,162 +1,216 @@
 import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { API_URL, MEDIA_URL } from '../api/config';
 import { services as staticServices } from '../data/company';
-import AnimatedBackground from './AnimatedBackground';
+import { Loader2 } from 'lucide-react';
 
 export default function Services() {
-  const [active, setActive] = useState(null);
+  const [hovered,  setHovered]  = useState(null);
   const [services, setServices] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [darkMode, setDarkMode] = useState(false);
+  const [loading,  setLoading]  = useState(true);
+  const [dark,     setDark]     = useState(false);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    setDarkMode(savedTheme === 'dark');
-
-    const observer = new MutationObserver(() => {
-      setDarkMode(document.documentElement.classList.contains('dark'));
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    const sync = () => setDark(document.documentElement.classList.contains('dark'));
+    sync();
+    const ob = new MutationObserver(sync);
+    ob.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => ob.disconnect();
   }, []);
 
   useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const response = await fetch(`${API_URL}/services`);
-        const data = await response.json();
-        if (data && data.length > 0) {
-          setServices(data);
-        } else {
-          setServices(staticServices);
-        }
-      } catch (err) {
-        console.error('Error fetching services:', err);
-        setServices(staticServices);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchServices();
+    fetch(`${API_URL}/services`)
+      .then(r => r.json())
+      .then(d => setServices(d?.length ? d : staticServices))
+      .catch(() => setServices(staticServices))
+      .finally(() => setLoading(false));
   }, []);
 
-  if (loading) {
-    return (
-      <AnimatedBackground dark={darkMode}>
-        <section id="services" className="py-20 md:py-28">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="animate-spin rounded-full h-10 w-10 border-4 border-slate-700 border-t-primary-500 mx-auto"></div>
-            <p className="mt-4 text-slate-300 font-medium">Loading services...</p>
-          </div>
-        </section>
-      </AnimatedBackground>
-    );
-  }
+  // Set first item hovered by default once loaded
+  useEffect(() => {
+    if (services.length > 0 && hovered === null) {
+      setHovered(services[0].id);
+    }
+  }, [services]);
 
-  const colors = ['primary', 'accent', 'primary', 'accent', 'primary', 'accent', 'primary', 'accent'];
+  const border = dark ? 'border-[#221c75]' : 'border-[#d6d4e8]';
+
+  if (loading) return (
+      <section id="services" className={`py-24 flex items-center justify-center ${dark ? 'bg-[#141052]' : 'bg-[#f4f3fa]'}`}>
+      <Loader2 className="w-8 h-8 text-[#3556f1] animate-spin" />
+    </section>
+  );
+
+  const activeService = services.find(s => s.id === hovered);
 
   return (
-    <AnimatedBackground dark={darkMode}>
-      <section id="services" className="py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <span className={`inline-block px-4 py-1.5 rounded-full mb-4 border ${darkMode ? 'bg-primary-500/20 border-primary-500/30 text-primary-400' : 'bg-primary-50 border-primary-200 text-primary-600'} text-xs font-bold tracking-[0.2em] uppercase`}>
-              Services
-            </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4">
-              <span className={darkMode ? "text-white" : "text-slate-900"}>What We Do</span>
-            </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-primary-500 to-accent-500 mx-auto mb-4 rounded-full" />
-            <p className={`text-lg max-w-2xl mx-auto ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-              Comprehensive infrastructure & technology solutions for public and private sector projects.
-            </p>
+    <section id="services" className={`py-24 lg:py-32 transition-colors duration-300 ${dark ? 'bg-[#141052]' : 'bg-[#f4f3fa]'}`}>
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-16">
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.4 }}
+              className="text-xs font-bold tracking-[0.2em] uppercase text-[#3556f1] mb-4"
+            >
+              What We Do
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.05 }}
+              className={`font-black leading-tight tracking-tight ${dark ? 'text-white' : 'text-[#0e0940]'}`}
+              style={{ fontSize: 'clamp(1.8rem, 4vw, 3.2rem)' }}
+            >
+              <span className="text-gradient">Eight</span> specialised<br />service lines.
+            </motion.h2>
           </div>
+          <motion.p
+            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+            viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}
+            className={`max-w-sm text-sm leading-relaxed lg:text-right ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}
+          >
+            Hover any service to explore — two decades of technical expertise across all eight lines.
+          </motion.p>
+        </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        {/* Two-column: list left, detail panel right */}
+        <div className="grid lg:grid-cols-2 gap-0 lg:gap-12 xl:gap-16 items-start">
+
+          {/* Left — Numbered list (hover triggers) */}
+          <div className={`border-t ${border}`}>
             {services.map((service, idx) => {
-              const colorKey = colors[idx % colors.length];
-              const cardGradients = [
-                darkMode ? 'from-slate-800 via-slate-900 to-slate-800' : 'from-white via-slate-50 to-white',
-                darkMode ? 'from-slate-900 via-slate-800 to-slate-900' : 'from-slate-50 via-white to-slate-50'
-              ];
+              const isActive = hovered === service.id;
               return (
-                <div
+                <motion.div
                   key={service.id}
-                  className={`card-hover relative overflow-hidden rounded-3xl shadow-xl border-2 transition-all duration-500 flex flex-col hover:-translate-y-2 ${
-                    active === service.id 
-                      ? `bg-gradient-to-br ${cardGradients[0]} border-${colorKey}-500` 
-                      : `bg-gradient-to-br ${cardGradients[idx % 2]} ${darkMode ? 'border-slate-700' : 'border-slate-200'} hover:border-${colorKey}-500/50`
+                  initial={{ opacity: 0, y: 8 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.35, delay: idx * 0.04 }}
+                  onMouseEnter={() => setHovered(service.id)}
+                  className={`flex items-center gap-5 py-5 border-b cursor-default transition-all duration-200 ${border} ${
+                    isActive
+                      ? dark ? 'bg-[#1a1460]/40' : 'bg-white'
+                      : ''
                   }`}
+                  style={{ paddingLeft: isActive ? '1rem' : '0', paddingRight: '1rem' }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br opacity-5" style={{ background: `linear-gradient(135deg, ${colorKey === 'primary' ? '#0ea5e9' : '#22c55e'}, transparent)` }} />
-                  
-                  <div className="relative h-48 overflow-hidden">
-                    {service.image ? (
-                      <img
-                        src={`${MEDIA_URL}${service.image}`}
-                        alt={service.title}
-                        className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                        onError={(e) => {
-                          e.target.style.display = 'none';
-                          e.target.nextElementSibling.style.display = 'flex';
-                        }}
-                      />
-                    ) : null}
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-800" style={{ display: service.image ? 'none' : 'flex' }}>
-                      <span className="text-8xl drop-shadow-2xl">{service.icon}</span>
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
-                    <div className="absolute top-4 left-4">
-                      <div className={`px-4 py-1 rounded-full bg-${colorKey}-500/20 border border-${colorKey}-500/30 flex items-center gap-2`}>
-                        <div className={`w-2 h-2 rounded-full bg-${colorKey}-500 animate-pulse`} />
-                        <span className={`text-${colorKey}-400 text-[10px] font-bold uppercase tracking-[0.2em]`}>Premium</span>
-                      </div>
-                    </div>
-                  </div>
+                  {/* Index */}
+                  <span className={`text-xs font-black tabular-nums w-7 flex-shrink-0 transition-colors ${
+                    isActive ? 'text-[#3556f1]' : dark ? 'text-[#484a71]' : 'text-[#484a71]'
+                  }`}>
+                    {String(idx + 1).padStart(2, '0')}
+                  </span>
 
-                  <div className="p-7 flex flex-col flex-1 relative z-10">
-                    <h3 className={`font-extrabold text-2xl mb-3 leading-tight bg-clip-text text-transparent ${darkMode ? 'bg-gradient-to-r from-white to-slate-300' : 'bg-gradient-to-r from-slate-900 to-slate-700'}`}>
-                      {service.title}
-                    </h3>
-                    <p className={`text-sm leading-relaxed mb-5 flex-1 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                      {service.description}
-                    </p>
+                  {/* Icon */}
+                  <span className="text-2xl w-9 flex-shrink-0">{service.icon}</span>
 
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setActive(active === service.id ? null : service.id);
-                      }}
-                      className={`w-full py-3 rounded-2xl font-bold tracking-wide transition-all duration-300 flex items-center justify-center gap-2 text-sm shine-effect ${
-                        colorKey === 'primary' 
-                          ? 'bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white shadow-xl shadow-primary-500/25' 
-                          : 'bg-gradient-to-r from-accent-600 to-accent-700 hover:from-accent-700 hover:to-accent-800 text-white shadow-xl shadow-accent-500/25'
-                      }`}
-                    >
-                      {active === service.id ? (
-                        <>Show Less <span className="text-lg">▲</span></>
-                      ) : (
-                        <>View Details <span className="text-lg">▼</span></>
-                      )}
-                    </button>
+                  {/* Title */}
+                  <span className={`flex-1 text-sm font-bold transition-colors ${
+                    isActive
+                      ? 'text-[#3556f1]'
+                      : dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'
+                  }`}>
+                    {service.title}
+                  </span>
 
-                    {active === service.id && (
-                      <ul className="mt-5 pt-5 border-t border-slate-700 space-y-3">
-                        {service.details.map((detail, i) => (
-                          <li key={i} className="flex items-start gap-3">
-                            <span className={`mt-1 w-2 h-2 rounded-full flex-shrink-0 bg-${colorKey}-500`} />
-                            <span className={`text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>{detail}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                </div>
+                  {/* Active dot */}
+                  <span className={`w-1.5 h-1.5 rounded-full flex-shrink-0 transition-all duration-200 ${
+                    isActive ? 'bg-[#3556f1] scale-100' : 'bg-transparent scale-0'
+                  }`} />
+                </motion.div>
               );
             })}
           </div>
+
+          {/* Right — Detail panel (changes on hover) */}
+          <div className="hidden lg:block sticky top-28">
+            <AnimatePresence mode="wait">
+              {activeService && (
+                <motion.div
+                  key={activeService.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                  className={`rounded-2xl border overflow-hidden ${dark ? 'border-[#221c75] bg-[#0e0940]' : 'border-[#d6d4e8] bg-white'}`}
+                >
+                  {/* Service image if available */}
+                  {activeService.image && (
+                    <div className="h-48 overflow-hidden">
+                      <img
+                        src={`${MEDIA_URL}${activeService.image}`}
+                        alt={activeService.title}
+                        className="w-full h-full object-cover"
+                        onError={e => { e.target.parentNode.style.display = 'none'; }}
+                      />
+                    </div>
+                  )}
+
+                  <div className="p-8">
+                    {/* Icon + title */}
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="text-3xl">{activeService.icon}</span>
+                      <h3 className={`text-lg font-extrabold leading-tight ${dark ? 'text-white' : 'text-[#0e0940]'}`}>
+                        {activeService.title}
+                      </h3>
+                    </div>
+
+                    {/* Description */}
+                    <p className={`text-sm leading-relaxed mb-6 ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}>
+                      {activeService.description}
+                    </p>
+
+                    {/* Detail bullets */}
+                    <ul className="space-y-2.5">
+                      {activeService.details.map((d, i) => (
+                        <li key={i} className="flex items-start gap-2.5 text-xs">
+                          <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#3556f1] flex-shrink-0" />
+                          <span className={`font-medium leading-relaxed ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}>{d}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
         </div>
-      </section>
-    </AnimatedBackground>
+
+        {/* Mobile: show detail of last hovered below list */}
+        <div className="lg:hidden mt-8">
+          <AnimatePresence mode="wait">
+            {activeService && (
+              <motion.div
+                key={activeService.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.25 }}
+                className={`rounded-2xl border p-6 ${dark ? 'border-[#221c75] bg-[#0e0940]' : 'border-[#d6d4e8] bg-white'}`}
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-2xl">{activeService.icon}</span>
+                  <h3 className={`text-base font-extrabold ${dark ? 'text-white' : 'text-[#0e0940]'}`}>{activeService.title}</h3>
+                </div>
+                <p className={`text-sm leading-relaxed mb-4 ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}>{activeService.description}</p>
+                <ul className="space-y-2">
+                  {activeService.details.map((d, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs">
+                      <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-[#3556f1] flex-shrink-0" />
+                      <span className={`font-medium ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}>{d}</span>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+      </div>
+    </section>
   );
 }

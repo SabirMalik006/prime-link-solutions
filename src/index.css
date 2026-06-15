@@ -1,42 +1,31 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
-  --bg-tertiary: #f1f5f9;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-tertiary: #94a3b8;
-  --border-color: #e2e8f0;
+  --bg-primary: #fdfdfd;
+  --bg-secondary: #f4f3fa;
+  --text-primary: #0a0530;
+  --text-secondary: #484a71;
+  --border-color: #d6d4e8;
+  --primary: #3556f1;
+  --primary-hover: #325def;
 }
 
 .dark {
-  --bg-primary: #020617;
-  --bg-secondary: #0f172a;
-  --bg-tertiary: #1e293b;
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --text-tertiary: #94a3b8;
-  --border-color: #334155;
+  --bg-primary: #0e0940;
+  --bg-secondary: #141052;
+  --text-primary: #fdfdfd;
+  --text-secondary: #a0a0c0;
+  --border-color: #221c75;
+  --primary: #3556f1;
+  --primary-hover: #4a6af5;
 }
 
-* { 
-  scroll-behavior: smooth; 
-  cursor: none !important; 
-}
-
-@media (max-width: 768px) { 
-  * { 
-    cursor: auto !important; 
-  } 
-  
-  .custom-cursor { 
-    display: none !important; 
-  } 
+* {
+  scroll-behavior: smooth;
 }
 
 html, body {
@@ -45,87 +34,73 @@ html, body {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+::selection {
+  background-color: #3556f1;
+  color: #fdfdfd;
+}
+
+/* Thin global scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #3556f1; border-radius: 4px; }
+
+/* Fade up utility */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-15px); }
-}
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-@keyframes shine {
-  0% { left: -100%; }
-  100% { left: 100%; }
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-.animate-fade-up { animation: fadeUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
-.animate-scale-in { animation: scaleIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
-.animate-fade-in { animation: fadeIn 0.5s ease forwards; }
-.animate-float { animation: float 6s ease-in-out infinite; }
-.animate-gradient {
-  background-size: 200% 200%;
-  animation: gradient 8s ease infinite;
+.ticker-track {
+  animation: ticker 28s linear infinite;
+  will-change: transform;
+}
+.ticker-track:hover {
+  animation-play-state: paused;
 }
 
-.delay-100 { animation-delay: 0.1s; }
-.delay-200 { animation-delay: 0.2s; }
-.delay-300 { animation-delay: 0.3s; }
-.delay-400 { animation-delay: 0.4s; }
-.delay-500 { animation-delay: 0.5s; }
-.delay-600 { animation-delay: 0.6s; }
-.delay-700 { animation-delay: 0.7s; }
-.delay-800 { animation-delay: 0.8s; }
-
-.card-hover {
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.card-hover:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+/* ── Subtle 3D isometric pattern for Hero ── */
+.hero-3d-pattern {
+  background-image:
+    linear-gradient(30deg, rgba(53,86,241,0.04) 12%, transparent 12.5%, transparent 87%, rgba(53,86,241,0.04) 87.5%),
+    linear-gradient(150deg, rgba(53,86,241,0.04) 12%, transparent 12.5%, transparent 87%, rgba(53,86,241,0.04) 87.5%),
+    linear-gradient(30deg, rgba(108,92,231,0.03) 12%, transparent 12.5%, transparent 87%, rgba(108,92,231,0.03) 87.5%),
+    linear-gradient(150deg, rgba(108,92,231,0.03) 12%, transparent 12.5%, transparent 87%, rgba(108,92,231,0.03) 87.5%);
+  background-size: 80px 140px;
 }
 
-.glass-nav {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(226,232,240,0.8);
+.dark .hero-3d-pattern {
+  background-image:
+    linear-gradient(30deg, rgba(53,86,241,0.06) 12%, transparent 12.5%, transparent 87%, rgba(53,86,241,0.06) 87.5%),
+    linear-gradient(150deg, rgba(53,86,241,0.06) 12%, transparent 12.5%, transparent 87%, rgba(53,86,241,0.06) 87.5%),
+    linear-gradient(30deg, rgba(108,92,231,0.04) 12%, transparent 12.5%, transparent 87%, rgba(108,92,231,0.04) 87.5%),
+    linear-gradient(150deg, rgba(108,92,231,0.04) 12%, transparent 12.5%, transparent 87%, rgba(108,92,231,0.04) 87.5%);
+  background-size: 80px 140px;
 }
 
-.custom-scrollbar::-webkit-scrollbar { width: 6px; }
-.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(14,165,233,0.4); border-radius: 999px; }
-
-.shine-effect {
-  position: relative;
-  overflow: hidden;
+/* ── Gradient text utility ── */
+.text-gradient {
+  background: linear-gradient(135deg, #3556f1, #6c5ce7, #e84393);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
-.shine-effect::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-  transform: skewX(-25deg);
-  animation: shine 3s infinite;
+
+/* ── Gradient background accent ── */
+.bg-gradient-accent {
+  background: linear-gradient(135deg, rgba(53,86,241,0.04) 0%, rgba(108,92,231,0.04) 50%, rgba(232,67,147,0.03) 100%);
+}
+
+.dark .bg-gradient-accent {
+  background: linear-gradient(135deg, rgba(53,86,241,0.08) 0%, rgba(108,92,231,0.08) 50%, rgba(232,67,147,0.05) 100%);
 }

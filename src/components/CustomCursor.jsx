@@ -146,10 +146,10 @@ const CustomCursor = () => {
         <div
           className="absolute inset-0 rounded-full"
           style={{
-            background: `radial-gradient(circle at center, rgba(14, 165, 233, ${styles.bgOpacity}) 0%, rgba(34, 197, 94, ${styles.bgOpacity * 0.5}) 100%)`,
+            background: `rgba(54, 87, 243, ${styles.bgOpacity})`,
             backdropFilter: `blur(${styles.blur}px)`,
-            border: `2px solid rgba(14, 165, 233, ${isHovering ? 0.6 : 0.4})`,
-            boxShadow: `0 0 ${styles.bgSize / 2}px rgba(14, 165, 233, 0.3)`,
+            border: `2px solid rgba(54, 87, 243, ${isHovering ? 0.6 : 0.4})`,
+            boxShadow: `0 0 ${styles.bgSize / 2}px rgba(54, 87, 243, 0.2)`,
             transition: 'border-color 0.2s ease, box-shadow 0.2s ease, backdrop-filter 0.2s ease',
           }}
         />
@@ -169,8 +169,8 @@ const CustomCursor = () => {
         <div
           className="absolute inset-0 rounded-full"
           style={{
-            background: 'linear-gradient(135deg, rgb(14, 165, 233), rgb(34, 197, 94))',
-            boxShadow: '0 0 8px rgba(14, 165, 233, 0.6)',
+            background: '#3556f1',
+            boxShadow: '0 0 8px rgba(54, 87, 243, 0.5)',
           }}
         />
       </div>
@@ -186,9 +186,8 @@ const CustomCursor = () => {
           }}
         >
           <div
-            className="absolute inset-0 rounded-full animate-ping"
+            className="absolute inset-0 rounded-full border border-[#3556f1]"
             style={{
-              background: 'radial-gradient(circle, rgba(14, 165, 233, 0.4), transparent)',
               animation: 'ripple 0.4s ease-out',
             }}
           />

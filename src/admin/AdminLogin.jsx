@@ -28,7 +28,7 @@ export default function AdminLogin() {
 
       if (response.ok) {
         login(data.token);
-        window.location.href = '/#/admin/dashboard';
+        navigate('/admin/dashboard');
       } else {
         setError(data.message || 'Invalid password');
       }
@@ -51,7 +51,7 @@ export default function AdminLogin() {
           <div className="flex justify-center mb-4">
             <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center shadow-xl shadow-primary-500/25">
               <img
-                src="/pp.jpeg"
+                src="/prime.jpeg"
                 alt="Prime Link Solutions"
                 className="w-full h-full object-cover"
                 onError={(e) => {

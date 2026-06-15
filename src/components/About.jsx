@@ -1,142 +1,115 @@
 import { useState, useEffect } from 'react';
-import { FiUsers, FiBriefcase, FiTarget, FiAward, FiStar, FiShield, FiCheck, FiTrendingUp } from 'react-icons/fi';
-import AnimatedBackground from './AnimatedBackground';
+import { motion } from 'framer-motion';
+import { CheckCircle2 } from 'lucide-react';
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-80px' },
+  transition: { duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] },
+});
+
+const values = [
+  'Over 20 years of proven field experience',
+  'Contractors for Pakistan Army, FWO, SCO, PTCL & DHA',
+  'Commitment to safety, quality and on-time delivery',
+  'End-to-end solutions — from civil works to finishing',
+  'Experienced engineers, supervisors & skilled workforce',
+];
 
 export default function About() {
-  const [darkMode, setDarkMode] = useState(false);
+  const [dark, setDark] = useState(false);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    setDarkMode(savedTheme === 'dark');
-
-    const observer = new MutationObserver(() => {
-      setDarkMode(document.documentElement.classList.contains('dark'));
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    return () => observer.disconnect();
+    const sync = () => setDark(document.documentElement.classList.contains('dark'));
+    sync();
+    const ob = new MutationObserver(sync);
+    ob.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => ob.disconnect();
   }, []);
 
-  const stats = [
-    { number: '20+', label: 'Years Experience', icon: FiAward },
-    { number: '500+', label: 'Happy Clients', icon: FiUsers },
-    { number: '50+', label: 'Countries', icon: FiTrendingUp },
-    { number: '100%', label: 'Quality', icon: FiCheck },
-  ];
-
   return (
-    <AnimatedBackground dark={darkMode}>
-      <section id="about" className="py-20 lg:py-28 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-16 text-center">
-            <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full mb-4 ${darkMode ? 'bg-primary-500/20 border border-primary-500/30' : 'bg-primary-50 border border-primary-200'}`}>
-              <FiTarget className={darkMode ? 'text-primary-400' : 'text-primary-600'} />
-              <span className={`text-xs font-semibold tracking-[0.2em] uppercase ${darkMode ? 'text-primary-400' : 'text-primary-600'}`}>About Us</span>
-            </div>
-            <h2 className="text-4xl font-extrabold mb-4">
-              <span className={darkMode ? "text-white" : "text-slate-900"}>Who We Are</span>
-            </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-primary-500 to-accent-500 mx-auto rounded-full mb-6" />
-          </div>
+    <section id="about" className={`py-24 lg:py-32 transition-colors duration-300 bg-gradient-accent ${dark ? 'bg-[#0e0940]' : 'bg-[#fdfdfd]'}`}>
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-            {stats.map((stat, i) => (
-              <div
-                key={i}
-                className={`p-6 rounded-3xl text-center transition-all duration-500 hover:-translate-y-2 ${darkMode ? 'bg-slate-800/70 border border-slate-700' : 'bg-white border border-slate-200'}`}
-              >
-                <div className="w-12 h-12 mx-auto mb-4 rounded-xl bg-gradient-to-r from-primary-500/30 to-accent-500/30 flex items-center justify-center">
-                  <stat.icon className="w-6 h-6 text-primary-500" />
+        {/* Section label */}
+        <motion.p {...fadeUp(0)} className="text-xs font-bold tracking-[0.2em] uppercase text-[#3556f1] mb-5">
+          About Us
+        </motion.p>
+
+        {/* Big editorial statement */}
+        <motion.h2
+          {...fadeUp(0.06)}
+          className={`font-black leading-[1.05] tracking-tight mb-14 ${dark ? 'text-white' : 'text-[#0e0940]'}`}
+          style={{ fontSize: 'clamp(2rem, 5vw, 4rem)' }}
+        >
+          Building Pakistan's infrastructure<br className="hidden sm:block" />
+          <span className="text-gradient">for over two decades.</span>
+        </motion.h2>
+
+        {/* Two column: description left, values right */}
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 mb-20">
+
+          {/* Left — founders + description */}
+          <motion.div {...fadeUp(0.1)} className="space-y-8">
+            <p className={`text-lg leading-relaxed ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}>
+              Prime Link Solutions delivers complete infrastructure development, civil works, maintenance, and procurement services. From telecom tower fabrication and CCTV surveillance systems to fiber networks and smart infrastructure — we execute reliably, on time, every time.
+            </p>
+
+            {/* Founders */}
+            <div className="flex flex-col gap-5">
+              {[
+                { initials: 'AK', name: 'Ammad Khan',  role: 'CEO & Co-Founder' },
+                { initials: 'SH', name: 'Syed Hassan', role: 'CEO & Co-Founder' },
+              ].map(f => (
+                <div key={f.name} className="flex items-center gap-4">
+                  <div className="w-11 h-11 rounded-full bg-[#3556f1] flex items-center justify-center text-white text-sm font-black flex-shrink-0">
+                    {f.initials}
+                  </div>
+                  <div>
+                    <p className={`text-sm font-extrabold ${dark ? 'text-white' : 'text-[#0e0940]'}`}>{f.name}</p>
+                    <p className={`text-xs font-semibold ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>{f.role}</p>
+                  </div>
                 </div>
-                <div className="text-3xl font-black bg-gradient-to-r from-primary-500 to-accent-500 bg-clip-text text-transparent mb-2">{stat.number}</div>
-                <p className={`text-sm font-medium ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>{stat.label}</p>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right — value points */}
+          <motion.div {...fadeUp(0.16)} className="space-y-4">
+            <p className={`text-xs font-bold tracking-[0.15em] uppercase mb-6 ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>
+              What makes us different
+            </p>
+            {values.map((v, i) => (
+              <div key={i} className="flex items-start gap-3">
+                <CheckCircle2 className="w-4 h-4 text-[#3556f1] mt-0.5 flex-shrink-0" />
+                <p className={`text-sm font-semibold leading-relaxed ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}>{v}</p>
               </div>
             ))}
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-12">
-            {/* Left side - Ammad Khan */}
-            <div className="space-y-6">
-              <div className={`p-8 rounded-3xl transition-all duration-500 hover:-translate-y-2 ${darkMode ? 'bg-slate-800/70 border border-slate-700' : 'bg-white border border-slate-200'}`}>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center text-white text-2xl font-black shadow-lg">
-                    AK
-                  </div>
-                  <div>
-                    <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>Ammad Khan</h3>
-                    <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>CEO & Founder</p>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <p className={`text-base leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                    Prime Link Solutions delivers Complete infrastructure development, civil works, maintenance, customized solutions and procurement services. Telecom towers fabrication, security systems, CCTV, conference audio and video systems, fencing, equipment supply and tower maintenance, we provide reliable, cost-effective solutions with seamless execution.
-                  </p>
-                </div>
-              </div>
-
-              <div className={`p-8 rounded-3xl transition-all duration-500 hover:-translate-y-2 ${darkMode ? 'bg-slate-800/70 border border-slate-700' : 'bg-white border border-slate-200'}`}>
-                <h3 className="text-2xl font-extrabold mb-6">
-                  <span className={darkMode ? "text-white" : "text-slate-900"}>Our Vision</span>
-                </h3>
-                <p className={`text-base leading-relaxed mb-6 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                  To become a trusted industry leader in integrated infrastructure and technology solutions, recognized for quality, innovation, and sustainable growth.
-                </p>
-                <div className="pt-4 border-t border-slate-700">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-primary-500 to-accent-500 flex items-center justify-center text-white text-xl font-black shadow-lg">
-                      AK
-                    </div>
-                    <div>
-                      <p className={`text-sm font-bold ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>Ammad Khan</p>
-                      <p className={`text-xs ${darkMode ? 'text-slate-500' : 'text-slate-500'}`}>CEO & Founder</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right side - Syed Hassan */}
-            <div className="space-y-6">
-              <div className={`p-8 rounded-3xl transition-all duration-500 hover:-translate-y-2 ${darkMode ? 'bg-slate-800/70 border border-slate-700' : 'bg-white border border-slate-200'}`}>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-accent-500 to-primary-500 flex items-center justify-center text-white text-2xl font-black shadow-lg">
-                    SH
-                  </div>
-                  <div>
-                    <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>Syed Hassan</h3>
-                    <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>CEO & Founder</p>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <p className={`text-base leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                    Prime Link Solutions delivers Complete infrastructure development, civil works, maintenance, customized solutions and procurement services. Telecom towers fabrication, security systems, CCTV, conference audio and video systems, fencing, equipment supply and tower maintenance, we provide reliable, cost-effective solutions with seamless execution.
-                  </p>
-                </div>
-              </div>
-
-              <div className={`p-8 rounded-3xl transition-all duration-500 hover:-translate-y-2 ${darkMode ? 'bg-slate-800/70 border border-slate-700' : 'bg-white border border-slate-200'}`}>
-                <h3 className="text-2xl font-extrabold mb-6">
-                  <span className={darkMode ? "text-white" : "text-slate-900"}>Our Mission</span>
-                </h3>
-                <p className={`text-base leading-relaxed mb-6 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                  To deliver innovative, reliable, and cost-effective solutions through excellence in execution, ensuring long-term value and satisfaction for our clients.
-                </p>
-                <div className="pt-4 border-t border-slate-700">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-r from-accent-500 to-primary-500 flex items-center justify-center text-white text-xl font-black shadow-lg">
-                      SH
-                    </div>
-                    <div>
-                      <p className={`text-sm font-bold ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>Syed Hassan</p>
-                      <p className={`text-xs ${darkMode ? 'text-slate-500' : 'text-slate-500'}`}>CEO & Founder</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          </motion.div>
         </div>
-      </section>
-    </AnimatedBackground>
+
+        {/* Full-width divider stats strip */}
+        <motion.div
+          {...fadeUp(0.2)}
+          className={`border-t border-b grid grid-cols-2 sm:grid-cols-4 ${dark ? 'border-[#221c75]' : 'border-[#d6d4e8]'}`}
+        >
+          {[
+            { n: '20+',  l: 'Years in Business'    },
+            { n: '500+', l: 'Completed Projects'   },
+            { n: '8+',   l: 'Industry Sectors'     },
+            { n: '100%', l: 'Delivery Commitment'  },
+          ].map(({ n, l }, i) => (
+            <div
+              key={l}
+              className={`py-10 px-6 text-center ${i < 3 ? (dark ? 'border-r border-[#221c75]' : 'border-r border-[#d6d4e8]') : ''} ${i > 1 && i < 3 ? 'sm:border-r-0' : ''}`}
+            >
+              <div className="text-4xl font-black text-[#3556f1] mb-1">{n}</div>
+              <div className={`text-xs font-bold uppercase tracking-wider ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>{l}</div>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
   );
 }

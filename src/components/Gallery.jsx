@@ -1,116 +1,132 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { API_URL, MEDIA_URL } from '../api/config';
-import AnimatedBackground from './AnimatedBackground';
+import { Loader2, ArrowRight } from 'lucide-react';
 
-const normalizeGalleryData = (data) => {
-  if (!data) return [];
-  if (Array.isArray(data)) return data;
-  if (Array.isArray(data.images)) return data.images;
-  if (Array.isArray(data.data)) return data.data;
+const norm = d => {
+  if (!d) return [];
+  if (Array.isArray(d)) return d;
+  if (Array.isArray(d.images)) return d.images;
+  if (Array.isArray(d.data)) return d.data;
   return [];
 };
 
-const getImageSrc = (url) => {
+const src = url => {
   if (!url) return '';
-  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  if (url.startsWith('http')) return url;
   return `${MEDIA_URL}${url.startsWith('/') ? '' : '/'}${url}`;
 };
 
 export default function Gallery() {
-  const [images, setImages] = useState([]);
+  const [images,  setImages]  = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error,   setError]   = useState('');
   const [showAll, setShowAll] = useState(false);
+  const [dark,    setDark]    = useState(false);
 
   useEffect(() => {
-    const fetchGallery = async () => {
-      try {
-        const response = await fetch(`${API_URL}/gallery`);
-        if (!response.ok) throw new Error(`Gallery fetch failed: ${response.status}`);
-        const data = await response.json();
-        setImages(normalizeGalleryData(data));
-      } catch (err) {
-        console.error('Error fetching gallery:', err);
-        setError('Unable to load gallery.');
-      } finally {
-          setLoading(false);
-        }
-    };
-    fetchGallery();
+    const sync = () => setDark(document.documentElement.classList.contains('dark'));
+    sync();
+    const ob = new MutationObserver(sync);
+    ob.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    return () => ob.disconnect();
   }, []);
 
-  const gradients = [
-    'from-primary-500/20 to-accent-500/20',
-    'from-accent-500/20 to-primary-500/20',
-    'from-primary-600/20 to-accent-600/20',
-    'from-accent-600/20 to-primary-600/20'
-  ];
+  useEffect(() => {
+    fetch(`${API_URL}/gallery`)
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(d => setImages(norm(d)))
+      .catch(() => setError('Unable to load gallery.'))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const shown = showAll ? images : images.slice(0, 6);
 
   return (
-    <AnimatedBackground dark={true}>
-      <section id="gallery" className="py-20 md:py-28 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full">
-          <div className="absolute top-20 left-20 w-80 h-80 rounded-full bg-primary-500/10 blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full bg-accent-500/10 blur-3xl animate-pulse delay-1000"></div>
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
-          <span className="inline-block px-4 py-1.5 bg-primary-500/10 text-primary-400 text-xs font-bold tracking-[0.2em] uppercase rounded-full mb-4">
-            Projects
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4">
-            Our Gallery
-          </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-primary-500 to-accent-500 mx-auto mb-4 rounded-full"></div>
-          <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Browse our latest installations and completed projects.
-          </p>
+    <section id="gallery" className={`py-24 lg:py-32 transition-colors duration-300 ${dark ? 'bg-[#0e0940]' : 'bg-[#fdfdfd]'}`}>
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
+
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-14">
+          <div>
+            <motion.p
+              initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.4 }}
+              className="text-xs font-bold tracking-[0.2em] uppercase text-[#3556f1] mb-4"
+            >
+              Gallery
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }} transition={{ duration: 0.45, delay: 0.05 }}
+              className={`font-black leading-tight tracking-tight ${dark ? 'text-white' : 'text-[#0e0940]'}`}
+              style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)' }}
+            >
+              <span className="text-gradient">Projects</span> in the field.
+            </motion.h2>
+          </div>
+          <motion.p
+            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
+            viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.1 }}
+            className={`max-w-xs text-sm leading-relaxed ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}
+          >
+            A selection of installations and completed works from our portfolio.
+          </motion.p>
         </div>
 
+        {/* Grid */}
         {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <div className="animate-spin rounded-full h-12 w-12 border-4 border-slate-800 border-t-primary-500"></div>
+          <div className="flex justify-center py-24">
+            <Loader2 className="w-8 h-8 animate-spin text-[#3556f1]" />
           </div>
         ) : error ? (
-          <div className="text-center text-slate-500 text-lg py-20">{error}</div>
+          <p className={`text-center py-20 text-sm font-semibold ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>{error}</p>
         ) : images.length === 0 ? (
-          <div className="text-center text-slate-500 text-lg py-20">No images available yet.</div>
+          <p className={`text-center py-20 text-sm font-semibold ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>No images available yet.</p>
         ) : (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {(showAll ? images : images.slice(0, 6)).map((img, idx) => (
-                <div
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {shown.map((img, idx) => (
+                <motion.div
                   key={img._id || img.id || idx}
-                  className="card-hover overflow-hidden rounded-3xl border border-slate-800 bg-slate-900"
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.45, delay: idx * 0.05 }}
+                  className={`group overflow-hidden rounded-2xl border ${dark ? 'border-[#221c75]' : 'border-[#d6d4e8]'}`}
+                  style={{ aspectRatio: idx % 5 === 0 ? '4/3' : '16/10' }}
                 >
-                  <div className="relative overflow-hidden">
+                  <div className="relative w-full h-full">
                     <img
-                      src={getImageSrc(img.url)}
+                      src={src(img.url)}
                       alt={img.title || 'Project'}
-                      className="w-full h-64 object-cover transition-transform duration-700 hover:scale-110"
-                      onError={(e) => {
-                        e.target.src = `https://placehold.co/600x400/0f172a/ffffff?text=Project`;
-                      }}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      onError={e => { e.target.src = 'https://placehold.co/600x400/0e0940/3657f3?text=Project'; }}
                     />
-                    <div className={`absolute inset-0 bg-gradient-to-t ${gradients[idx % gradients.length]} opacity-40`}></div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent"></div>
+                    {/* Caption overlay — appears only on hover */}
+                    <div className="absolute inset-0 bg-[#0e0940]/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                      <div className="p-5">
+                        <p className="text-white text-sm font-bold">{img.title || 'Project'}</p>
+                        {img.description && <p className="text-[#a0a0c0] text-xs mt-1">{img.description}</p>}
+                      </div>
+                    </div>
                   </div>
-                  <div className="p-6">
-                    <h3 className="text-lg font-bold text-white mb-2">{img.title || 'Project'}</h3>
-                    <p className="text-slate-400 text-sm leading-relaxed">
-                      {img.description || 'Installation from our portfolio.'}
-                    </p>
-                  </div>
-                </div>
+                </motion.div>
               ))}
             </div>
+
             {images.length > 6 && (
-              <div className="mt-12 flex justify-center">
+              <div className="mt-10 flex justify-center">
                 <button
                   onClick={() => setShowAll(!showAll)}
-                  className="px-8 py-3 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white font-semibold rounded-xl shadow-lg shadow-primary-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-primary-500/35"
+                  className={`inline-flex items-center gap-2 px-6 py-3 border rounded-xl text-sm font-bold transition-colors ${
+                    dark
+                      ? 'border-[#221c75] text-[#a0a0c0] hover:border-[#3556f1] hover:text-white'
+                      : 'border-[#d6d4e8] text-[#484a71] hover:border-[#3556f1] hover:text-[#0a0530]'
+                  }`}
                 >
-                  {showAll ? 'Show Less' : `View All (${images.length})`}
+                  {showAll ? 'Show Less' : `View All ${images.length} Projects`}
+                  {!showAll && <ArrowRight className="w-4 h-4" />}
                 </button>
               </div>
             )}
@@ -118,6 +134,5 @@ export default function Gallery() {
         )}
       </div>
     </section>
-    </AnimatedBackground>
   );
 }
