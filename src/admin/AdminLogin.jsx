@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAdmin } from '../context/AdminContext';
 import { API_URL } from '../api/config';
-import { Eye, EyeOff, Loader } from 'lucide-react';
+import { Eye, EyeOff, Loader, ArrowLeft } from 'lucide-react';
 
 export default function AdminLogin() {
   const [password, setPassword] = useState('');
@@ -40,46 +40,62 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 px-4 sm:px-0 relative overflow-hidden">
-      <div className="absolute inset-0">
-        <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full bg-primary-500/10 blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 rounded-full bg-accent-500/10 blur-3xl animate-pulse delay-1000"></div>
-      </div>
+    <div className="min-h-screen flex items-center justify-center bg-[#0e0940] px-4 sm:px-0 relative overflow-hidden">
+      {/* Dot grid background */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage: 'radial-gradient(circle, rgba(54,87,243,0.18) 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+        }}
+      />
+      {/* Gradient accent blobs */}
+      <div className="pointer-events-none absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full bg-[#3556f1] opacity-[0.08] blur-[120px]" />
+      <div className="pointer-events-none absolute -bottom-40 -right-20 w-[400px] h-[400px] rounded-full bg-[#6c5ce7] opacity-[0.08] blur-[100px]" />
 
-      <div className="relative z-10 bg-slate-900/80 backdrop-blur-xl rounded-3xl shadow-2xl p-8 max-w-md w-full border border-slate-800">
+      {/* Back button */}
+      <button
+        onClick={() => navigate('/')}
+        className="absolute top-6 left-6 flex items-center gap-2 px-4 py-2 border border-[#221c75] text-[#a0a0c0] hover:text-white hover:border-[#3556f1] text-xs font-bold rounded-xl transition-colors"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Back to Site
+      </button>
+
+      <div className="relative z-10 bg-[#141052] rounded-3xl shadow-2xl p-8 max-w-md w-full border border-[#221c75]">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 rounded-2xl overflow-hidden bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center shadow-xl shadow-primary-500/25">
+            <div className="w-16 h-16 rounded-2xl overflow-hidden bg-[#3556f1] flex items-center justify-center shadow-xl shadow-[#3556f1]/25">
               <img
                 src="/prime.jpeg"
                 alt="Prime Link Solutions"
                 className="w-full h-full object-cover"
                 onError={(e) => {
-                  e.target.src = 'https://placehold.co/200x200/0ea5e9/ffffff?text=PL';
+                  e.target.src = 'https://placehold.co/200x200/3556f1/ffffff?text=PL';
                 }}
               />
             </div>
           </div>
           <h2 className="text-2xl font-bold text-white mb-2">Admin Login</h2>
-          <p className="text-slate-400 text-sm">Enter your credentials to access dashboard</p>
+          <p className="text-[#a0a0c0] text-sm">Enter your credentials to access dashboard</p>
         </div>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-6">
-            <label className="block text-sm font-semibold text-slate-300 mb-2">Password</label>
+            <label className="block text-xs font-bold tracking-[0.15em] uppercase text-[#484a71] mb-2">Password</label>
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-slate-950/50 border border-slate-700 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 rounded-2xl px-5 py-4 text-slate-200 text-base placeholder-slate-500 outline-none transition-all pr-14"
+                className="w-full bg-[#1a1460] border border-[#221c75] focus:border-[#3556f1] focus:ring-1 focus:ring-[#3556f1] rounded-2xl px-5 py-4 text-white text-base placeholder-[#484a71] outline-none transition-all pr-14"
                 placeholder="Enter admin password"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-[#484a71] hover:text-white transition-colors"
               >
                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
@@ -95,7 +111,7 @@ export default function AdminLogin() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-700 hover:to-primary-800 text-white text-base font-bold rounded-2xl shadow-xl shadow-primary-500/25 hover:shadow-2xl hover:shadow-primary-500/35 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3"
+            className="w-full py-4 bg-[#3556f1] hover:bg-[#325def] text-white text-base font-bold rounded-2xl shadow-xl shadow-[#3556f1]/25 hover:shadow-2xl hover:shadow-[#3556f1]/35 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-3"
           >
             {loading ? (
               <>

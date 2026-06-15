@@ -35,10 +35,11 @@ export default function Navbar() {
   };
 
   const scrollTo = (id) => {
-    setMenuOpen(false);
     const el = document.getElementById(id);
-    if (!el) return;
-    window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 76, behavior: 'smooth' });
+    if (el) {
+      window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 76, behavior: 'smooth' });
+    }
+    setMenuOpen(false);
   };
 
   const handleLink = (e, href) => {
@@ -122,23 +123,23 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2, ease: 'easeInOut' }}
-            className={`overflow-hidden border-t lg:hidden ${dark ? 'bg-[#0e0940] border-[#221c75]' : 'bg-[#fdfdfd] border-[#d6d4e8]'}`}
+            className={`border-t lg:hidden ${dark ? 'bg-[#0e0940] border-[#221c75]' : 'bg-[#fdfdfd] border-[#d6d4e8]'}`}
           >
             <div className="px-5 py-5 flex flex-col gap-1">
               {navLinks.map(link => (
-                <a
+                <button
+                  type="button"
                   key={link.label}
-                  href={'#' + link.href}
-                  onClick={e => handleLink(e, link.href)}
-                  className={`py-2.5 px-3 rounded-lg text-sm font-semibold transition-colors hover:text-[#3556f1] ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}
+                  onClick={(e) => { e.stopPropagation(); scrollTo(link.href); }}
+                  className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-semibold transition-colors hover:text-[#3556f1] ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}
                 >
                   {link.label}
-                </a>
+                </button>
               ))}
-              <a href="#contact" onClick={e => handleLink(e, 'contact')}
+              <button type="button" onClick={(e) => { e.stopPropagation(); scrollTo('contact'); }}
                 className="mt-3 w-full py-3 bg-[#3556f1] text-white text-sm font-bold rounded-xl text-center block">
                 Get Quote
-              </a>
+              </button>
             </div>
           </motion.div>
         )}
