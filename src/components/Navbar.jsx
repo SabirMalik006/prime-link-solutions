@@ -55,7 +55,7 @@ export default function Navbar() {
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
           ? dark
-            ? 'bg-[#0e0940]/95 backdrop-blur-md border-b border-[#221c75]'
+            ? 'bg-[#061a3c]/95 backdrop-blur-md border-b border-[#1a2a54]'
             : 'bg-[#fdfdfd]/95 backdrop-blur-md border-b border-[#d6d4e8]'
           : 'bg-transparent'
       }`}
@@ -72,7 +72,7 @@ export default function Navbar() {
             <img src="/prime.jpeg" alt="Prime Link" className="w-full h-full object-cover"
               onError={e => { e.target.src = 'https://placehold.co/32x32/3657f3/fff?text=PL'; }} />
           </div>
-          <span className={`font-black text-base tracking-tight ${dark ? 'text-white' : 'text-[#0e0940]'}`}>
+          <span className={`font-black text-base tracking-tight ${dark ? 'text-white' : 'text-[#061a3c]'}`}>
             Prime Link <span className="text-gradient">Solutions</span>
           </span>
         </a>
@@ -94,7 +94,7 @@ export default function Navbar() {
         {/* Right controls */}
         <div className="flex items-center gap-3">
           <button onClick={toggleTheme} aria-label="Toggle theme"
-            className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${dark ? 'text-[#a0a0c0] hover:text-white' : 'text-[#484a71] hover:text-[#0e0940]'}`}>
+            className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${dark ? 'text-[#a0a0c0] hover:text-white' : 'text-[#484a71] hover:text-[#061a3c]'}`}>
             {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
 
@@ -109,8 +109,8 @@ export default function Navbar() {
           <button onClick={() => setMenuOpen(!menuOpen)} className="lg:hidden w-8 h-8 flex items-center justify-center"
             aria-label="Menu">
             {menuOpen
-              ? <X className={`w-5 h-5 ${dark ? 'text-white' : 'text-[#0e0940]'}`} />
-              : <Menu className={`w-5 h-5 ${dark ? 'text-white' : 'text-[#0e0940]'}`} />}
+              ? <X className={`w-5 h-5 ${dark ? 'text-white' : 'text-[#061a3c]'}`} />
+              : <Menu className={`w-5 h-5 ${dark ? 'text-white' : 'text-[#061a3c]'}`} />}
           </button>
         </div>
       </div>
@@ -123,7 +123,7 @@ export default function Navbar() {
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2, ease: 'easeInOut' }}
-            className={`border-t lg:hidden ${dark ? 'bg-[#0e0940] border-[#221c75]' : 'bg-[#fdfdfd] border-[#d6d4e8]'}`}
+            className={`border-t lg:hidden ${dark ? 'bg-[#061a3c] border-[#1a2a54]' : 'bg-[#fdfdfd] border-[#d6d4e8]'}`}
           >
             <div className="px-5 py-5 flex flex-col gap-1">
               {navLinks.map(link => (

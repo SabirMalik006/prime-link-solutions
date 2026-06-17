@@ -43,7 +43,7 @@ export default function Gallery() {
   const shown = showAll ? images : images.slice(0, 6);
 
   return (
-    <section id="gallery" className={`py-24 lg:py-32 transition-colors duration-300 ${dark ? 'bg-[#0e0940]' : 'bg-[#fdfdfd]'}`}>
+    <section id="gallery" className={`py-24 lg:py-32 transition-colors duration-300 ${dark ? 'bg-[#061a3c]' : 'bg-[#fdfdfd]'}`}>
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
 
         {/* Header */}
@@ -59,7 +59,7 @@ export default function Gallery() {
             <motion.h2
               initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.45, delay: 0.05 }}
-              className={`font-black leading-tight tracking-tight ${dark ? 'text-white' : 'text-[#0e0940]'}`}
+              className={`font-black leading-tight tracking-tight ${dark ? 'text-white' : 'text-[#061a3c]'}`}
               style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)' }}
             >
               <span className="text-gradient">Projects</span> in the field.
@@ -93,7 +93,7 @@ export default function Gallery() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-40px' }}
                   transition={{ duration: 0.45, delay: idx * 0.05 }}
-                  className={`group overflow-hidden rounded-2xl border ${dark ? 'border-[#221c75]' : 'border-[#d6d4e8]'}`}
+                  className={`group overflow-hidden rounded-2xl border ${dark ? 'border-[#1a2a54]' : 'border-[#d6d4e8]'}`}
                   style={{ aspectRatio: idx % 5 === 0 ? '4/3' : '16/10' }}
                 >
                   <div className="relative w-full h-full">
@@ -104,7 +104,7 @@ export default function Gallery() {
                       onError={e => { e.target.src = 'https://placehold.co/600x400/0e0940/3657f3?text=Project'; }}
                     />
                     {/* Caption overlay — appears only on hover */}
-                    <div className="absolute inset-0 bg-[#0e0940]/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                    <div className="absolute inset-0 bg-[#061a3c]/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                       <div className="p-5">
                         <p className="text-white text-sm font-bold">{img.title || 'Project'}</p>
                         {img.description && <p className="text-[#a0a0c0] text-xs mt-1">{img.description}</p>}
@@ -121,7 +121,7 @@ export default function Gallery() {
                   onClick={() => setShowAll(!showAll)}
                   className={`inline-flex items-center gap-2 px-6 py-3 border rounded-xl text-sm font-bold transition-colors ${
                     dark
-                      ? 'border-[#221c75] text-[#a0a0c0] hover:border-[#3556f1] hover:text-white'
+                      ? 'border-[#1a2a54] text-[#a0a0c0] hover:border-[#3556f1] hover:text-white'
                       : 'border-[#d6d4e8] text-[#484a71] hover:border-[#3556f1] hover:text-[#0a0530]'
                   }`}
                 >

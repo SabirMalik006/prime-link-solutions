@@ -15,7 +15,7 @@ export default function Footer() {
     return () => ob.disconnect();
   }, []);
 
-  const border = dark ? 'border-[#221c75]' : 'border-[#d6d4e8]';
+  const border = dark ? 'border-[#1a2a54]' : 'border-[#d6d4e8]';
 
   const scrollTo = (id) => {
     const el = document.getElementById(id);
@@ -37,7 +37,7 @@ export default function Footer() {
                   onError={e => { e.target.src = 'https://placehold.co/32x32/3657f3/fff?text=PL'; }} />
               </div>
               <div>
-                <p className={`font-black text-sm leading-tight ${dark ? 'text-white' : 'text-[#0e0940]'}`}>Prime Link</p>
+                <p className={`font-black text-sm leading-tight ${dark ? 'text-white' : 'text-[#061a3c]'}`}>Prime Link</p>
                 <p className="text-gradient text-[10px] font-bold tracking-widest uppercase">Solutions</p>
               </div>
             </div>

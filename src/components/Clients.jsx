@@ -23,12 +23,12 @@ export default function Clients() {
     return () => ob.disconnect();
   }, []);
 
-  const border = dark ? 'border-[#221c75]' : 'border-[#d6d4e8]';
+  const border = dark ? 'border-[#1a2a54]' : 'border-[#d6d4e8]';
 
   return (
     <>
       {/* ── CLIENTS / OUR NETWORK section ── */}
-      <section id="clients" className={`py-24 lg:py-32 transition-colors duration-300 relative ${dark ? 'bg-[#0e0940]' : 'bg-[#fdfdfd]'}`}>
+      <section id="clients" className={`py-24 lg:py-32 transition-colors duration-300 relative ${dark ? 'bg-[#061a3c]' : 'bg-[#fdfdfd]'}`}>
         <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10 mb-14 relative z-10">
           <motion.p {...fadeUp(0)} className="text-xs font-bold tracking-[0.2em] uppercase text-[#3556f1] mb-4">
             Our Network
@@ -69,7 +69,7 @@ export default function Clients() {
       </section>
 
       {/* ── WHY CHOOSE US — navy panel ── */}
-      <section id="why-us" className={`py-24 lg:py-32 transition-colors duration-300 relative overflow-hidden ${dark ? 'bg-[#141052]' : 'bg-[#0a0530]'}`}>
+      <section id="why-us" className={`py-24 lg:py-32 transition-colors duration-300 relative overflow-hidden ${dark ? 'bg-[#081c42]' : 'bg-[#0a0530]'}`}>
         {/* Subtle grid background */}
         <div
           className="pointer-events-none absolute inset-0 opacity-[0.04]"
@@ -119,7 +119,7 @@ export default function Clients() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: '-60px' }}
                   transition={{ duration: 0.4, delay: i * 0.07 }}
-                  className="relative flex items-start gap-4 p-5 rounded-xl border border-[#221c75] bg-[#0e0940]/60 hover:bg-[#0e0940]/90 transition-all group"
+                  className="relative flex items-start gap-4 p-5 rounded-xl border border-[#1a2a54] bg-[#061a3c]/60 hover:bg-[#061a3c]/90 transition-all group"
                 >
                   <span className="text-xs font-black tabular-nums text-[#3556f1] w-6 flex-shrink-0 mt-0.5">
                     {String(i + 1).padStart(2, '0')}

@@ -47,7 +47,7 @@ export default function Contact() {
 
   const input = `w-full px-4 py-3 rounded-xl text-sm font-medium outline-none border transition-all duration-200 ${
     dark
-      ? 'bg-[#1a1460] border-[#221c75] text-white placeholder-[#4a4a7a] focus:border-[#3556f1]'
+      ? 'bg-[#081c42] border-[#1a2a54] text-white placeholder-[#484a71] focus:border-[#3556f1]'
       : 'bg-white border-[#d6d4e8] text-[#0a0530] placeholder-[#484a71] focus:border-[#3556f1]'
   }`;
 
@@ -58,11 +58,11 @@ export default function Contact() {
   ];
 
   return (
-    <section id="contact" className={`transition-colors duration-300 ${dark ? 'bg-[#0e0940]' : 'bg-[#fdfdfd]'}`}>
+    <section id="contact" className={`transition-colors duration-300 ${dark ? 'bg-[#061a3c]' : 'bg-[#fdfdfd]'}`}>
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
 
         {/* Full-width top label */}
-        <div className={`border-b py-10 ${dark ? 'border-[#221c75]' : 'border-[#d6d4e8]'}`}>
+        <div className={`border-b py-10 ${dark ? 'border-[#1a2a54]' : 'border-[#d6d4e8]'}`}>
           <motion.p
             initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.4 }}
@@ -73,7 +73,7 @@ export default function Contact() {
           <motion.h2
             initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.06 }}
-            className={`font-black leading-tight tracking-tight ${dark ? 'text-white' : 'text-[#0e0940]'}`}
+            className={`font-black leading-tight tracking-tight ${dark ? 'text-white' : 'text-[#061a3c]'}`}
             style={{ fontSize: 'clamp(1.8rem, 4vw, 3.2rem)' }}
           >
             <span className="text-gradient">Let's talk</span> about<br />your next project.
@@ -87,7 +87,7 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.5 }}
-            className={`lg:col-span-2 py-14 pr-0 lg:pr-16 border-b lg:border-b-0 lg:border-r ${dark ? 'border-[#221c75]' : 'border-[#d6d4e8]'}`}
+            className={`lg:col-span-2 py-14 pr-0 lg:pr-16 border-b lg:border-b-0 lg:border-r ${dark ? 'border-[#1a2a54]' : 'border-[#d6d4e8]'}`}
           >
             <p className={`text-sm leading-relaxed mb-10 ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}>
               Ready to start? Reach out directly or fill in the form and we'll respond within 24 hours.

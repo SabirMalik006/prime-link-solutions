@@ -29,7 +29,7 @@ export default function About() {
   }, []);
 
   return (
-    <section id="about" className={`py-24 lg:py-32 transition-colors duration-300 bg-gradient-accent ${dark ? 'bg-[#0e0940]' : 'bg-[#fdfdfd]'}`}>
+    <section id="about" className={`py-24 lg:py-32 transition-colors duration-300 bg-gradient-accent ${dark ? 'bg-[#061a3c]' : 'bg-[#fdfdfd]'}`}>
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
 
         {/* Section label */}
@@ -40,7 +40,7 @@ export default function About() {
         {/* Big editorial statement */}
         <motion.h2
           {...fadeUp(0.06)}
-          className={`font-black leading-[1.05] tracking-tight mb-14 ${dark ? 'text-white' : 'text-[#0e0940]'}`}
+          className={`font-black leading-[1.05] tracking-tight mb-14 ${dark ? 'text-white' : 'text-[#061a3c]'}`}
           style={{ fontSize: 'clamp(2rem, 5vw, 4rem)' }}
         >
           Building Pakistan's infrastructure<br className="hidden sm:block" />
@@ -67,7 +67,7 @@ export default function About() {
                     {f.initials}
                   </div>
                   <div>
-                    <p className={`text-sm font-extrabold ${dark ? 'text-white' : 'text-[#0e0940]'}`}>{f.name}</p>
+                    <p className={`text-sm font-extrabold ${dark ? 'text-white' : 'text-[#061a3c]'}`}>{f.name}</p>
                     <p className={`text-xs font-semibold ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>{f.role}</p>
                   </div>
                 </div>
@@ -92,7 +92,7 @@ export default function About() {
         {/* Full-width divider stats strip */}
         <motion.div
           {...fadeUp(0.2)}
-          className={`border-t border-b grid grid-cols-2 sm:grid-cols-4 ${dark ? 'border-[#221c75]' : 'border-[#d6d4e8]'}`}
+          className={`border-t border-b grid grid-cols-2 sm:grid-cols-4 ${dark ? 'border-[#1a2a54]' : 'border-[#d6d4e8]'}`}
         >
           {[
             { n: '20+',  l: 'Years in Business'    },
@@ -102,7 +102,7 @@ export default function About() {
           ].map(({ n, l }, i) => (
             <div
               key={l}
-              className={`py-10 px-6 text-center ${i < 3 ? (dark ? 'border-r border-[#221c75]' : 'border-r border-[#d6d4e8]') : ''} ${i > 1 && i < 3 ? 'sm:border-r-0' : ''}`}
+              className={`py-10 px-6 text-center ${i < 3 ? (dark ? 'border-r border-[#1a2a54]' : 'border-r border-[#d6d4e8]') : ''} ${i > 1 && i < 3 ? 'sm:border-r-0' : ''}`}
             >
               <div className="text-4xl font-black text-[#3556f1] mb-1">{n}</div>
               <div className={`text-xs font-bold uppercase tracking-wider ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>{l}</div>

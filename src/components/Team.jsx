@@ -16,10 +16,10 @@ export default function Team() {
     return () => ob.disconnect();
   }, []);
 
-  const border = dark ? 'border-[#221c75]' : 'border-[#d6d4e8]';
+  const border = dark ? 'border-[#1a2a54]' : 'border-[#d6d4e8]';
 
   return (
-    <section id="team" className={`py-24 lg:py-32 transition-colors duration-300 ${dark ? 'bg-[#141052]' : 'bg-[#f4f3fa]'}`}>
+    <section id="team" className={`py-24 lg:py-32 transition-colors duration-300 ${dark ? 'bg-[#081c42]' : 'bg-[#f4f3fa]'}`}>
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
 
         {/* Header */}
@@ -37,7 +37,7 @@ export default function Team() {
           <motion.h2
             initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.05 }}
-            className={`font-black leading-tight tracking-tight ${dark ? 'text-white' : 'text-[#0e0940]'}`}
+            className={`font-black leading-tight tracking-tight ${dark ? 'text-white' : 'text-[#061a3c]'}`}
             style={{ fontSize: 'clamp(1.8rem, 4vw, 3rem)' }}
           >
             <span className="text-gradient">The people</span> and<br />machinery behind<br />

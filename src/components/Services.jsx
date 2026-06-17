@@ -39,10 +39,10 @@ export default function Services() {
     }
   }, [services]);
 
-  const border = dark ? 'border-[#221c75]' : 'border-[#d6d4e8]';
+  const border = dark ? 'border-[#1a2a54]' : 'border-[#d6d4e8]';
 
   if (loading) return (
-      <section id="services" className={`py-24 flex items-center justify-center ${dark ? 'bg-[#141052]' : 'bg-[#f4f3fa]'}`}>
+      <section id="services" className={`py-24 flex items-center justify-center ${dark ? 'bg-[#081c42]' : 'bg-[#f4f3fa]'}`}>
       <Loader2 className="w-8 h-8 text-[#3556f1] animate-spin" />
     </section>
   );
@@ -50,7 +50,7 @@ export default function Services() {
   const activeService = services.find(s => s.id === hovered);
 
   return (
-    <section id="services" className={`py-24 lg:py-32 transition-colors duration-300 ${dark ? 'bg-[#141052]' : 'bg-[#f4f3fa]'}`}>
+    <section id="services" className={`py-24 lg:py-32 transition-colors duration-300 ${dark ? 'bg-[#081c42]' : 'bg-[#f4f3fa]'}`}>
       <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-10">
 
         {/* Header */}
@@ -66,7 +66,7 @@ export default function Services() {
             <motion.h2
               initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.05 }}
-              className={`font-black leading-tight tracking-tight ${dark ? 'text-white' : 'text-[#0e0940]'}`}
+              className={`font-black leading-tight tracking-tight ${dark ? 'text-white' : 'text-[#061a3c]'}`}
               style={{ fontSize: 'clamp(1.8rem, 4vw, 3.2rem)' }}
             >
               <span className="text-gradient">Eight</span> specialised<br />service lines.
@@ -90,7 +90,7 @@ export default function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-40px' }}
               transition={{ duration: 0.4, delay: idx * 0.04 }}
-              className={`rounded-2xl border overflow-hidden ${dark ? 'border-[#221c75] bg-[#0e0940]' : 'border-[#d6d4e8] bg-white'}`}
+              className={`rounded-2xl border overflow-hidden ${dark ? 'border-[#1a2a54] bg-[#061a3c]' : 'border-[#d6d4e8] bg-white'}`}
             >
               {service.image && (
                 <div className="h-40 sm:h-48 overflow-hidden">
@@ -107,7 +107,7 @@ export default function Services() {
                   <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#3556f1]/10 text-lg flex-shrink-0">
                     {service.icon}
                   </span>
-                  <h3 className={`text-base font-extrabold leading-tight ${dark ? 'text-white' : 'text-[#0e0940]'}`}>
+                  <h3 className={`text-base font-extrabold leading-tight ${dark ? 'text-white' : 'text-[#061a3c]'}`}>
                     {service.title}
                   </h3>
                 </div>
@@ -144,7 +144,7 @@ export default function Services() {
                   onMouseEnter={() => setHovered(service.id)}
                   className={`flex items-center gap-5 py-5 border-b cursor-default transition-all duration-200 ${border} ${
                     isActive
-                      ? dark ? 'bg-[#1a1460]/40' : 'bg-white'
+                      ? dark ? 'bg-[#081c42]/40' : 'bg-white'
                       : ''
                   }`}
                   style={{ paddingLeft: isActive ? '1rem' : '0', paddingRight: '1rem' }}
@@ -178,7 +178,7 @@ export default function Services() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -6 }}
                   transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                  className={`rounded-2xl border overflow-hidden ${dark ? 'border-[#221c75] bg-[#0e0940]' : 'border-[#d6d4e8] bg-white'}`}
+                  className={`rounded-2xl border overflow-hidden ${dark ? 'border-[#1a2a54] bg-[#061a3c]' : 'border-[#d6d4e8] bg-white'}`}
                 >
                   {activeService.image && (
                     <div className="h-48 overflow-hidden">
@@ -193,7 +193,7 @@ export default function Services() {
                   <div className="p-8">
                     <div className="flex items-center gap-3 mb-4">
                       <span className="text-3xl">{activeService.icon}</span>
-                      <h3 className={`text-lg font-extrabold leading-tight ${dark ? 'text-white' : 'text-[#0e0940]'}`}>
+                      <h3 className={`text-lg font-extrabold leading-tight ${dark ? 'text-white' : 'text-[#061a3c]'}`}>
                         {activeService.title}
                       </h3>
                     </div>
