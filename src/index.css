@@ -115,3 +115,12 @@ body {
 .animate-loader-bar {
   animation: loaderBar 1.6s ease-in-out forwards;
 }
+
+/* Mobile menu fade-in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.15s ease-out;
+}

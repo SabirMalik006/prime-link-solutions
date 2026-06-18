@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Sun, Moon, Menu, X } from 'lucide-react';
 
 const navLinks = [
@@ -12,9 +11,9 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-  const [scrolled,  setScrolled]  = useState(false);
-  const [menuOpen,  setMenuOpen]  = useState(false);
-  const [dark,      setDark]      = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [dark, setDark] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -35,11 +34,11 @@ export default function Navbar() {
   };
 
   const scrollTo = (id) => {
+    setMenuOpen(false);
     const el = document.getElementById(id);
     if (el) {
       window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - 76, behavior: 'smooth' });
     }
-    setMenuOpen(false);
   };
 
   const handleLink = (e, href) => {
@@ -47,6 +46,8 @@ export default function Navbar() {
     if (location.pathname.includes('/admin')) { window.location.href = '/#' + href; return; }
     scrollTo(href);
   };
+
+  const toggleMenu = () => setMenuOpen(v => !v);
 
   if (location.pathname.includes('/admin')) return null;
 
@@ -69,11 +70,13 @@ export default function Navbar() {
           className="flex items-center gap-2.5 group"
         >
           <div className="w-8 h-8 rounded-lg overflow-hidden bg-[#3556f1] flex-shrink-0">
-            <img src="/prime.jpeg" alt="Prime Link" className="w-full h-full object-cover"
-              onError={e => { e.target.src = 'https://placehold.co/32x32/3657f3/fff?text=PL'; }} />
+            <img
+              src="/prime.jpeg" alt="Prime Link" className="w-full h-full object-cover"
+              onError={e => { e.target.src = 'https://placehold.co/32x32/3657f3/fff?text=PL'; }}
+            />
           </div>
           <span className={`font-black text-base tracking-tight ${dark ? 'text-white' : 'text-[#061a3c]'}`}>
-            Prime Link <span className="text-gradient">Solutions</span>
+            Prime Link <span className="text-gradient">Systems</span>
           </span>
         </a>
 
@@ -93,8 +96,12 @@ export default function Navbar() {
 
         {/* Right controls */}
         <div className="flex items-center gap-3">
-          <button onClick={toggleTheme} aria-label="Toggle theme"
-            className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${dark ? 'text-[#a0a0c0] hover:text-white' : 'text-[#484a71] hover:text-[#061a3c]'}`}>
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label="Toggle theme"
+            className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${dark ? 'text-[#a0a0c0] hover:text-white' : 'text-[#484a71] hover:text-[#061a3c]'}`}
+          >
             {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </button>
 
@@ -106,8 +113,13 @@ export default function Navbar() {
             Get Quote
           </a>
 
-          <button onClick={() => setMenuOpen(!menuOpen)} className="lg:hidden w-8 h-8 flex items-center justify-center"
-            aria-label="Menu">
+          {/* Hamburger */}
+          <button
+            type="button"
+            onPointerDown={toggleMenu}
+            className="lg:hidden w-9 h-9 flex items-center justify-center cursor-pointer active:scale-90 transition-transform"
+            aria-label="Menu"
+          >
             {menuOpen
               ? <X className={`w-5 h-5 ${dark ? 'text-white' : 'text-[#061a3c]'}`} />
               : <Menu className={`w-5 h-5 ${dark ? 'text-white' : 'text-[#061a3c]'}`} />}
@@ -116,34 +128,33 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2, ease: 'easeInOut' }}
-            className={`border-t lg:hidden ${dark ? 'bg-[#061a3c] border-[#1a2a54]' : 'bg-[#fdfdfd] border-[#d6d4e8]'}`}
+      <div
+        className={`lg:hidden overflow-hidden transition-all duration-200 ease-out ${
+          menuOpen ? 'max-h-[400px] opacity-100' : 'max-h-0 opacity-0'
+        } ${dark ? 'bg-[#061a3c] border-t border-[#1a2a54]' : 'bg-[#fdfdfd] border-t border-[#d6d4e8]'}`}
+      >
+        <div className="px-5 py-5 flex flex-col gap-1">
+          {navLinks.map(link => (
+            <a
+              key={link.label}
+              href={'#' + link.href}
+              onClick={e => { e.preventDefault(); scrollTo(link.href); }}
+              className={`block w-full py-2.5 px-3 rounded-lg text-sm font-semibold transition-colors hover:text-[#3556f1] ${
+                dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'
+              }`}
+            >
+              {link.label}
+            </a>
+          ))}
+          <a
+            href="#contact"
+            onClick={e => { e.preventDefault(); scrollTo('contact'); }}
+            className="mt-3 w-full block text-center py-3 bg-[#3556f1] text-white text-sm font-bold rounded-xl"
           >
-            <div className="px-5 py-5 flex flex-col gap-1">
-              {navLinks.map(link => (
-                <button
-                  type="button"
-                  key={link.label}
-                  onClick={(e) => { e.stopPropagation(); scrollTo(link.href); }}
-                  className={`w-full text-left py-2.5 px-3 rounded-lg text-sm font-semibold transition-colors hover:text-[#3556f1] ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}
-                >
-                  {link.label}
-                </button>
-              ))}
-              <button type="button" onClick={(e) => { e.stopPropagation(); scrollTo('contact'); }}
-                className="mt-3 w-full py-3 bg-[#3556f1] text-white text-sm font-bold rounded-xl text-center block">
-                Get Quote
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            Get Quote
+          </a>
+        </div>
+      </div>
     </header>
   );
 }

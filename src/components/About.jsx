@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
+import sign1 from '../assets/sign1.png';
+import sign2 from '../assets/sign2.png';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -53,22 +55,27 @@ export default function About() {
           {/* Left — founders + description */}
           <motion.div {...fadeUp(0.1)} className="space-y-8">
             <p className={`text-lg leading-relaxed ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}>
-              Prime Link Solutions delivers complete infrastructure development, civil works, maintenance, and procurement services. From telecom tower fabrication and CCTV surveillance systems to fiber networks and smart infrastructure — we execute reliably, on time, every time.
+              Prime Link Systems delivers complete infrastructure development, civil works, maintenance, and procurement services. From telecom tower fabrication and CCTV surveillance systems to fiber networks and smart infrastructure — we execute reliably, on time, every time.
             </p>
 
             {/* Founders */}
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-col gap-6">
               {[
-                { initials: 'AK', name: 'Ammad Khan',  role: 'CEO & Co-Founder' },
-                { initials: 'SH', name: 'Syed Hassan', role: 'CEO & Co-Founder' },
+                { initials: 'AK', name: 'Ammad Khan',  role: 'Director of Operations', img: sign1 },
+                { initials: 'SH', name: 'Syyed Hassan', role: 'Director of Corporate', img: sign2 },
               ].map(f => (
                 <div key={f.name} className="flex items-center gap-4">
                   <div className="w-11 h-11 rounded-full bg-[#3556f1] flex items-center justify-center text-white text-sm font-black flex-shrink-0">
                     {f.initials}
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <p className={`text-sm font-extrabold ${dark ? 'text-white' : 'text-[#061a3c]'}`}>{f.name}</p>
-                    <p className={`text-xs font-semibold ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>{f.role}</p>
+                    <p className={`text-xs font-semibold ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}>{f.role}</p>
+                    <img
+                      src={f.img}
+                      alt={`${f.name} sign`}
+                      className={`h-6 w-auto object-contain mt-1 opacity-70 ${dark ? 'brightness-0 invert-[0.85]' : ''}`}
+                    />
                   </div>
                 </div>
               ))}

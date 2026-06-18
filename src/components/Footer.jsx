@@ -38,7 +38,7 @@ export default function Footer() {
               </div>
               <div>
                 <p className={`font-black text-sm leading-tight ${dark ? 'text-white' : 'text-[#061a3c]'}`}>Prime Link</p>
-                <p className="text-gradient text-[10px] font-bold tracking-widest uppercase">Solutions</p>
+                <p className="text-gradient text-[10px] font-bold tracking-widest uppercase">Systems</p>
               </div>
             </div>
             <p className={`text-xs leading-relaxed font-medium ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>
@@ -105,7 +105,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="py-6 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className={`text-[11px] font-semibold ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>
-            © {new Date().getFullYear()} Prime Link Solutions — Islamabad, Pakistan
+            © {new Date().getFullYear()} Prime Link Systems — Islamabad, Pakistan
           </p>
           <div className="flex items-center gap-4">
             <a

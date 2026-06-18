@@ -30,7 +30,7 @@ export default function PolicyModal({ isOpen, onClose }) {
               Terms & Conditions
             </h3>
             <p className="text-slate-400 leading-relaxed text-sm sm:text-base">
-              Welcome to <span className="text-white font-medium">Prime Link Solutions</span>. By using our services, you agree to follow our terms and policies. Please make sure all information provided by you is correct. We reserve the right to update products, prices, and policies at any time without prior notice.
+              Welcome to <span className="text-white font-medium">Prime Link Systems</span>. By using our services, you agree to follow our terms and policies. Please make sure all information provided by you is correct. We reserve the right to update products, prices, and policies at any time without prior notice.
             </p>
           </section>
 

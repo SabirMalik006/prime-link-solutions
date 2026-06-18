@@ -68,7 +68,7 @@ export default function AdminLogin() {
             <div className="w-16 h-16 rounded-2xl overflow-hidden bg-[#3556f1] flex items-center justify-center shadow-xl shadow-[#3556f1]/25">
               <img
                 src="/prime.jpeg"
-                alt="Prime Link Solutions"
+                alt="Prime Link Systems"
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   e.target.src = 'https://placehold.co/200x200/3556f1/ffffff?text=PL';

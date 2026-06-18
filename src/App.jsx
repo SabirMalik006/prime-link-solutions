@@ -74,7 +74,7 @@ function Loader() {
         } ${reveal ? 'opacity-0' : 'opacity-100'}`}
       >
         <div className="w-20 h-20 rounded-2xl overflow-hidden bg-[#3556f1] flex items-center justify-center shadow-xl shadow-[#3556f1]/25">
-          <img src="/prime.jpeg" alt="Prime Link Solutions" className="w-full h-full object-cover" />
+          <img src="/prime.jpeg" alt="Prime Link Systems" className="w-full h-full object-cover" />
         </div>
       </div>
       <h1 className={`text-2xl sm:text-3xl font-black tracking-tight mb-12 transition-all duration-300 ${

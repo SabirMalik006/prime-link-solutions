@@ -1,8 +1,15 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { API_URL, MEDIA_URL } from '../api/config';
+import { API_URL } from '../api/config';
 import { services as staticServices } from '../data/company';
 import { Loader2 } from 'lucide-react';
+
+const assetImages = import.meta.glob('../assets/*.png', { eager: true, import: 'default' });
+const getImg = (filename) => {
+  if (!filename) return null;
+  const name = filename.split('/').pop();
+  return assetImages[`../assets/${name}`] || null;
+};
 
 export default function Services() {
   const [hovered,  setHovered]  = useState(null);
@@ -95,7 +102,7 @@ export default function Services() {
               {service.image && (
                 <div className="h-40 sm:h-48 overflow-hidden">
                   <img
-                    src={`${MEDIA_URL}${service.image}`}
+                    src={getImg(service.image)}
                     alt={service.title}
                     className="w-full h-full object-cover"
                     onError={e => { e.target.parentNode.style.display = 'none'; }}
@@ -183,7 +190,7 @@ export default function Services() {
                   {activeService.image && (
                     <div className="h-48 overflow-hidden">
                       <img
-                        src={`${MEDIA_URL}${activeService.image}`}
+                        src={getImg(activeService.image)}
                         alt={activeService.title}
                         className="w-full h-full object-cover"
                         onError={e => { e.target.parentNode.style.display = 'none'; }}

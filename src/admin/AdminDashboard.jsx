@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAdmin } from '../context/AdminContext';
 import GalleryManager from './GalleryManager';
-import ContentManager from './ContentManager';
-import ServicesManager from './ServicesManager';
 import MessagesManager from './MessagesManager';
-import { LogOut, Image, FileText, Grid, ExternalLink, Loader, Mail } from 'lucide-react';
+import { LogOut, Image, ExternalLink, Loader, Mail } from 'lucide-react';
 
 export default function AdminDashboard() {
     const { logout, isAuthenticated } = useAdmin();
-    const [activeTab, setActiveTab] = useState('services');
+    const [activeTab, setActiveTab] = useState('gallery');
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     if (!isAuthenticated) {
@@ -16,8 +14,6 @@ export default function AdminDashboard() {
     }
 
     const tabs = [
-        { id: 'services', label: 'Services', icon: Grid },
-        { id: 'content', label: 'Content', icon: FileText },
         { id: 'gallery', label: 'Gallery', icon: Image },
         { id: 'messages', label: 'Messages', icon: Mail },
     ];
@@ -164,8 +160,6 @@ export default function AdminDashboard() {
                 {/* Tab Content - Responsive Container */}
                 <div className="bg-white rounded-xl sm:rounded-2xl shadow-sm overflow-x-auto">
                     <div className="p-3 sm:p-4 md:p-6">
-                        {activeTab === 'content' && <ContentManager />}
-                        {activeTab === 'services' && <ServicesManager />}
                         {activeTab === 'gallery' && <GalleryManager />}
                         {activeTab === 'messages' && <MessagesManager />}
                     </div>

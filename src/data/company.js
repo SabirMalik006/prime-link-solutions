@@ -1,5 +1,5 @@
 export const companyInfo = {
-  name: "Prime Link Solutions",
+  name: "Prime Link Systems",
   tagline: "Infrastructure. Technology. Excellence.",
   about: "Prime Link Solutions delivers Complete infrastructure development, civil works, maintenance, customized solutions and procurement services. Telecom towers fabrication, security systems, CCTV, conference audio and video systems, fencing, equipment supply and tower maintenance, we provide reliable, cost-effective solutions with seamless execution. Committed to quality and efficiency, we support both public and private sector projects with excellence.",
   address: "Icon 2, Business Square, Gulberg Greens, Islamabad",
@@ -26,6 +26,7 @@ export const services = [
     title: "Construction Material Supply & Procurement",
     icon: "📡",
     color: "#1a3a5c",
+    image: "/services/Construction.png",
     description: "Sourcing and delivering essential building materials to construction sites efficiently and on time.",
     details: [
       "Cement, sand, aggregates & on-demand materials",
@@ -43,6 +44,7 @@ export const services = [
     title: "Maintenance & Renovation Services",
     icon: "🗼",
     color: "#155f6e",
+    image: "/services/Maintenance.png",
     description: "Keeping your properties in peak condition through expert repairs, upgrades, and modern renovations tailored to every need.",
     details: [
       "Interior & exterior painting (residential, commercial & institutional)",
@@ -59,6 +61,7 @@ export const services = [
     title: "Manufacturing of Telecommunication Towers & Maintenance",
     icon: "🔌",
     color: "#1a3a5c",
+    image: "/services/Manufacturing.png",
     description: "End-to-end fiber cable laying solutions with trenching, installation and network deployment with precision.",
     details: [
       "Design and manufacturing of high-quality telecom towers",
@@ -75,6 +78,7 @@ export const services = [
     title: "Optical Fiber Cable Laying & Maintenance",
     icon: "🌐",
     color: "#155f6e",
+    image: "/services/Optical.png",
     description: "Proactive fiber network maintenance ensuring optimal performance, quick fault resolution and long-term network stability.",
     details: [
       "End-to-end fiber cable laying solutions",
@@ -89,6 +93,7 @@ export const services = [
     title: "CCTV, Access Control, Maintenance Procurement & Monitoring Systems",
     icon: "📹",
     color: "#1a3a5c",
+    image: "/services/CCTV.png",
     description: "Securing and monitoring your premises with advanced CCTV, access control, and smart procurement systems for seamless oversight and protection.",
     details: [
       "Advanced CCTV surveillance for real-time monitoring",
@@ -106,6 +111,7 @@ export const services = [
     title: "Site Safety & Fire Fighting Equipment",
     icon: "🔐",
     color: "#155f6e",
+    image: "/services/Site.png",
     description: "Safeguarding lives and assets with industry-grade fire fighting equipment and comprehensive site safety solutions.",
     details: [
       "Construction site safety equipment for hazard-free operations",
@@ -122,6 +128,7 @@ export const services = [
     title: "Procurement",
     icon: "📦",
     color: "#1a3a5c",
+    image: "/services/Procurement.png",
     description: "Complete procurement solutions for power, IT, surveillance and Audio & Visual (SMDs) equipment tailored to client specs and OEM standards.",
     details: [
       "Enterprise power & energy solutions (UPS, batteries, PDUs, stabilizers & backup systems)",
@@ -139,6 +146,7 @@ export const services = [
     title: "Smart Infrastructure",
     icon: "🏗️",
     color: "#155f6e",
+    image: "/services/Smart.png",
     description: "Building intelligent systems that connect technology and infrastructure for smarter, more efficient operations.",
     details: [
       "Technology-enabled civil construction with ICT, power & monitoring integration",

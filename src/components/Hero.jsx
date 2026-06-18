@@ -74,18 +74,30 @@ export default function Hero() {
         {/* Main headline — LARGE editorial type */}
         <div className="mb-6">
           <motion.h1
-            {...fade(0.08)}
+            initial={{ opacity: 0, y: 60, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
             className={`font-black leading-[0.92] tracking-tighter ${dark ? 'text-white' : 'text-[#061a3c]'}`}
-            style={{ fontSize: 'clamp(3rem, 9vw, 8rem)' }}
+            style={{
+              fontSize: 'clamp(3.5rem, 11vw, 10rem)',
+              textShadow: dark
+                ? '0 1px 0 rgba(255,255,255,0.06), 0 2px 0 rgba(255,255,255,0.05), 0 3px 0 rgba(255,255,255,0.04), 0 4px 0 rgba(255,255,255,0.03), 0 5px 6px rgba(0,0,0,0.3)'
+                : '0 1px 0 rgba(6,26,60,0.12), 0 2px 0 rgba(6,26,60,0.10), 0 3px 0 rgba(6,26,60,0.08), 0 4px 0 rgba(6,26,60,0.06), 0 5px 6px rgba(6,26,60,0.15)'
+            }}
           >
             Prime Link
           </motion.h1>
           <motion.h1
-            {...fade(0.15)}
+            initial={{ opacity: 0, y: 60, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.22, ease: [0.22, 1, 0.36, 1] }}
             className="font-black leading-[0.92] tracking-tighter text-gradient"
-            style={{ fontSize: 'clamp(3rem, 9vw, 8rem)' }}
+            style={{
+              fontSize: 'clamp(3.5rem, 11vw, 10rem)',
+              textShadow: '0 1px 2px rgba(0,0,0,0.10), 0 2px 4px rgba(0,0,0,0.08), 0 3px 8px rgba(0,0,0,0.06)'
+            }}
           >
-            Solutions
+            Systems
           </motion.h1>
         </div>
 
