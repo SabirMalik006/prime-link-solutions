@@ -161,14 +161,17 @@ export const services = [
 ];
 
 export const clients = [
+  { name: "FWO", full: "Frontier Works Organization" },
+  { name: "Pak Army", full: "Pakistan Army" },
+  { name: "Frontier Corps", full: "Frontier Corps Pakistan" },
+  { name: "NLC", full: "National Logistics Cell" },
+  { name: "One Network", full: "One Network PVT LTD" },
+  { name: "Civil Armed Forces", full: "Civil Armed Forces Pakistan" },
   { name: "SCO", full: "Special Communication Organization" },
   { name: "PTCL", full: "Pakistan Telecommunication Company Ltd" },
   { name: "Cybernet", full: "Cybernet Pakistan" },
   { name: "DHA", full: "Defence Housing Authority" },
-  { name: "One Network", full: "One Network PVT Ltd" },
-  { name: "FWO", full: "Frontier Works Organization" },
   { name: "Corps of EME", full: "Corps of Electrical & Mechanical Engineers" },
-  { name: "Pakistan Army", full: "Pakistan Army" },
 ];
 
 export const certifications = [

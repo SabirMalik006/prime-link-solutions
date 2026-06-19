@@ -80,7 +80,7 @@ function Loader() {
       <h1 className={`text-2xl sm:text-3xl font-black tracking-tight mb-12 transition-all duration-300 ${
         zoom || reveal ? 'opacity-0 scale-90' : 'opacity-100 scale-100'
       } ${dark ? 'text-white' : 'text-[#061a3c]'}`}>
-        Prime Link <span className="text-gradient">Solutions</span>
+        Prime Link <span className="text-gradient">Systems</span>
       </h1>
       <div className={`w-48 sm:w-64 h-1 rounded-full overflow-hidden relative transition-all duration-300 ${
         zoom || reveal ? 'opacity-0' : 'opacity-100'

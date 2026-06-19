@@ -96,6 +96,22 @@ body {
   background-clip: text;
 }
 
+.text-gradient-clients {
+  background: linear-gradient(135deg, #fdfdfd 0%, #a0c4ff 40%, #3556f1 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 40px rgba(53,86,241,0.3);
+}
+
+.text-gradient-clients-light {
+  background: linear-gradient(135deg, #0a0530 0%, #3556f1 50%, #0084f1 80%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 40px rgba(53,86,241,0.15);
+}
+
 /* ── Gradient background accent ── */
 .bg-gradient-accent {
   background: linear-gradient(135deg, rgba(53,86,241,0.04) 0%, rgba(1,131,239,0.04) 50%, rgba(0,132,241,0.03) 100%);

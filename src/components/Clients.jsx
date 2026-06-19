@@ -44,12 +44,12 @@ export default function Clients() {
 
         {/* Ticker strip */}
         <div className={`border-t border-b ${border}`}>
-          <div className="ticker-track flex items-center whitespace-nowrap py-6">
+          <div className="ticker-track flex items-center whitespace-nowrap py-8">
             {tickerClients.map((c, i) => (
-              <span key={i} className="inline-flex items-center gap-3 px-10">
-                <span className={`text-xl font-black tracking-tight ${dark ? 'text-white' : 'text-[#0a0530]'}`}>{c.name}</span>
-                <span className={`text-xs font-semibold hidden sm:inline ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>{c.full}</span>
-                <span className="text-[#3556f1] text-lg mx-1">·</span>
+              <span key={i} className="inline-flex items-center gap-4 px-12">
+                <span className={`text-3xl sm:text-4xl font-black tracking-tight text-gradient-clients ${dark ? '' : 'text-gradient-clients-light'}`}>{c.name}</span>
+                <span className={`text-sm font-semibold hidden sm:inline ${dark ? 'text-[#a0a0c0]' : 'text-[#7878a0]'}`}>{c.full}</span>
+                <span className="text-[#3556f1]/40 text-2xl mx-2">✦</span>
               </span>
             ))}
           </div>
@@ -57,11 +57,11 @@ export default function Clients() {
 
         {/* Second ticker — reversed for depth */}
         <div className={`border-b ${border}`}>
-          <div className="ticker-track flex items-center whitespace-nowrap py-5" style={{ animationDirection: 'reverse', animationDuration: '35s' }}>
+          <div className="ticker-track flex items-center whitespace-nowrap py-7" style={{ animationDirection: 'reverse', animationDuration: '35s' }}>
             {[...clients, ...clients].reverse().map((c, i) => (
-              <span key={i} className="inline-flex items-center gap-3 px-10">
-                <span className={`text-sm font-bold uppercase tracking-widest ${dark ? 'text-[#484a71]' : 'text-[#484a71]'}`}>{c.name}</span>
-                <span className="text-[#3556f1] text-lg mx-1">·</span>
+              <span key={i} className="inline-flex items-center gap-4 px-12">
+                <span className={`text-xl sm:text-2xl font-black tracking-tight text-gradient-clients ${dark ? '' : 'text-gradient-clients-light'}`}>{c.name}</span>
+                <span className="text-[#3556f1]/40 text-2xl mx-2">✦</span>
               </span>
             ))}
           </div>
