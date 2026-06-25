@@ -65,13 +65,6 @@ export default function Gallery() {
               <span className="text-gradient">Projects</span> in the field.
             </motion.h2>
           </div>
-          <motion.p
-            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-            viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.1 }}
-            className={`max-w-xs text-sm leading-relaxed ${dark ? 'text-[#a0a0c0]' : 'text-[#484a71]'}`}
-          >
-            A selection of installations and completed works from our portfolio.
-          </motion.p>
         </div>
 
         {/* Grid */}

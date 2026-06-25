@@ -10,6 +10,7 @@ export default function GalleryManager() {
   const [deleting, setDeleting] = useState(null);
   const [modal, setModal] = useState({ show: false, message: '', type: 'success' });
   const [confirmModal, setConfirmModal] = useState({ show: false, id: null });
+  const [imageTitle, setImageTitle] = useState('');
   const fileInputRef = useRef(null);
   const { token } = useAdmin();
 
@@ -36,6 +37,7 @@ export default function GalleryManager() {
 
     const formData = new FormData();
     formData.append('image', file);
+    formData.append('title', imageTitle.trim() || file.name);
 
     setUploading(true);
     try {
@@ -59,6 +61,7 @@ export default function GalleryManager() {
       setModal({ show: true, message: 'Error uploading image', type: 'error' });
     } finally {
       setUploading(false);
+      setImageTitle('');
       if (fileInputRef.current) fileInputRef.current.value = '';
     }
   };
@@ -103,12 +106,19 @@ export default function GalleryManager() {
 
   return (
     <div className="bg-white rounded-2xl shadow-sm p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h3 className="text-xl font-bold text-[#0e2540]">Gallery Manager</h3>
+      <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center mb-6">
+        <h3 className="text-xl font-bold text-[#0e2540] sm:mr-auto">Gallery Manager</h3>
+        <input
+          type="text"
+          value={imageTitle}
+          onChange={e => setImageTitle(e.target.value)}
+          placeholder="Image name..."
+          className="px-3 py-2 border border-gray-300 rounded-lg text-sm text-[#0e2540] focus:outline-none focus:ring-2 focus:ring-[#0e2540] w-full sm:w-48"
+        />
         <button
           onClick={() => fileInputRef.current.click()}
           disabled={uploading}
-          className="flex items-center gap-2 px-4 py-2 bg-[#0e2540] text-white rounded-lg hover:bg-[#1a3a5c] transition-colors disabled:opacity-50"
+          className="flex items-center gap-2 px-4 py-2 bg-[#0e2540] text-white rounded-lg hover:bg-[#1a3a5c] transition-colors disabled:opacity-50 shrink-0"
         >
           {uploading ? <Loader size={18} className="animate-spin" /> : <Upload size={18} />}
           {uploading ? 'Uploading...' : 'Upload Images'}
@@ -132,17 +142,16 @@ export default function GalleryManager() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-h-[400px] overflow-y-auto">
           {images.map((img) => (
             <div key={img.id} className="relative group rounded-lg overflow-hidden border border-gray-200">
-              {/* ✅ SIRF YEH LINE CHANGE HUI HAI - MEDIA_URL use kiya */}
               <img
-                src={`${MEDIA_URL}${img.url}`}
+                src={img.url?.startsWith('http') ? img.url : `${MEDIA_URL}${img.url}`}
                 alt={img.title}
                 className="w-full h-32 object-cover"
               />
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+              <div className="absolute top-2 right-2">
                 <button
                   onClick={() => setConfirmModal({ show: true, id: img._id })}
                   disabled={deleting === img._id}
-                  className="p-2 bg-red-500 rounded-full text-white hover:bg-red-600 disabled:opacity-50"
+                  className="p-2 bg-red-500 rounded-full text-white hover:bg-red-600 disabled:opacity-50 shadow-lg"
                 >
                   {deleting === img._id ? <Loader size={16} className="animate-spin" /> : <Trash2 size={16} />}
                 </button>
