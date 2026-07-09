@@ -3,7 +3,7 @@ export const companyInfo = {
   tagline: "Infrastructure. Technology. Excellence.",
   about: "Prime Link Solutions delivers Complete infrastructure development, civil works, maintenance, customized solutions and procurement services. Telecom towers fabrication, security systems, CCTV, conference audio and video systems, fencing, equipment supply and tower maintenance, we provide reliable, cost-effective solutions with seamless execution. Committed to quality and efficiency, we support both public and private sector projects with excellence.",
   address: "Icon 2, Business Square, Gulberg Greens, Islamabad",
-  phone: "+92 321-5366666",
+  phone: "+92 323 9109429",
   email: "info@primelinksolutions.com",
   website: "www.primelinksolutions.com",
   experience: "20+",
